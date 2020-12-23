@@ -1,0 +1,352 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/* Login */
+
+.login-clipping {
+    @apply .fixed;
+    height: 900px;
+    overflow: hidden;
+}
+
+.login-clipping .clipper {
+    @apply .absolute .top-0 .left-0;
+    clip-path: polygon(0 0, 55% 0, 100% 100%, 0% 100%);
+    background: #E0472D;
+    height: 900px;
+    width: 697px;
+}
+
+.login-clipping .container {
+    @apply .relative;
+    z-index: 3;
+}
+
+/* Sidebar */
+
+.sidebar {
+    @apply .bg-gray-800;
+    width: 165px;
+}
+
+.list-menu svg.icon {
+    fill: #666666;
+}
+
+.list-menu:hover svg.icon {
+    @apply .fill-red-600;
+}
+
+select::-ms-expand {
+    display: none;
+}
+
+select {
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.item figure.item-image {
+    position: relative;
+    perspective: 10000px;
+}
+
+.item:hover {
+    @apply .cursor-pointer
+}
+
+.item:hover figure.item-image svg.icon {
+    @apply .opacity-100 .cursor-pointer
+}
+
+.item figure.item-image svg.icon {
+    content: "";
+    position: absolute;
+    width: 23px;
+    height: 28px;
+    top: 50%;
+    left: 50%;
+    transform-origin: bottom;
+    opacity: 0;
+    transform: translateX(-50%) translateY(-50%) rotateX(-45deg);
+    @apply .transition-all .duration-300
+}
+
+item:hover figure.item-image svg.icon {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-50%) rotateX(0deg);
+}
+
+.item figure.item-image-live {
+    position: relative;
+    perspective: 10000px;
+}
+
+.item-image-live .thumbnail-live {
+    width: 500px
+}
+
+.item:hover figure.item-image-live svg.icon {
+    @apply .opacity-100 .cursor-pointer
+}
+
+.item figure.item-image-live svg.icon {
+    width: 40px;
+    height: 40px;
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform-origin: bottom;
+    opacity: 0;
+    transform: translateX(-50%) translateY(-50%) rotateX(-45deg);
+    @apply .transition-all .duration-300
+}
+
+item:hover figure.item-image-live svg.icon {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-50%) rotateX(0deg);
+}
+
+.item figure.item-image-live img.live-icon {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    @apply .transition-all .duration-300
+}
+
+.item figure.item-image-live .live-viewers {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 20%;
+}
+
+.item figure.item-image-live .live-viewers-wrap {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 20%;
+}
+
+.share-icon-live svg {
+    width: 40px;
+    height: 40px;
+    fill: #404041;
+}
+
+.item figure.item-image-user {
+    position: relative;
+    perspective: 10000px;
+}
+
+.item:hover {
+    @apply .cursor-pointer
+}
+
+.item:hover figure.item-image-user svg.icon {
+    @apply .opacity-100 .cursor-pointer
+}
+
+.item figure.item-image-user svg.icon {
+    content: "";
+    position: absolute;
+    width: 46px;
+    height: 46px;
+    top: 50%;
+    left: 50%;
+    transform-origin: bottom;
+    opacity: 0;
+    transform: translateX(-50%) translateY(-50%) rotateX(-45deg);
+    @apply .transition-all .duration-300
+}
+
+item:hover figure.item-image-user svg.icon {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-50%) rotateX(0deg);
+}
+
+.icon-controller-user svg.icon-at-user {
+    width: 14px;
+}
+
+.icon-socmed-user svg {
+    width: 28px;
+    height: 28px;
+}
+
+.item figure.item-image-user .icon-socmed-user {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+}
+
+.item figure.item-image-user .minute-user {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+
+.favmerchant-at-user svg {
+    width: 95px;
+    height: 95px;
+}
+
+.fp {
+    height: 100vh;
+}
+
+.fp-controller {
+    height: 80vh;
+}
+
+.fp-controller svg {
+    width: 178px;
+}
+
+.mb-navbar svg {
+    fill: #585959;
+    width: 25px;
+    height: 25px;
+}
+
+.tickets svg {
+    fill: #df472d;
+    width: 47px;
+    width: 45px;
+}
+
+.socmed-icon-login svg {
+    width: 40px;
+    height: 40px;
+}
+
+.merchant-dashboard svg {
+    width: 32px;
+    height: 32px;
+}
+
+.merchant-dashboard svg {
+    fill: #404041;
+}
+
+.form-dashboard svg {
+    fill: #404041;
+}
+
+.item figure.item-image-live-detail {
+    position: relative;
+    perspective: 10000px;
+}
+
+.item:hover figure.item-image-live-detail svg.icon {
+    @apply .opacity-100 .cursor-pointer
+}
+
+.item figure.item-image-live-detail svg.icon {
+    width: 40px;
+    height: 40px;
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform-origin: bottom;
+    opacity: 0;
+    transform: translateX(-50%) translateY(-50%) rotateX(-45deg);
+    @apply .transition-all .duration-300
+}
+
+item:hover figure.item-image-live-detail svg.icon {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-50%) rotateX(0deg);
+}
+
+.notif-icon {
+    width: 10%;
+}
+
+.notif-icon svg {
+    width: 22px;
+    height: 22px;
+}
+
+.notif-message {
+    width: 85%;
+}
+
+.notif-minute {
+    width: 15%;
+}
+
+.img-phone img {
+    height: 80vh;
+}
+
+.form-login {
+    height: 80vh;
+}
+
+.item-image-user img {
+    width: 291px;
+    height: 159px;
+}
+
+@media all and (min-width: 480px) and (max-width: 768px) {
+    .item-image img {
+        width: 700px;
+    }
+    .item figure.item-image-live .live-viewers {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 10%;
+    }
+    .item figure.item-image-live .live-viewers-wrap {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 10%;
+    }
+}
+
+@media all and (max-width: 480px) {
+    .item-image-live .thumbnail-live {
+        width: 350px;
+    }
+    .item figure.item-image-live .live-viewers {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 20%;
+    }
+    .item figure.item-image-live .live-viewers-wrap {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 20%;
+    }
+    .user-detail button svg {
+        width: 20px;
+        height: 20px;
+    }
+    .notif-icon {
+        width: 5%;
+    }
+    .notif-message {
+        width: 65%;
+    }
+    .notif-minute {
+        width: 25%;
+    }
+    .item-image img {
+        width: 400px;
+    }
+    .item-image-user img {
+        width: 400px;
+        height: 200px;
+    }
+}
