@@ -60,7 +60,7 @@ function App() {
             <>
               <PrivateRoute path={`${url}`} component={Support} exact />
               <PrivateRoute path={`${url}/create`} component={CreateSupport} />
-              <PrivateRoute path={`${url}/edit`} component={EditSupport} />
+              <PrivateRoute path={`${url}/edit/:id`} component={EditSupport} />
             </>
           )} />
 
