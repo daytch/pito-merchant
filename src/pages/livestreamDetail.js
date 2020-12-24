@@ -31,6 +31,7 @@ const LivestreamDetail = () => {
     useEffect(() => {
         livestream.getLivestreamDetail(id).then((res) => {
             let data = res.data;
+
             setTitle(data.title);
             setDesc(data.desc);
             let stDate = moment(data.startDate).format('YYYY-MM-DD');

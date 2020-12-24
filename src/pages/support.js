@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Sidebar from 'components/SideNavbarMerchant'
 import Table from 'components/table/index'
 import { Link } from 'react-router-dom'
+import axios from 'configs/axios'
 
 
 const Supports = () => {
@@ -41,6 +42,26 @@ const Supports = () => {
         },
 
     ]
+
+    const [ticket, setTicket] = useState([])
+
+    useEffect(() => {
+       axios.get('/merchant/listTicket').then(e=>{
+           console.log(e.data)
+           const a = e.data.map(e=>{
+               return {
+                   ticketNumber: e.id,
+                   tittle: e.title,
+                   status: e.status,
+                   lastUpdated: e.last_session
+               }
+           })
+
+           setTicket(a)
+       });
+    }, [])
+
+    console.log(ticket)
     return (
         <>
             <section className="min-h-screen flex flex-col xl:flex-row ">
