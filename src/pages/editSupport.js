@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Sidebar from 'components/SideNavbarMerchant'
 import Card from 'components/card'
+import axios from 'configs/axios'
 
-const EditSupport = () => {
+const EditSupport = (props) => {
 
     const tableBodySupport = [
         {
@@ -42,12 +43,30 @@ const EditSupport = () => {
             image: "https://web2tailwind.com/assets/docs/master/image-01.jpg"
         },
     ]
+
+    const [data, setData] = useState([])
+
+    useEffect(() => {
+        axios.get('/merchant/listMessage?ticket_id='+ props.match.params.id+ '&page=1').then(e =>{
+            const a = e.data.map(a=>{
+                return {
+                    name: a.name,
+                    text: a.text,
+                    lastUpdated: a.createdAt,
+                    image: ""
+                }
+            })
+
+            setData(a);
+        })
+    }, [])
     
+
     return (
         <>
             <section className="min-h-screen flex flex-col xl:flex-row ">
                 <Sidebar />
-                <Card ListData={tableBodySupport} />
+                <Card ListData={data} />
             </section>
         </>
     )

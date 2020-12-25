@@ -1,8 +1,14 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import SideNavbarMerchant from 'components/SideNavbarMerchant'
 import Notification from 'components/notification'
+import axios from 'configs/axios'
 
 const Notif = () => {
+    useEffect(() => {
+        axios.get('/user/getNotification?page=1').then(e=>{
+            console.log(e)
+        })
+    }, [])
     return (
         <>
             <section className="min-h-screen flex flex-col xl:flex-row">
