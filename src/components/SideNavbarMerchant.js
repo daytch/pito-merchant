@@ -39,13 +39,14 @@ const SideNavbarMerchant = () => {
     return (
         <>
             <ToastContainer position="top-right" />
-            <div className="min-h-screen w-full flex justify-between xl:hidden bg-gray-800 items-center">
+            <div className="w-full flex justify-between xl:hidden bg-gray-800 items-center">
                 <div className="px-4 py-3">
+                    <PitoLogoSmall />
                 </div>
                 <div className="mb-navbar flex items-center px-4 py-3">
                     <h5 className="text-white text-sm text-right px-2">Hello, <br /><span className="font-medium text-red-600 text-base">{name}</span></h5>
                     {
-                        img ? (<img style={{ width: 80, height: 80, borderRadius: 80 / 2 }} src={img} className="px-2 w-20" alt={name}></img>) :
+                        img ? (<img style={{ width: 50, height: 50, borderRadius: 50/ 2 }} src={img} className="px-1 w-30" alt={name}></img>) :
                             (<Avatar name="Nurul Hidayat" className="mx-auto" round={true} size="75px" />)
                     }
                     <button onClick={() => setIsOpen(!isOpen)}><Hamburger /></button>
@@ -94,7 +95,7 @@ const SideNavbarMerchant = () => {
                     <PitoLogoSmall className="mx-auto" />
                     <div className="profile pt-6 text-center">
                         {
-                            img ? (<img style={{ width: 80, height: 80, borderRadius: 80 / 2 }} src={img} className="mx-auto" alt={name}></img>) :
+                            img ? (<img style={{ width: 70, height: 70, borderRadius: 70/ 2 }} src={img} className="mx-auto" alt={name}></img>) :
                                 (<Avatar name="Nurul Hidayat" className="mx-auto" round={true} size="75px" />)
                         }
                         <h5 className="text-white mt-4 text-sm">Hello, <br /><span className="font-medium text-red-600 text-base">{name}</span></h5>

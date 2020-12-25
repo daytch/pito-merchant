@@ -1,57 +1,53 @@
 import React from 'react'
 import Sidebar from 'components/SideNavbarMerchant'
-import Table from 'components/table/index'
+import Card from 'components/card'
 
 const EditSupport = () => {
-    const tableHeadTickets = [
-        {
-            title: "Ticket Number"
-        },
-        {
-            title: "Tittle"
-        },
-        {
-            title: "Status"
-        },
-        {
-            title: "Last Updated"
-        },
-    ];
 
     const tableBodySupport = [
         {
-            ticketNumber: '#10111456101',
-            tittle: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod',
-            status: 'Open/Closed',
+            name: 'Admin1',
+            text: 'Lorem ipsum dolor sit amet',
             lastUpdated: "01/09/2020 (00:18)",
+            image: ""
         },
         {
-            ticketNumber: '#10111456102',
-            tittle: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod',
-            status: 'Open/Closed',
+            name: 'Merchant1',
+            text: 'consectetur adipiscing elit',
             lastUpdated: "01/09/2020 (00:18)",
+            image: "https://web2tailwind.com/assets/docs/master/image-01.jpg"
         },
         {
-            ticketNumber: '#10111456103',
-            tittle: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod',
-            status: 'Open/Closed',
+            name: 'Admin1',
+            text: 'Lorem ipsum dolor sit amet',
             lastUpdated: "01/09/2020 (00:18)",
+            image: ""
         },
-
+        {
+            name: 'Merchant1',
+            text: 'consectetur adipiscing elit',
+            lastUpdated: "01/09/2020 (00:18)",
+            image: "https://web2tailwind.com/assets/docs/master/image-01.jpg"
+        },
+        {
+            name: 'Admin1',
+            text: 'Lorem ipsum dolor sit amet',
+            lastUpdated: "01/09/2020 (00:18)",
+            image: ""
+        },
+        {
+            name: 'Merchant1',
+            text: 'consectetur adipiscing elit',
+            lastUpdated: "01/09/2020 (00:18)",
+            image: "https://web2tailwind.com/assets/docs/master/image-01.jpg"
+        },
     ]
+    
     return (
         <>
             <section className="min-h-screen flex flex-col xl:flex-row ">
                 <Sidebar />
-                <div className="py-20 px-5 w-full">
-                    <div className="tickets flex justify-end">
-                        <button className="bg-red-600 rounded-2xl text-sm xl:text-lg px-6 py-2 w-2/5 md:w-1/4 text-white">New Tickets</button>
-                    </div>
-                    <div className="flex pt-10 overflow-x-auto">
-                        <Table itemHead={tableHeadTickets} itemBodySupport={tableBodySupport} />
-                    </div>
-                </div>
-
+                <Card ListData={tableBodySupport} />
             </section>
         </>
     )
