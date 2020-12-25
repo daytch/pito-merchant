@@ -1,22 +1,59 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import SideNavbarMerchant from 'components/SideNavbarMerchant'
 
 import { ReactComponent as FbIcon } from 'assets/images/fb-icon-blue.svg'
 import { ReactComponent as EmailIcon } from 'assets/images/email-icon.svg'
 import { ReactComponent as GoogleIcon } from 'assets/images/google-icon-colorful.svg'
 import Avatar from 'react-avatar';
+import users from 'api/users'
+import axios from 'configs/axios'
+import { useState } from 'react'
+import { toast, ToastContainer } from 'react-toastify'
 
-const profileEdit = ({ location }) => {
-    const { data } = location;
-    console.log(data);
+const ProfileEdit = () => {
+    // const { data } = this.props.location;
+    const [data, setData] = useState([]);
+    function getData(){
+        axios.get("/merchant/getProfile").then(e =>{
+           setData(e.data);
+       })
+    }
+    useEffect(() => {
+       getData()
+    }, [])
 
+    function handleEdit(){
+        console.log('ahaa')
+
+        const formData = new FormData();
+        for (const [key, value] of Object.entries(data)) {
+            formData.append(key,value)
+        }
+
+        axios.post('/merchant/submitProfile',formData).then(e=>{
+            toast.success('Data berhasil diperbaharui');
+            getData()
+        })
+        console.log('ehem')
+    }
+
+    function handleChange(data,value){
+        setData((e)=>{
+            return {
+                ...e,
+                [data]: value 
+            }
+        })
+    }
+  
     return (
         <>
             <section className="min-h-screen flex flex-col xl:flex-row">
                 <SideNavbarMerchant />
+                <ToastContainer position="top-right" />
                 <div className="py-10 md:py-20 flex flex-col md:flex-row w-full">
                     <div className="w-full md:w-3/5 xxl:w-1/2 px-4">
-                        <div className="flex flex-col xl:flex-row xl:items-center">
+                        <div className="flex flex-col xl:flex-row xl:items-center">                            
                             <h5 className="text-white text-sm text-right px-2">Hello, <br /><span className="font-medium text-red-600 text-base">{data.name}</span></h5>
                             {
                                 data.img_avatar ? (<img src={data.img_avatar} draggable={false} className="rounded-full w-4/5 xl:w-1/3 border-8 mb-4 xl:mb-0 xl:mr-4 border-red-600 mx-auto" alt={data.name} />) :
@@ -50,11 +87,15 @@ const profileEdit = ({ location }) => {
                             <h6 className="text-red-600 font-semibold text-lg">Edit Profile</h6>
                             <div className="flex flex-wrap w-full items-start my-2">
                                 <label htmlFor="name" className="w-full md:w-1/4 text-base text-gray-700">Display Name</label>
-                                <input type="text" placeholder="Your Display Name" className="w-full md:w-4/6 px-4 py-2 my-2 md:my-0 md:ml-4 border border-gray-300 rounded-lg" />
+                                <input type="text" value={data.name} onChange={(e)=>{
+                                    handleChange('name',e.target.value)
+                                }} placeholder="Your Display Name" className="w-full md:w-4/6 px-4 py-2 my-2 md:my-0 md:ml-4 border border-gray-300 rounded-lg" />
                             </div>
                             <div className="flex flex-wrap w-full items-start my-2">
                                 <label htmlFor="about" className="w-full md:w-1/4 text-base text-gray-700">About</label>
-                                <textarea placeholder="Describe Your Self" className="w-full md:w-4/6 px-4 py-2 h-32 my-2 md:my-0 md:ml-4 border border-gray-300 rounded-lg" />
+                                <textarea value={data.about} onChange={(e)=>{
+                                    handleChange('about',e.target.value)
+                                }} placeholder="Describe Your Self" className="w-full md:w-4/6 px-4 py-2 h-32 my-2 md:my-0 md:ml-4 border border-gray-300 rounded-lg" />
                             </div>
                             <div className="flex flex-wrap w-full items-center my-4">
                                 <label htmlFor="category" className="w-full md:w-1/4 text-base text-gray-700">Category</label>
@@ -73,15 +114,21 @@ const profileEdit = ({ location }) => {
                             </div>
                             <div className="flex flex-wrap w-full items-start my-2">
                                 <label htmlFor="name" className="w-full md:w-1/4 text-base text-gray-700">Facebook Page Link</label>
-                                <input type="text" placeholder="https://facebook.com" className="w-full md:w-4/6 px-4 py-2 my-2 md:my-0 md:ml-4 border border-gray-300 rounded-lg" />
+                                <input type="text" value={data.fb_url} onChange={(e)=>{
+                                    handleChange('fb_url',e.target.value)
+                                }} placeholder="https://facebook.com" className="w-full md:w-4/6 px-4 py-2 my-2 md:my-0 md:ml-4 border border-gray-300 rounded-lg" />
                             </div>
                             <div className="flex flex-wrap w-full items-start my-2">
                                 <label htmlFor="name" className="w-full md:w-1/4 text-base text-gray-700">Instagram Page Link</label>
-                                <input type="text" placeholder="https://instagram.com" className="w-full md:w-4/6 px-4 py-2 my-2 md:my-0 md:ml-4 border border-gray-300 rounded-lg" />
+                                <input type="text" value={data.ig_url} onChange={(e)=>{
+                                    handleChange('ig_url',e.target.value)
+                                }} placeholder="https://instagram.com" className="w-full md:w-4/6 px-4 py-2 my-2 md:my-0 md:ml-4 border border-gray-300 rounded-lg" />
                             </div>
                             <div className="flex flex-wrap w-full items-start my-2">
                                 <label htmlFor="name" className="w-full md:w-1/4 text-base text-gray-700">Tiktok Page Link</label>
-                                <input type="text" placeholder="https://tiktok.com" className="w-full md:w-4/6 px-4 py-2 my-2 md:my-0 md:ml-4 border border-gray-300 rounded-lg" />
+                                <input type="text" value={data.tiktok_url} onChange={(e)=>{
+                                    handleChange('tiktok_url',e.target.value)
+                                }} placeholder="https://tiktok.com" className="w-full md:w-4/6 px-4 py-2 my-2 md:my-0 md:ml-4 border border-gray-300 rounded-lg" />
                             </div>
                         </div>
                         <div className="flex flex-col pt-8 md:pt-0 px-4 mt-4 md:mt-8">
@@ -100,7 +147,7 @@ const profileEdit = ({ location }) => {
                             </div>
                             <div className="flex justify-end md:px-8 mt-4">
                                 <button className="w-1/3 px-4 py-2 rounded-3xl border border-red-600 text-red-600 mx-5 font-medium">Cancel</button>
-                                <button className="w-1/3 px-4 py-2 rounded-3xl bg-red-600 text-white font-medium">Save</button>
+                                <button onClick={handleEdit} className="w-1/3 px-4 py-2 rounded-3xl bg-red-600 text-white font-medium">Save</button>
                             </div>
                         </div>
                     </div>
@@ -110,4 +157,4 @@ const profileEdit = ({ location }) => {
     )
 }
 
-export default profileEdit;
+export default ProfileEdit;
