@@ -21,27 +21,6 @@ const Supports = () => {
         },
     ];
 
-    const tableBodySupport = [
-        {
-            ticketNumber: '#10111456101',
-            tittle: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod',
-            status: 'Open/Closed',
-            lastUpdated: "01/09/2020 (00:18)",
-        },
-        {
-            ticketNumber: '#10111456102',
-            tittle: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod',
-            status: 'Open/Closed',
-            lastUpdated: "01/09/2020 (00:18)",
-        },
-        {
-            ticketNumber: '#10111456103',
-            tittle: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod',
-            status: 'Open/Closed',
-            lastUpdated: "01/09/2020 (00:18)",
-        },
-
-    ]
 
     const [ticket, setTicket] = useState([])
 
@@ -61,7 +40,6 @@ const Supports = () => {
        });
     }, [])
 
-    console.log(ticket)
     return (
         <>
             <section className="min-h-screen flex flex-col xl:flex-row ">
@@ -73,7 +51,7 @@ const Supports = () => {
                         </Link>
                     </div>
                     <div className="flex pt-10 overflow-x-auto">
-                        <Table itemHead={tableHeadTickets} itemBodySupport={tableBodySupport} />
+                        <Table itemHead={tableHeadTickets} itemBodySupport={ticket} />
                     </div>
                 </div>
 
