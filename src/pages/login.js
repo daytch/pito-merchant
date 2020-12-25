@@ -140,7 +140,7 @@ const Login = ({ history }) => {
                     <div className="flex flex-col mt-4 xl:mt-2 xxl:mt-8">
                         <h6 className="md:text-lg font-light mx-auto text-gray-700 px-4">Not a member yet?
                         </h6>
-                        <h6 className="md:text-lg font-light mx-auto text-gray-700 px-4"><span className="font-medium text-red-600">Create Accout</span> Via Download Pito App
+                        <h6 className="md:text-lg font-light mx-auto text-gray-700 px-4"><span className="font-medium text-red-600">Create Account</span> Via Download Pito App
                         </h6>
                         <div className="flex px-4 mx-auto">
                             <GoogleplaySign className="w-40 mr-4" />

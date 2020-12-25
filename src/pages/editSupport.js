@@ -3,6 +3,7 @@ import Sidebar from 'components/SideNavbarMerchant'
 import Card from 'components/card'
 
 const EditSupport = () => {
+
     const tableBodySupport = [
         {
             name: 'Admin1',
@@ -41,6 +42,7 @@ const EditSupport = () => {
             image: "https://web2tailwind.com/assets/docs/master/image-01.jpg"
         },
     ]
+    
     return (
         <>
             <section className="min-h-screen flex flex-col xl:flex-row ">
