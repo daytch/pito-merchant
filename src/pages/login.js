@@ -29,7 +29,7 @@ import 'react-toastify/dist/ReactToastify.css';
 const Login = ({ history }) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [token, setToken] = useState(localStorage.getItem('PITO:merchant-token'));
+    const [token] = useState(localStorage.getItem('PITO:merchant-token'));
 
     //state error handler
     const [errors, seterrors] = useState(null)

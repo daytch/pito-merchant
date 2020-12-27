@@ -13,7 +13,7 @@ import withReactContent from 'sweetalert2-react-content'
 
 const MySwal = withReactContent(Swal)
 
-const Create = ({id,data}) => {
+const Create = ({ id, data }) => {
     console.log(data)
     const [isLoading, setLoading] = useState(true)
     const [mypic, setMypic] = useState('')
@@ -29,7 +29,7 @@ const Create = ({id,data}) => {
     const [categoryid, setCategoryid] = useState({})
 
     useEffect(() => {
-        
+
         livestream.getCategory().then((res) => {
             const ListCategory = res.data.map((i) => {
                 return { "id": i.id, "value": i.text }
@@ -79,11 +79,12 @@ const Create = ({id,data}) => {
         let ids = Object.values(categoryid);
         let endDate = startDate + " " + endTime;
         let start = startDate + " " + startTime;
-        
-    let cat = []
-for (const [key, value] of Object.entries(categoryid)) {
-    cat.push(value)
-}
+
+        let cat = []
+        for (const [key, value] of Object.entries(categoryid)) {
+            console.log(key);
+            cat.push(value)
+        }
 
 
 
@@ -93,11 +94,11 @@ for (const [key, value] of Object.entries(categoryid)) {
             return;
         }
 
-        if(new Set(cat).size !== cat.length ){
-    setLoading(false)
+        if (new Set(cat).size !== cat.length) {
+            setLoading(false)
             MySwal.fire('Validation!', 'Cannot pick same categories.', 'warning');
             return;
-}
+        }
 
         if (!startDate) {
             setLoading(false)
@@ -156,8 +157,8 @@ for (const [key, value] of Object.entries(categoryid)) {
     }
 
     useEffect(() => {
-        axios.get('/merchant/getVideosDetail?videoId='+{id}).then(e=>{
-           
+        axios.get('/merchant/getVideosDetail?videoId=' + { id }).then(e => {
+
         })
     }, [])
 
