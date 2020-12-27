@@ -54,7 +54,7 @@ const ProfileEdit = () => {
                 <div className="py-10 md:py-20 flex flex-col md:flex-row w-full">
                     <div className="w-full md:w-3/5 xxl:w-1/2 px-4">
                         <div className="flex flex-col xl:flex-row xl:items-center">                            
-                            <h5 className="text-white text-sm text-right px-2">Hello, <br /><span className="font-medium text-red-600 text-base">{data.name}</span></h5>
+                       
                             {
                                 data.img_avatar ? (<img src={data.img_avatar} draggable={false} className="rounded-full w-4/5 xl:w-1/3 border-8 mb-4 xl:mb-0 xl:mr-4 border-red-600 mx-auto" alt={data.name} />) :
                                     (<Avatar name="Nurul Hidayat" className="mx-auto" round={true} size="125px" />)

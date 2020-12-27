@@ -12,7 +12,7 @@ import { ReactComponent as LikeIcon } from 'assets/images/thumbs-like-icon.svg'
 import { ReactComponent as CalendarIcon } from 'assets/images/calendar-icon.svg'
 import iconLive from 'assets/images/live-icon.png'
 
-const FullWidth = ({ linkVideo, actionLinks, viewsElement, actions, dataVideos, socmedVertical, socmedCustom, liveRecord, title, name, subtitle, caption, category, buttons }) => {
+const FullWidth = ({ linkVideo, actionLinks, viewsElement, actions, dataVideos, socmedVertical, socmedCustom, liveRecord, title, name, subtitle, caption, ig,tiktok,fb, category, buttons }) => {
     return (
         <>
             {
@@ -45,7 +45,7 @@ const FullWidth = ({ linkVideo, actionLinks, viewsElement, actions, dataVideos, 
                                     socmedVertical && <div className="share-icon-live flex-col px-4 xxl:px-8">
                                         <FbIcon className="mb-4" />
                                         <IgIcon className="mb-4" />
-                                        <TtIcon className="mb-4" />
+                                        <TtIcon className="mb-4" />a
                                         <ShareIconMobile className="flex md:hidden" />
                                     </div>
                                 }
@@ -125,17 +125,23 @@ const FullWidth = ({ linkVideo, actionLinks, viewsElement, actions, dataVideos, 
                                         {
                                             socmedCustom && (
                                                 <div className="merchant-dashboard my-2 flex flex-wrap">
+                                                    <a href={fb}>
                                                     <FbIcon className="mr-4" />
-                                                    <IgIcon className="mr-4" />
-                                                    <TtIcon className="mr-4" />
-                                                    <ShareIconMobile className="mr-4" />
+                                                    </a>
+                                                    <a href={ig}><IgIcon className="mr-4" /></a>
+                                                    <a href={tiktok}><TtIcon className="mr-4" /></a>
+                                                    <a href=""><ShareIconMobile className="mr-4" /></a>
+                                                    
                                                 </div>
                                             )
                                         }
-                                        {
+                                          {
                                             actions && (
                                                 <div className="mt-4 flex items-center">
-                                                    <Link to={actionLinks} className="font-semibold text-base md:text-lg text-red-600 mr-4">Edit</Link>
+                                                    <Link to={{
+                                                        pathname: actionLinks,
+                                                        query: { linkVideo, actionLinks, viewsElement, actions, dataVideos, socmedVertical, socmedCustom, liveRecord, title, name, subtitle, caption, ig,tiktok,fb, category, buttons }
+                                                    }} className="font-semibold text-base md:text-lg text-red-600 mr-4">Edit</Link>
                                                     <Link className="font-semibold text-base md:text-lg text-red-600 mr-4">Delete</Link>
                                                 </div>
                                             )

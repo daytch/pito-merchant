@@ -6,12 +6,12 @@ const Card = ({ ListData }) => {
     console.log(ListData);
     return (
         <>
-            <div className="w-2/3 flex items-center mx-auto">
+            <div className="w-2/3 mt-3 flex items-center mx-auto">
                 <div className="p-6 border rounded-t-lg bg-gray-100">
                     {
                         ListData && ListData.map((item, index) => {
                             return (<div key={index}>
-                                { index % 2 !== 0 ?
+                                { item.name === localStorage.getItem('PITO:name') ?
                                     <div className="w-full flex my-4">
                                         <div className="flex-1">
                                             <h2 className="text-lg font-medium text-gray-800 my-0">{item.name}</h2>

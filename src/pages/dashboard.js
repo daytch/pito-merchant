@@ -41,7 +41,7 @@ const Dashboard = () => {
                                         const videos = [{ id: item.id, thumbnail: item.img_thumbnail, live: true, views: 260.000, shared: 989, date: item.start_time, title: item.title }]
                                         return (
                                             <div key={index} className="flex flex-wrap w-full xl:w-1/2 mt-4">
-                                                <FullWidth dataVideos={videos} title={item.title} caption={item.description} category={item.categories} socmedCustom={true} />
+                                                <FullWidth actionLinks={'/dashboard/edit/'+item.id} dataVideos={videos} title={item.title} caption={item.description} category={item.categories} ig={item.instagram_url} fb={item.facebook_url} tiktok={item.tiktok_url} socmedCustom={true} />
                                             </div>
                                         )
                                     })
@@ -56,7 +56,7 @@ const Dashboard = () => {
                                         const videos = [{ id: item.id, thumbnail: item.img_thumbnail, live: false, views: 260.000, shared: 989, date: item.start_time, title: item.title }]
                                         return (
                                             <div key={index} className="flex flex-wrap w-full xl:w-1/2 mt-4">
-                                                <FullWidth actionLinks="/dashboard/edit" dataVideos={videos} title={item.title} actions={true} caption={item.description} category={item.categories} socmedCustom={true} />
+                                                <FullWidth actionLinks={'/dashboard/edit/'+item.id} dataVideos={videos} title={item.title} actions={true} caption={item.description} category={item.categories} ig={item.instagram_url} fb={item.facebook_url} tiktok={item.tiktok_url} socmedCustom={true} />
                                             </div>
                                         )
                                     })
@@ -68,10 +68,12 @@ const Dashboard = () => {
                             <div className="flex flex-wrap">
                                 {
                                     previousVideos.map((item, index) => {
+                                      
                                         const videos = [{ id: item.id, thumbnail: item.img_thumbnail, live: false, views: 260.000, shared: 989, date: item.start_time, title: item.title }]
+                                   
                                         return (
                                             <div key={index} className="flex flex-wrap w-full xl:w-1/2 mt-4">
-                                                <FullWidth dataVideos={videos} title={item.title} viewsElement={true} actions={false} caption={item.description} category={item.categories} socmedCustom={true} />
+                                                <FullWidth actionLinks={'/dashboard/edit/'+item.id} dataVideos={videos} title={item.title} viewsElement={true} actions={false} ig={item.instagram_url} fb={item.facebook_url} tiktok={item.tiktok_url} caption={item.description} category={item.categories} socmedCustom={true} />
                                             </div>
                                         )
                                     })

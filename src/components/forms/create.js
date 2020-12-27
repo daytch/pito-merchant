@@ -5,7 +5,7 @@ import { ReactComponent as TtIcon } from 'assets/images/tiktok-icon.svg'
 import { ReactComponent as UploadIcon } from 'assets/images/upload-icon.svg'
 import Dropdown from 'components/forms/dropdown'
 import Spinner from 'components/spinner'
-
+import axios from 'configs/axios'
 import livestream from 'api/livestream';
 import 'react-toastify/dist/ReactToastify.css';
 import Swal from 'sweetalert2'
@@ -13,25 +13,24 @@ import withReactContent from 'sweetalert2-react-content'
 
 const MySwal = withReactContent(Swal)
 
-const Create = () => {
-
+const Create = ({id,data}) => {
+    console.log(data)
     const [isLoading, setLoading] = useState(true)
     const [mypic, setMypic] = useState('')
     const [startDate, setStartDate] = useState('')
     const [startTime, setStartTime] = useState('')
     const [endTime, setEndTime] = useState('')
-    const [title, setTitle] = useState('')
-    const [desc, setDesc] = useState('')
-    const [fb_url, setFburl] = useState('')
-    const [tiktok_url, setTiktokurl] = useState('')
-    const [ig_url, setIgurl] = useState('')
-    const [category, setCategory] = useState([])
+    const [title, setTitle] = useState(data.title)
+    const [desc, setDesc] = useState(data.caption)
+    const [fb_url, setFburl] = useState(data.fb)
+    const [tiktok_url, setTiktokurl] = useState(data.tiktok)
+    const [ig_url, setIgurl] = useState(data.tiktok)
+    const [category, setCategory] = useState(data.category)
     const [categoryid, setCategoryid] = useState({})
 
     useEffect(() => {
         
         livestream.getCategory().then((res) => {
-            console.log(res);
             const ListCategory = res.data.map((i) => {
                 return { "id": i.id, "value": i.text }
             })
@@ -73,7 +72,6 @@ const Create = () => {
 
     //state error handler
     const [errors, seterrors] = useState(null)
-
     const submit = (e) => {
         e.preventDefault();
         setLoading(true)
@@ -82,11 +80,24 @@ const Create = () => {
         let endDate = startDate + " " + endTime;
         let start = startDate + " " + startTime;
         
+    let cat = []
+for (const [key, value] of Object.entries(categoryid)) {
+    cat.push(value)
+}
+
+
+
         if (!title) {
             setLoading(false)
             MySwal.fire('Validation!', 'Title cannot be empty.', 'warning');
             return;
         }
+
+        if(new Set(cat).size !== cat.length ){
+    setLoading(false)
+            MySwal.fire('Validation!', 'Cannot pick same categories.', 'warning');
+            return;
+}
 
         if (!startDate) {
             setLoading(false)
@@ -99,6 +110,7 @@ const Create = () => {
             MySwal.fire('Validation!', 'Start Time cannot be empty.', 'warning');
             return;
         }
+
 
         if (!endTime) {
             setLoading(false)
@@ -142,6 +154,12 @@ const Create = () => {
             console.error(errors)
         })
     }
+
+    useEffect(() => {
+        axios.get('/merchant/getVideosDetail?videoId='+{id}).then(e=>{
+           
+        })
+    }, [])
 
     return (
         <>

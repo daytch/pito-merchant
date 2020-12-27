@@ -33,7 +33,7 @@ function App() {
             <>
               <PrivateRoute path={`${url}/`} component={Dashboard} exact />
               <PrivateRoute path={`${url}/create`} component={CreateDashboard} />
-              <PrivateRoute path={`${url}/edit`} component={EditDashboard} />
+              <PrivateRoute path={`${url}/edit/:id`} component={EditDashboard} />
             </>
           )} />
         <Route path="/profile"
