@@ -19,10 +19,10 @@ instance.interceptors.response.use((response) => response.data, error => {
     if (status === UNAUTHORIZED) {
         if (localStorage.getItem('PITO:token')) {
             localStorage.removeItem('PITO:token')
-            window.location.href = "/login"
+            window.location.href = "/"
         } else {
             localStorage.removeItem('PITO:merchant-token')
-            window.location.href = "/login"
+            window.location.href = "/"
         }
     } else {
         MySwal.fire('Error!', error?.response?.data?.message, 'error');
