@@ -14,21 +14,20 @@ import moment from 'moment'
 
 const MySwal = withReactContent(Swal)
 
-const Create = ({id,data}) => {
+const New = ({id,data}) => {
     const [isLoading, setLoading] = useState(true)
     const [mypic, setMypic] = useState('')
     const [startDate, setStartDate] = useState('')
-    const [startTime, setStartTime] = useState(moment(data.start_time).format("hh:mm"))
+    const [startTime, setStartTime] = useState('')
     const [endTime, setEndTime] = useState('')
-    const [title, setTitle] = useState(data.title)
-    const [desc, setDesc] = useState(data.caption)
-    const [fb_url, setFburl] = useState(data.fb)
-    const [tiktok_url, setTiktokurl] = useState(data.tiktok)
-    const [ig_url, setIgurl] = useState(data.tiktok)
-    const [category, setCategory] = useState(data.category)
+    const [title, setTitle] = useState('')
+    const [desc, setDesc] = useState('')
+    const [fb_url, setFburl] = useState('')
+    const [tiktok_url, setTiktokurl] = useState('')
+    const [ig_url, setIgurl] = useState('')
+    const [category, setCategory] = useState([])
     const [categoryid, setCategoryid] = useState({})
-    
-    console.log(data.category)
+
     useEffect(() => {
         
         livestream.getCategory().then((res) => {
@@ -242,4 +241,4 @@ const ImageThumb = ({ image }) => {
 };
 
 
-export default Create;
+export default New;

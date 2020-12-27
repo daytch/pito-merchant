@@ -1,11 +1,13 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import SideNavbarMerchant from 'components/SideNavbarMerchant'
 import Notification from 'components/notification'
 import axios from 'configs/axios'
 
 const Notif = () => {
+    const [data, setData] = useState([])
     useEffect(() => {
         axios.get('/user/getNotification?page=1').then(e=>{
+            setData(e.data)
             console.log(e)
         })
     }, [])
@@ -19,10 +21,11 @@ const Notif = () => {
                         <h6 className="text-red-600 mx-4 font-bold xl:ext-lg border-b-2 border-red-600">Marsk All as Read</h6>
                     </div>
                     <div className="mt-4">
-                        <Notification />
-                        <Notification />
-                        <Notification />
-                        <Notification />
+                        {
+                            data.map(e=>{
+                               return <Notification data={e} />
+                            })
+                        }
                     </div>
 
                 </div>
