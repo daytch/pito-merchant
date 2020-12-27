@@ -4,7 +4,7 @@ import withReactContent from 'sweetalert2-react-content';
 
 const MySwal = withReactContent(Swal)
 const instance = axios.create({
-    baseURL: 'https://pito-api.herokuapp.com/'
+    baseURL: 'https://api.pito.com.sg/'//'https://pito-api.herokuapp.com/'
 })
 const UNAUTHORIZED = 401;
 

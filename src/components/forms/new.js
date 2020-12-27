@@ -156,10 +156,14 @@ for (const [key, value] of Object.entries(categoryid)) {
     }
 
     useEffect(() => {
-        axios.get('/merchant/getVideosDetail?videoId='+{id}).then(e=>{
-           
-        })
+        debugger;
+        if (id) {
+            livestream.getLivestreamDetail(id).then((res) => {
+
+            })
+        }
     }, [])
+
 
     return (
         <>
