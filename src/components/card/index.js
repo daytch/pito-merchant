@@ -7,7 +7,7 @@ const Card = ({ ListData }) => {
     return (
         <>
             <div className="w-2/3 mt-3 flex items-center mx-auto">
-                <div className="p-6 border rounded-t-lg bg-gray-100">
+                <div className="chat-content p-6 border rounded-t-lg bg-gray-100">
                     {
                         ListData && ListData.map((item, index) => {
                             return (<div key={index}>

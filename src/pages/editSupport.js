@@ -48,7 +48,7 @@ const EditSupport = (props) => {
         <>
             <section className="min-h-screen flex flex-col xl:flex-row ">
                 <Sidebar />
-                <div className="">
+                <div className="chat-history">
                     <Card ListData={data} />
                     <div className="ml-16">
                     <div className="flex flex-wrap items-start mt-4">

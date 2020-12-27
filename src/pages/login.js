@@ -29,6 +29,7 @@ import 'react-toastify/dist/ReactToastify.css';
 const Login = ({ history }) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [token] = useState(localStorage.getItem('PITO:merchant-token'));
 
     //state error handler
     const [errors, seterrors] = useState(null)
@@ -43,13 +44,13 @@ const Login = ({ history }) => {
     }
 
     //Check tokens if ready
-    const {token} = useState(localStorage.getItem('PITO:merchant-token'));
     useEffect(() => {
+        debugger;
         if (token) {
-            window.history.push("/dashboard")
+            history.push("/dashboard")
         }
         // eslint-disable-next-line
-    }, [])
+    }, [token])
 
     //on submit Login
     const submit = (e) => {
@@ -61,7 +62,7 @@ const Login = ({ history }) => {
             password
         }).then((res) => {
             setAuthorizationHeader(res.token);
-            
+
             localStorage.setItem('PITO:merchant-token', res.token)
             localStorage.setItem('PITO:merchant-img', res.image)
             localStorage.setItem('PITO:merchant-name', res.name)
@@ -129,7 +130,7 @@ const Login = ({ history }) => {
                                 onFailure={responseGoogle}
                                 render={renderProps => (
                                     <button onClick={renderProps.onClick}><GoogleIcon /></button>
-                                  )}
+                                )}
                             />
 
                             {/* <FbIcon className="mr-4" /> 

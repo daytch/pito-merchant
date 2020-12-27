@@ -5,7 +5,7 @@ import { ReactComponent as FbIcon } from 'assets/images/fb-icon-blue.svg'
 import { ReactComponent as EmailIcon } from 'assets/images/email-icon.svg'
 import { ReactComponent as GoogleIcon } from 'assets/images/google-icon-colorful.svg'
 import Avatar from 'react-avatar';
-import users from 'api/users'
+// import users from 'api/users'
 import axios from 'configs/axios'
 import { useState } from 'react'
 import { toast, ToastContainer } from 'react-toastify'
