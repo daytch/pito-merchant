@@ -5,16 +5,16 @@ import { ReactComponent as TtIcon } from 'assets/images/tiktok-icon.svg'
 import { ReactComponent as UploadIcon } from 'assets/images/upload-icon.svg'
 import Dropdown from 'components/forms/dropdown'
 import Spinner from 'components/spinner'
-import axios from 'configs/axios'
+// import axios from 'configs/axios'
 import livestream from 'api/livestream';
 import 'react-toastify/dist/ReactToastify.css';
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
-import moment from 'moment'
+// import moment from 'moment'
 
 const MySwal = withReactContent(Swal)
 
-const New = ({id,data}) => {
+const New = ({ id, data }) => {
     const [isLoading, setLoading] = useState(true)
     const [mypic, setMypic] = useState('')
     const [startDate, setStartDate] = useState('')
@@ -29,7 +29,7 @@ const New = ({id,data}) => {
     const [categoryid, setCategoryid] = useState({})
 
     useEffect(() => {
-        
+
         livestream.getCategory().then((res) => {
             const ListCategory = res.data.map((i) => {
                 return { "id": i.id, "value": i.text }
@@ -79,11 +79,11 @@ const New = ({id,data}) => {
         let ids = Object.values(categoryid);
         let endDate = startDate + " " + endTime;
         let start = startDate + " " + startTime;
-        
-    let cat = []
-for (const [key, value] of Object.entries(categoryid)) {
-    cat.push(value)
-}
+
+        let cat = []
+        for (const [value] of Object.entries(categoryid)) {
+            cat.push(value)
+        }
 
 
 
@@ -93,11 +93,11 @@ for (const [key, value] of Object.entries(categoryid)) {
             return;
         }
 
-        if(new Set(cat).size !== cat.length ){
-    setLoading(false)
+        if (new Set(cat).size !== cat.length) {
+            setLoading(false)
             MySwal.fire('Validation!', 'Cannot pick same categories.', 'warning');
             return;
-}
+        }
 
         if (!startDate) {
             setLoading(false)
@@ -143,7 +143,6 @@ for (const [key, value] of Object.entries(categoryid)) {
 
         livestream.create(formData).then((res) => {
             setLoading(false)
-            console.log(res);
             MySwal.fire({
                 icon: 'success',
                 title: 'Success',
@@ -155,14 +154,14 @@ for (const [key, value] of Object.entries(categoryid)) {
         })
     }
 
-    useEffect(() => {
-        debugger;
-        if (id) {
-            livestream.getLivestreamDetail(id).then((res) => {
+    // useEffect(() => {
+    //     
+    //     if (id) {
+    //         livestream.getLivestreamDetail(id).then((res) => {
 
-            })
-        }
-    }, [])
+    //         })
+    //     }
+    // }, [])
 
 
     return (

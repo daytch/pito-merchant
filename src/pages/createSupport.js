@@ -68,7 +68,6 @@ const CreateSupport = () => {
 
         support.create(formData).then((res) => {
             setLoading(false)
-            console.log(res);
             MySwal.fire({
                 icon: 'success',
                 title: 'Success',

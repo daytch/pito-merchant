@@ -26,7 +26,6 @@ const Supports = () => {
 
     useEffect(() => {
        axios.get('/merchant/listTicket').then(e=>{
-           console.log(e.data)
            const a = e.data.map(e=>{
                return {
                    ticketNumber: e.id,

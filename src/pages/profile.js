@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import SideNavbarMerchant from 'components/SideNavbarMerchant'
-// import userAvatarDummy from 'assets/images/user-avatar.jpg'
 import { ReactComponent as FbIcon } from 'assets/images/fb-icon.svg'
 import { ReactComponent as IgIcon } from 'assets/images/ig-icon.svg'
 import { ReactComponent as TtIcon } from 'assets/images/tiktok-icon.svg'
@@ -24,11 +23,14 @@ const Profile = () => {
     const [name, setName] = useState();
     const [isLoading, setLoading] = useState(true)
     const [data, setData] = useState();
+    const [fav, setFav] = useState();
+    const [share, setShare] = useState();
+    const [view, setView] = useState();
 
     useEffect(() => {
         User.getProfile().then((res) => {
             let data = res.data;
-            console.log(data)
+
             let dataUser = {
                 "email": data.email,
                 "name": data.name,
@@ -49,23 +51,24 @@ const Profile = () => {
             setAbout(data.about);
             setName(data.name);
             setVideos(data.history_videos);
+            setFav(data.total_fav);
+            setShare(data.total_shared);
+            setView(data.total_view);
             setLoading(false);
         });
     }, [])
 
     function changeDateid(e) {
+
         switch (e.value) {
             case "Date":
                 setVideos(videos.sort((a, b) => (moment(a.start_time).isAfter(b.start_time)) ? 1 : -1));
                 break;
             case "Views":
-                setVideos(videos.sort((a, b) => (a.likes > b.likes) ? 1 : -1));
+                setVideos(videos.sort((a, b) => (a.views > b.views) ? 1 : -1));
                 break;
             case "Favourites":
-                setVideos(videos.sort((a, b) => (a.id > b.id) ? 1 : -1));
-                break;
-            case "Shares":
-                setVideos(videos.sort((a, b) => (a.id > b.id) ? 1 : -1));
+                setVideos(videos.sort((a, b) => (a.likes > b.likes) ? 1 : -1));
                 break;
             default:
                 setVideos(videos.sort((a, b) => (a.id > b.id) ? 1 : -1));
@@ -86,10 +89,10 @@ const Profile = () => {
             id: 3,
             value: 'Favourites'
         },
-        {
-            id: 4,
-            value: 'Shares'
-        }
+        // {
+        //     id: 4,
+        //     value: 'Shares'
+        // }
     ]
     return (
         <Spinner isLoading={isLoading} className="min-h-screen">
@@ -109,23 +112,23 @@ const Profile = () => {
                                     category && <div className="flex flex-wrap text-sm font-medium text-gray-700 items-center mt-2">
                                         {
                                             category.map((item, index) => {
-                                                return index < 2 ? (<><h6>{item.name}</h6><div className="rounded-full w-2 h-2 bg-gray-700 mx-2"></div></>)
-                                                    : (<><h6>{item.name}</h6></>)
+                                                return (<span key={index}><div className="rounded-full inline-block w-2 h-2 bg-gray-700 mx-2"></div><h6 className="inline-block">{item.name}</h6></span>)
+                                                // : (<span key={index}><div className="rounded-full w-2 h-2 bg-gray-700 mx-2"></div><h6>{item}</h6></span>)
                                             })
                                         }
                                     </div>
                                 }
                                 <div className="flex flex-wrap mt-4 md:mt-2">
                                     <div className="flex flex-col mr-8 text-center">
-                                        <h4 className="font-bold text-2xl text-red-600">53.240</h4>
+                                        <h4 className="font-bold text-2xl text-red-600">{view}</h4>
                                         <p className="font-light text-sm text-gray-300">Views</p>
                                     </div>
                                     <div className="flex flex-col mr-8 text-center">
-                                        <h4 className="font-bold text-2xl text-red-600">2.300</h4>
+                                        <h4 className="font-bold text-2xl text-red-600">{fav}</h4>
                                         <p className="font-light text-sm text-gray-300">Subscriber</p>
                                     </div>
                                     <div className="flex flex-col text-center">
-                                        <h4 className="font-bold text-2xl text-red-600">489</h4>
+                                        <h4 className="font-bold text-2xl text-red-600">{share}</h4>
                                         <p className="font-light text-sm text-gray-300">Shared</p>
                                     </div>
                                 </div>
@@ -134,9 +137,9 @@ const Profile = () => {
                                 })
                             } */}
                             <div className="w-1/5 hidden xl:flex flex-col">
-                                <Link to={{ pathname: fb }} target="_blank"><FbIcon className="mb-4" /></Link>
-                                <Link to={{ pathname: ig }} target="_blank"><IgIcon className="mb-4" /></Link>
-                                <Link to={{ pathname: tiktok }} target="_blank"><TtIcon className="mb-4" /></Link>
+                                {fb && <Link to={{ pathname: fb }} target="_blank"><FbIcon className="mb-4" /></Link>}
+                                {ig && <Link to={{ pathname: ig }} target="_blank"><IgIcon className="mb-4" /></Link>}
+                                {tiktok && <Link to={{ pathname: tiktok }} target="_blank"><TtIcon className="mb-4" /></Link>}
                             </div>
                         </div>
                         <div className="flex justify-end pt-8">

@@ -45,7 +45,7 @@ const Login = ({ history }) => {
 
     //Check tokens if ready
     useEffect(() => {
-        debugger;
+
         if (token) {
             history.push("/dashboard")
         }
@@ -66,6 +66,7 @@ const Login = ({ history }) => {
             localStorage.setItem('PITO:merchant-token', res.token)
             localStorage.setItem('PITO:merchant-img', res.image)
             localStorage.setItem('PITO:merchant-name', res.name)
+            localStorage.setItem('PITO:login', 'email')
             toast.success("you have successfully logged in !")
             history.push("/dashboard")
             // setTimeout(() => {
@@ -81,10 +82,12 @@ const Login = ({ history }) => {
         users.loginSosmed({ email }).then((res) => {
             setAuthorizationHeader(res.token);
             localStorage.setItem('PITO:merchant-token', res.token)
+            localStorage.setItem('PITO:login', 'google')
             toast.success("you have successfully logged in !")
-            setTimeout(() => {
-                history.push("/dashboard")
-            }, 500);
+            history.push("/dashboard")
+            // setTimeout(() => {
+            //     history.push("/dashboard")
+            // }, 500);
         }).catch(err => {
             seterrors(err?.response?.data?.message)
         })
@@ -129,7 +132,7 @@ const Login = ({ history }) => {
                                 onSuccess={responseGoogle}
                                 onFailure={responseGoogle}
                                 render={renderProps => (
-                                    <button onClick={renderProps.onClick}><GoogleIcon /></button>
+                                    <button onClick={() => renderProps.onClick}><GoogleIcon /></button>
                                 )}
                             />
 

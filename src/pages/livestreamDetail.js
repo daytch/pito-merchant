@@ -27,7 +27,9 @@ const LivestreamDetail = () => {
     const [views, setViews] = useState("")
     const [thumbnail, setThumbnail] = useState("")
     const { id } = useParams();
-
+    const divStyle = {
+        marginLeft: "-8vw !important",
+    };
     useEffect(() => {
         livestream.getLivestreamDetail(id).then((res) => {
             let data = res.data;
@@ -40,9 +42,12 @@ const LivestreamDetail = () => {
             setStartDate(stDate);
             setStartTime(stTime);
             setEndTime(enTime);
-            setCategory1(data.categories[0].name);
-            setCategory2(data.categories[1].name);
-            setCategory3(data.categories[2].name);
+            let cat1 = data.categories[0] ? data.categories[0].name : "Category";
+            let cat2 = data.categories[1] ? data.categories[1].name : "Category";
+            let cat3 = data.categories[2] ? data.categories[2].name : "Category";
+            setCategory1(cat1);
+            setCategory2(cat2);
+            setCategory3(cat3);
             setFb(data.fb_url);
             setIg(data.ig_url);
             setTiktok(data.tiktok_url);
@@ -68,7 +73,7 @@ const LivestreamDetail = () => {
                     <div className="mt-0 md:mt-10">
                         <div className="item relative w-full md:w-1/2 mx-auto">
                             <figure className="item-image-live-detail">
-                                <PlayIcon className="icon" />
+                                <PlayIcon className="icon" style={divStyle} />
                                 <img src={thumbnail} onError={(e) => { e.target.onerror = null; e.target.src = "https://alppetro.co.id/dist/assets/images/default.jpg" }} alt={title} className="thumbnail-live-detail" width={580} />
                             </figure>
 

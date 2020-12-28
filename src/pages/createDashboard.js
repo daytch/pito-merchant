@@ -1,6 +1,6 @@
 import React from 'react'
 import SideNavbarMerchant from 'components/SideNavbarMerchant'
-import Create from 'components/forms/create'
+// import Create from 'components/forms/create'
 import New from 'components/forms/new'
 
 const CreateDashboard = () => {

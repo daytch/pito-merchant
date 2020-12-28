@@ -3,7 +3,6 @@ import moment from 'moment'
 import Avatar from 'react-avatar';
 
 const Card = ({ ListData }) => {
-    console.log(ListData);
     return (
         <>
             <div className="w-2/3 mt-3 flex items-center mx-auto">

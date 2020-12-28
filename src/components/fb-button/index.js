@@ -62,6 +62,7 @@ class FacebookLoginButton extends Component {
             users.loginSosmed({ email }).then((res) => {
                 setAuthorizationHeader(res.token);
                 localStorage.setItem('PITO:merchant-token', res.token)
+                localStorage.setItem('PITO:login', 'facebook')
                 window.history.push("/dashboard")
             }).catch(err => {
                 console.error(err);

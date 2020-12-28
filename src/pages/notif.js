@@ -8,7 +8,6 @@ const Notif = () => {
     useEffect(() => {
         axios.get('/user/getNotification?page=1').then(e=>{
             setData(e.data)
-            console.log(e)
         })
     }, [])
     return (

@@ -27,7 +27,6 @@ const Create = ({ id, data }) => {
     const [category, setCategory] = useState(data.category)
     const [categoryid, setCategoryid] = useState({})
 
-    console.log(data.category)
     useEffect(() => {
 
         livestream.getCategory().then((res) => {
@@ -81,12 +80,9 @@ const Create = ({ id, data }) => {
         let start = startDate + " " + startTime;
 
         let cat = []
-        for (const [key, value] of Object.entries(categoryid)) {
-            console.log(key);
+        for (const [value] of Object.entries(categoryid)) {
             cat.push(value)
         }
-
-
 
         if (!title) {
             setLoading(false)
@@ -144,7 +140,6 @@ const Create = ({ id, data }) => {
 
         livestream.create(formData).then((res) => {
             setLoading(false)
-            console.log(res);
             MySwal.fire({
                 icon: 'success',
                 title: 'Success',
@@ -156,14 +151,14 @@ const Create = ({ id, data }) => {
         })
     }
 
-    useEffect(() => {
-        debugger;
-        if (id) {
-            livestream.getLivestreamDetail(id).then((res) => {
+    // useEffect(() => {
 
-            })
-        }
-    }, [])
+    //     if (id) {
+    //         livestream.getLivestreamDetail(id).then((res) => {
+
+    //         })
+    //     }
+    // }, [])
 
     return (
         <>

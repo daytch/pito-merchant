@@ -4,12 +4,12 @@ import withReactContent from 'sweetalert2-react-content';
  
 const MySwal = withReactContent(Swal)
 const instance = axios.create({
-    baseURL: 'https://pito-api.herokuapp.com/'
+    baseURL: 'https://api.pito.com.sg/'
 })
 const UNAUTHORIZED = 401;
 
 instance.interceptors.request.use(function (config) {
-    let token = (localStorage.getItem('PITO:token')) ? localStorage.getItem('PITO:token') : localStorage.getItem('PITO:merchant-token');
+    let token = localStorage.getItem('PITO:merchant-token');
     config.headers.common["x-access-token"] = token
 
     return config;
@@ -17,10 +17,7 @@ instance.interceptors.request.use(function (config) {
 instance.interceptors.response.use((response) => response.data, error => {
     const { status } = error.response;
     if (status === UNAUTHORIZED) {
-        if (localStorage.getItem('PITO:token')) {
-            localStorage.removeItem('PITO:token')
-            window.location.href = "/"
-        } else {
+        if (localStorage.getItem('PITO:merchant-token')) {
             localStorage.removeItem('PITO:merchant-token')
             window.location.href = "/"
         }
