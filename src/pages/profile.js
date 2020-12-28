@@ -28,6 +28,7 @@ const Profile = () => {
     useEffect(() => {
         User.getProfile().then((res) => {
             let data = res.data;
+            console.log(data)
             let dataUser = {
                 "email": data.email,
                 "name": data.name,
@@ -108,8 +109,8 @@ const Profile = () => {
                                     category && <div className="flex flex-wrap text-sm font-medium text-gray-700 items-center mt-2">
                                         {
                                             category.map((item, index) => {
-                                                return index < 2 ? (<><h6>{item}</h6><div className="rounded-full w-2 h-2 bg-gray-700 mx-2"></div></>)
-                                                    : (<><h6>{item}</h6></>)
+                                                return index < 2 ? (<><h6>{item.name}</h6><div className="rounded-full w-2 h-2 bg-gray-700 mx-2"></div></>)
+                                                    : (<><h6>{item.name}</h6></>)
                                             })
                                         }
                                     </div>
