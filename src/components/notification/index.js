@@ -5,9 +5,9 @@ import moment from 'moment'
 const index = ({data}) => {
     return (
         <div className="flex justify-center items-center w-full md:px-4 py-4 border border-gray-100 bg-pink-500">
-            {/* <div className="notif-icon mx-4 md:mx-0">
+            <div className="notif-icon mx-4 md:mx-0">
                 <CloseNotif className="mx-auto" />
-            </div> */}
+            </div>
             <div className="notif-message mr-4 md:mr-0">
                 <div className="flex-col">
                     <div className="flex flex-wrap">

@@ -9,32 +9,101 @@ import Avatar from 'react-avatar';
 import axios from 'configs/axios'
 import { useState } from 'react'
 import { toast, ToastContainer } from 'react-toastify'
-
+import Dropdown from 'components/forms/dropdown'
+import livestream from 'api/livestream';
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+const MySwal = withReactContent(Swal)
 const ProfileEdit = () => {
     // const { data } = this.props.location;
     const [data, setData] = useState([]);
+        const [category, setCategory] = useState(data.category)
+    const [categoryid, setCategoryid] = useState({})
+    const [loading,setLoading] = useState(true)
+    const [newPass, setnewPass] = useState('')
+    const [rePass, setrePass] = useState('')
+    const [currentPass, setcurrentPass] = useState('')
+
+    function handleCurrent(data){
+        setcurrentPass(data)
+    }
+    function handleNew(data){
+        setnewPass(data)
+    }
+    function handleRe(data){
+        setrePass(data)
+    }
+
+    
     function getData(){
         axios.get("/merchant/getProfile").then(e =>{
            setData(e.data);
+           let c = e.data.categories.map((item,index)=>{
+               return {
+                   key: index + 1,
+                   value: item.category_id
+                
+               }
+           })
+           var result = {};
+            for (var i = 0; i < c.length; i++) {
+            result[c[i].key] = c[i].value;
+            }
+           setCategoryid(result)
+
        })
     }
+
+  
     useEffect(() => {
+        livestream.getCategory().then((res) => {
+            const ListCategory = res.data.map((i) => {
+                return { "id": i.id, "value": i.text }
+            })
+            setCategory(ListCategory);
+            setLoading(false)
+        })
        getData()
     }, [])
 
+    function changeCategoryid(e, idx) {
+        setCategoryid({ ...categoryid, [idx]: e.id });
+    }
     function handleEdit(){
-        console.log('ahaa')
+        let cat = []
+        for (const [key, value] of Object.entries(categoryid)) {
+            console.log(key);
+            cat.push(value)
+        }
+        if (new Set(cat).size !== cat.length) {
+            setLoading(false)
+            MySwal.fire('Validation!', 'Cannot pick same categories.', 'warning');
+            return;
+        }
 
         const formData = new FormData();
         for (const [key, value] of Object.entries(data)) {
             formData.append(key,value)
+        }
+        formData.append('categories', cat)
+
+        if(currentPass && rePass && newPass){
+            if(newPass != rePass){
+                alert('New Password dan Retype Passord tidak sama')
+            }else{
+                axios.post('/user/changePassword',{
+                    old_password: currentPass,
+                    new_password: newPass
+                }).then(e=>{
+                    toast.success(e.message);
+                })
+            }
         }
 
         axios.post('/merchant/submitProfile',formData).then(e=>{
             toast.success('Data berhasil diperbaharui');
             getData()
         })
-        console.log('ehem')
     }
 
     function handleChange(data,value){
@@ -97,21 +166,21 @@ const ProfileEdit = () => {
                                     handleChange('about',e.target.value)
                                 }} placeholder="Describe Your Self" className="w-full md:w-4/6 px-4 py-2 h-32 my-2 md:my-0 md:ml-4 border border-gray-300 rounded-lg" />
                             </div>
-                            <div className="flex flex-wrap w-full items-center my-4">
-                                <label htmlFor="category" className="w-full md:w-1/4 text-base text-gray-700">Category</label>
-                                <div className="flex flex-wrap w-full md:w-4/6 md:pl-4">
-                                    <div className="form-categories border border-gray-300 rounded-lg px-2 py-2 mr-4 my-2" role="button">
-                                        <input type="checkbox" name="category" className="px-4 py-2 border border-gray-300 rounded-lg mr-2" value="Category 1" /><span>Category 1</span>
-                                    </div>
-                                    <div className="form-categories border border-gray-300 rounded-lg px-2 py-2 mr-4 my-2" role="button">
-                                        <input type="checkbox" name="category" className="px-4 py-2 border border-gray-300 rounded-lg mr-2" value="Category 2" /><span>Category 2</span>
-                                    </div>
-                                    <div className="form-categories border border-gray-300 rounded-lg px-2 py-2 mr-4 my-2" role="button">
-                                        <input type="checkbox" name="category" className="px-4 py-2 border border-gray-300 rounded-lg mr-2" value="Category 3" /><span>Category 3</span>
-                                    </div>
+                            <div className="flex flex-wrap w-full items-center mt-4">
+                            <label htmlFor="category" className="w-full md:w-auto text-lg text-gray-700">Categories</label>
+                            <div className="flex">
+                                <div className="form-categories border border-gray-300 rounded-lg px-1 py-2 mr-1 my-2 md:ml-1" role="button">
+                                    <Dropdown title="Category" placeholder="Category 1" items={category} onClick={changeCategoryid} idx={1} />
                                 </div>
-
+                                <div className="form-categories border border-gray-300 rounded-lg px-1 py-2 mr-1 my-2 md:ml-1" role="button">
+                                    <Dropdown title="Category" placeholder="Category 2" items={category} onClick={changeCategoryid} idx={2} />
+                                </div>
+                                <div className="form-categories border border-gray-300 rounded-lg px-1 py-2 mr-1 my-2 md:ml-1" role="button">
+                                    <Dropdown title="Category" placeholder="Category 3" items={category} onClick={changeCategoryid} idx={3} />
+                                </div>
                             </div>
+
+                        </div>
                             <div className="flex flex-wrap w-full items-start my-2">
                                 <label htmlFor="name" className="w-full md:w-1/4 text-base text-gray-700">Facebook Page Link</label>
                                 <input type="text" value={data.fb_url} onChange={(e)=>{
@@ -135,15 +204,15 @@ const ProfileEdit = () => {
                             <h6 className="text-red-600 font-semibold text-lg">Edit Password</h6>
                             <div className="flex flex-wrap w-full items-start my-2">
                                 <label htmlFor="currentPassword" className="w-full md:w-1/4 text-base text-gray-700">Current Password</label>
-                                <input type="text" placeholder="Your Current Password" className="w-full md:w-4/6 px-4 py-2 my-2 md:my-0 md:ml-4 border border-gray-300 rounded-lg" />
+                                <input type="text" value={currentPass} onChange={(e)=>handleCurrent(e.target.value)}  placeholder="Your Current Password" className="w-full md:w-4/6 px-4 py-2 my-2 md:my-0 md:ml-4 border border-gray-300 rounded-lg" />
                             </div>
                             <div className="flex flex-wrap w-full items-start my-2">
                                 <label htmlFor="name" className="w-full md:w-1/4 text-base text-gray-700">New Password</label>
-                                <input type="text" placeholder="Your New Passoword" className="w-full md:w-4/6 px-4 py-2 my-2 md:my-0 md:ml-4 border border-gray-300 rounded-lg" />
+                                <input type="text" value={newPass} onChange={(e)=>handleNew(e.target.value)} placeholder="Your New Passoword" className="w-full md:w-4/6 px-4 py-2 my-2 md:my-0 md:ml-4 border border-gray-300 rounded-lg" />
                             </div>
                             <div className="flex flex-wrap w-full items-start my-2">
                                 <label htmlFor="name" className="w-full md:w-1/4 text-base text-gray-700">Retype Password</label>
-                                <input type="text" placeholder="Retype Your new Passoword" className="w-full md:w-4/6 px-4 py-2 my-2 md:my-0 md:ml-4 border border-gray-300 rounded-lg" />
+                                <input type="text" value={rePass} onChange={(e)=>handleRe(e.target.value)} placeholder="Retype Your new Passoword" className="w-full md:w-4/6 px-4 py-2 my-2 md:my-0 md:ml-4 border border-gray-300 rounded-lg" />
                             </div>
                             <div className="flex justify-end md:px-8 mt-4">
                                 <button className="w-1/3 px-4 py-2 rounded-3xl border border-red-600 text-red-600 mx-5 font-medium">Cancel</button>
