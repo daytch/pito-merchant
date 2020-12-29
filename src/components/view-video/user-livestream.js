@@ -78,7 +78,6 @@ const UserLivestreamVideos = ({ ListVideo }) => {
                                     {
                                         item.instagram_url && (<button style={{ transition: "all .15s ease" }}
                                             onClick={() => changeDataModal(true, item.instagram_url)}><IgIcon className="mr-4" /></button>)
-
                                     }
                                     {
                                         item.tiktok_url && (<button style={{ transition: "all .15s ease" }}
@@ -96,8 +95,8 @@ const UserLivestreamVideos = ({ ListVideo }) => {
                                                 {/*content*/}
                                                 <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                                                     {/*header*/}
-                                                    <div className="flex items-start justify-between p-5 border-b border-solid border-gray-300 rounded-t">
-                                                        <h3 className="text-3xl font-semibold">{item.title}</h3>
+                                                    <div className="flex items-start justify-between p-2 border-b border-solid border-gray-300 rounded-t">
+                                                        <h6 className="text-2xl font-semibold">{item.title}</h6>
                                                         <button
                                                             className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
                                                             onClick={() => setShowModal(false)} >
@@ -109,15 +108,15 @@ const UserLivestreamVideos = ({ ListVideo }) => {
                                                         {dataModal && ReactHtmlParserfrom(dataModal)}
                                                     </div>
                                                     {/*footer*/}
-                                                    <div className="flex items-center justify-end p-6 border-t border-solid border-gray-300 rounded-b">
-                                                        <button
-                                                            className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1"
-                                                            type="button"
-                                                            style={{ transition: "all .15s ease" }}
-                                                            onClick={() => setShowModal(false)}
-                                                        >Close</button>
+                                                    {/* <div className="flex items-center justify-end p-6 border-t border-solid border-gray-300 rounded-b">
+                                                <button
+                                                    className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1"
+                                                    type="button"
+                                                    style={{ transition: "all .15s ease" }}
+                                                    onClick={() => setShowModal(false)}
+                                                >Close</button>
 
-                                                    </div>
+                                            </div> */}
                                                 </div>
                                             </div>
                                         </div>

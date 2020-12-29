@@ -45,7 +45,6 @@ const Login = ({ history }) => {
 
     //Check tokens if ready
     useEffect(() => {
-
         if (token) {
             history.push("/dashboard")
         }
@@ -78,19 +77,22 @@ const Login = ({ history }) => {
     }
 
     const responseGoogle = (response) => {
-        let email = response.profileObj.email;
-        users.loginSosmed({ email }).then((res) => {
-            setAuthorizationHeader(res.token);
-            localStorage.setItem('PITO:merchant-token', res.token)
-            localStorage.setItem('PITO:login', 'google')
-            toast.success("you have successfully logged in !")
-            history.push("/dashboard")
-            // setTimeout(() => {
-            //     history.push("/dashboard")
-            // }, 500);
-        }).catch(err => {
-            seterrors(err?.response?.data?.message)
-        })
+        
+        if (!response.error) {
+            let emails = response.profileObj.email;
+            users.loginSosmed({ emails }).then((res) => {
+                setAuthorizationHeader(res.token);
+                localStorage.setItem('PITO:merchant-token', res.token)
+                localStorage.setItem('PITO:login', 'google')
+                toast.success("you have successfully logged in !")
+                history.push("/dashboard")
+                // setTimeout(() => {
+                //     history.push("/dashboard")
+                // }, 500);
+            }).catch(err => {
+                seterrors(err?.response?.data?.message)
+            })
+        }
     }
 
     return (

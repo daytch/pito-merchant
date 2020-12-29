@@ -13,7 +13,7 @@ import { ReactComponent as LikeIcon } from 'assets/images/thumbs-like-icon.svg'
 import iconLive from 'assets/images/live-icon.png'
 import ReactHtmlParserfrom from 'react-html-parser';
 
-const FullWidth = ({ linkVideo, actionLinks, viewsElement, actions, dataVideos, socmedVertical, socmedCustom, liveRecord, title, name, subtitle, caption, ig, tiktok, fb, category, buttons }) => {
+const FullWidth = ({ DeleteButton, linkVideo, actionLinks, viewsElement, actions, dataVideos, socmedVertical, socmedCustom, liveRecord, title, name, subtitle, caption, ig, tiktok, fb, category, buttons }) => {
 
     const [showModal, setShowModal] = useState(false);
     const [dataModal, setDataModal] = useState('');
@@ -138,17 +138,17 @@ const FullWidth = ({ linkVideo, actionLinks, viewsElement, actions, dataVideos, 
                                                 {
                                                     fb && (
                                                         <button style={{ transition: "all .15s ease" }}
-                                                            onClick={()=>changeDataModal(true, fb)}><FbIcon className="mr-4" />
+                                                            onClick={() => changeDataModal(true, fb)}><FbIcon className="mr-4" />
                                                         </button>)
                                                 }
                                                 {
                                                     ig && (<button style={{ transition: "all .15s ease" }}
-                                                        onClick={()=>changeDataModal(true, ig)}><IgIcon className="mr-4" /></button>)
+                                                        onClick={() => changeDataModal(true, ig)}><IgIcon className="mr-4" /></button>)
 
                                                 }
                                                 {
                                                     tiktok && (<button style={{ transition: "all .15s ease" }}
-                                                        onClick={()=>changeDataModal(true, tiktok)}><TtIcon className="mr-4" /></button>)
+                                                        onClick={() => changeDataModal(true, tiktok)}><TtIcon className="mr-4" /></button>)
                                                 }
                                                 <button href=""><ShareIconMobile className="mr-4" /></button>
                                             </div>
@@ -163,8 +163,8 @@ const FullWidth = ({ linkVideo, actionLinks, viewsElement, actions, dataVideos, 
                                                         {/*content*/}
                                                         <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                                                             {/*header*/}
-                                                            <div className="flex items-start justify-between p-5 border-b border-solid border-gray-300 rounded-t">
-                                                                <h3 className="text-3xl font-semibold">{item.title}</h3>
+                                                            <div className="flex items-start justify-between p-2 border-b border-solid border-gray-300 rounded-t">
+                                                                <h6 className="text-2xl font-semibold">{title}</h6>
                                                                 <button
                                                                     className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
                                                                     onClick={() => setShowModal(false)} >
@@ -176,15 +176,15 @@ const FullWidth = ({ linkVideo, actionLinks, viewsElement, actions, dataVideos, 
                                                                 {dataModal && ReactHtmlParserfrom(dataModal)}
                                                             </div>
                                                             {/*footer*/}
-                                                            <div className="flex items-center justify-end p-6 border-t border-solid border-gray-300 rounded-b">
-                                                                <button
-                                                                    className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1"
-                                                                    type="button"
-                                                                    style={{ transition: "all .15s ease" }}
-                                                                    onClick={() => setShowModal(false)}
-                                                                >Close</button>
+                                                            {/* <div className="flex items-center justify-end p-6 border-t border-solid border-gray-300 rounded-b">
+                                                <button
+                                                    className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1"
+                                                    type="button"
+                                                    style={{ transition: "all .15s ease" }}
+                                                    onClick={() => setShowModal(false)}
+                                                >Close</button>
 
-                                                            </div>
+                                            </div> */}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -198,7 +198,7 @@ const FullWidth = ({ linkVideo, actionLinks, viewsElement, actions, dataVideos, 
                                                         pathname: actionLinks,
                                                         query: { linkVideo, actionLinks, viewsElement, actions, dataVideos, socmedVertical, socmedCustom, liveRecord, title, name, subtitle, caption, ig, tiktok, fb, category, buttons }
                                                     }} className="font-semibold text-base md:text-lg text-red-600 mr-4">Edit</Link>
-                                                    <Link to={"/"} className="font-semibold text-base md:text-lg text-red-600 mr-4">Delete</Link>
+                                                    <DeleteButton id={item.id} />{/* <button onClick={() => submitDelete} className="font-semibold text-base md:text-lg text-red-600 mr-4">Delete</button> */}
                                                 </div>
                                             )
                                         }

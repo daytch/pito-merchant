@@ -541,7 +541,9 @@ pre, code, kbd, samp {
 
 img, svg, video, canvas, audio, iframe, embed, object {
     display: block;
-    vertical-align: middle;
+    /* vertical-align: middle; */
+    margin-left:auto;
+    margin-right:auto;
 }
 
 /**
@@ -95881,7 +95883,25 @@ item:hover figure.item-image-live-detail svg.icon {
     width: 189vh;
 }
 
-.chat-content{
+.chat-content {
     margin-left: -7vw;
     width: 46vw;
+}
+
+.play-icon-lvdetail {
+    transition: all 0.15s ease 0s;
+    margin-top: -15%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999999;
+}
+
+.thumbnail-lvdetail {
+    position: inherit !important;
+    margin-top: 17% !important;
+    margin-bottom: -13% !important;
+    margin-left: auto;
+    margin-right: auto;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
 }

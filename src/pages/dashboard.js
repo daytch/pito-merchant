@@ -5,6 +5,7 @@ import FullWidth from 'components/view-video/FullWidth'
 import { Link } from 'react-router-dom'
 import dashboard from 'api/dashboard'
 import Spinner from 'components/spinner'
+import livestream from 'api/livestream'
 
 
 const Dashboard = () => {
@@ -24,6 +25,23 @@ const Dashboard = () => {
         })
     }, []) //[liveVideos, previousVideos, upcomingVideos])
 
+    function submitDelete(id) {
+        
+        setLoading(true)
+        livestream.deleteLivestream(id).then((res) => {
+            dashboard.get().then((res) => {
+                setLiveVideos(res.live_videos.data)
+                setpreviousVideos(res.previous_videos.data)
+                setupcomingVideos(res.upcoming_videos.data)
+                setLoading(false)
+            })
+        });
+    }
+
+    const DeleteButton = (id) => {
+        return <button onClick={() => submitDelete(id)} className="font-semibold text-base md:text-lg text-red-600 mr-4">Delete</button>;
+    };
+
     return (
         <Spinner isLoading={isLoading} className="min-h-screen">
             <section className="min-h-screen flex flex-col xl:flex-row">
@@ -38,10 +56,10 @@ const Dashboard = () => {
                             <div className="flex flex-wrap w-full mt-4">
                                 {
                                     liveVideos.map((item, index) => {
-                                        const videos = [{ iframe:item.iframe, id: item.id, thumbnail: item.img_thumbnail, live: true, views: item.views, likes :item.likes, date: item.start_time, title: item.title }]
+                                        const videos = [{ iframe: item.iframe, id: item.id, thumbnail: item.img_thumbnail, live: true, views: item.views, likes: item.likes, date: item.start_time, title: item.title }]
                                         return (
                                             <div key={index} className="flex flex-wrap w-full xl:w-1/2 mt-4">
-                                                <FullWidth actionLinks={'/dashboard/edit/'+item.id} dataVideos={videos} title={item.title} caption={item.description} category={item.categories} ig={item.instagram_url} fb={item.facebook_url} tiktok={item.tiktok_url} socmedCustom={true} />
+                                                <FullWidth actionLinks={'/dashboard/edit/' + item.id} dataVideos={videos} title={item.title} caption={item.description} category={item.categories} ig={item.instagram_url} fb={item.facebook_url} tiktok={item.tiktok_url} socmedCustom={true} />
                                             </div>
                                         )
                                     })
@@ -53,10 +71,10 @@ const Dashboard = () => {
                             <div className="flex flex-wrap">
                                 {
                                     upcomingVideos.map((item, index) => {
-                                        const videos = [{ iframe:item.iframe, id: item.id, thumbnail: item.img_thumbnail, live: false, views: item.views, likes: item.likes, date: item.start_time, title: item.title }]
+                                        const videos = [{ iframe: item.iframe, id: item.id, thumbnail: item.img_thumbnail, live: false, views: item.views, likes: item.likes, date: item.start_time, title: item.title }]
                                         return (
                                             <div key={index} className="flex flex-wrap w-full xl:w-1/2 mt-4">
-                                                <FullWidth actionLinks={'/dashboard/edit/'+item.id} dataVideos={videos} title={item.title} actions={true} caption={item.description} category={item.categories} ig={item.instagram_url} fb={item.facebook_url} tiktok={item.tiktok_url} socmedCustom={true} />
+                                                <FullWidth DeleteButton={DeleteButton} actionLinks={'/dashboard/edit/' + item.id} dataVideos={videos} title={item.title} actions={true} caption={item.description} category={item.categories} ig={item.instagram_url} fb={item.facebook_url} tiktok={item.tiktok_url} socmedCustom={true} />
                                             </div>
                                         )
                                     })
@@ -68,12 +86,12 @@ const Dashboard = () => {
                             <div className="flex flex-wrap">
                                 {
                                     previousVideos.map((item, index) => {
-                                      
-                                        const videos = [{ iframe:item.iframe, id: item.id, thumbnail: item.img_thumbnail, live: false, views: item.views, likes :item.likes, date: item.start_time, title: item.title }]
-                                   
+
+                                        const videos = [{ iframe: item.iframe, id: item.id, thumbnail: item.img_thumbnail, live: false, views: item.views, likes: item.likes, date: item.start_time, title: item.title }]
+
                                         return (
                                             <div key={index} className="flex flex-wrap w-full xl:w-1/2 mt-4">
-                                                <FullWidth actionLinks={'/dashboard/edit/'+item.id} dataVideos={videos} title={item.title} viewsElement={true} actions={false} ig={item.instagram_url} fb={item.facebook_url} tiktok={item.tiktok_url} caption={item.description} category={item.categories} socmedCustom={true} />
+                                                <FullWidth actionLinks={'/dashboard/edit/' + item.id} dataVideos={videos} title={item.title} viewsElement={true} actions={false} ig={item.instagram_url} fb={item.facebook_url} tiktok={item.tiktok_url} caption={item.description} category={item.categories} socmedCustom={true} />
                                             </div>
                                         )
                                     })
