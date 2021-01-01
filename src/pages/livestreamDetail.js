@@ -140,7 +140,7 @@ const LivestreamDetail = () => {
                     </Modal>
 
                     <div className="mt-0 md:mt-10">
-                        <div className="item relative w-full md:w-1/2 mx-auto">
+                        <div className="flex flex-wrap mt-4 md:mt-2 mx-auto justify-center w-full md:w-1/2">
                             {ReactHtmlParserfrom(iframe)}
                             {/* <figure className="item-image-live-detail">
                                 <PlayIcon className="play-icon-lvdetail icon" style={{ transition: "all .15s ease", marginLeft: "-8vw !important" }}

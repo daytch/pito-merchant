@@ -33,8 +33,8 @@ function App() {
             <>
               <PrivateRoute path={`${url}/`} component={Dashboard} exact />
               <PrivateRoute path={`${url}/create/`} component={CreateDashboard} />
-              <PrivateRoute path={`${url}/edit/:id`} component={EditDashboard} />
-              <PrivateRoute path={`${url}/copy/:id`} component={EditDashboard} />
+              <PrivateRoute path={`${url}/edit/:id`} component={EditDashboard} exact/>
+              <PrivateRoute path={`${url}/copy/:id`} component={EditDashboard} exact />
             </>
           )} />
         <Route path="/profile"
@@ -47,7 +47,7 @@ function App() {
         <Route path="/livestream"
           render={({ match: { url } }) => (
             <>
-              <PrivateRoute path={`${url}/:id`} component={LivestreamDetail} />
+              <PrivateRoute path={`${url}/:id`} component={LivestreamDetail} exact/>
             </>
           )} />
         <Route path="/notification"
@@ -61,7 +61,7 @@ function App() {
             <>
               <PrivateRoute path={`${url}`} component={Support} exact />
               <PrivateRoute path={`${url}/create`} component={CreateSupport} />
-              <PrivateRoute path={`${url}/edit/:id`} component={EditSupport} />
+              <PrivateRoute path={`${url}/edit/:id`} component={EditSupport} exact/>
             </>
           )} />
 
