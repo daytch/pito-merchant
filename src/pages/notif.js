@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import SideNavbarMerchant from 'components/SideNavbarMerchant'
 import Notification from 'components/notification'
-import axios from 'configs/axios'
+import NotifAPI from 'api/notification'
 
 const Notif = () => {
     const [data, setData] = useState([])
+
+    function hideNotif(id) {
+        id.currentTarget.parentElement.style="none";
+    }
+
     useEffect(() => {
-        axios.get('/user/getNotification?page=1').then(e=>{
+        NotifAPI.getList().then(e => {
             setData(e.data)
         })
     }, [])
@@ -21,8 +26,8 @@ const Notif = () => {
                     </div>
                     <div className="mt-4">
                         {
-                            data.map(e=>{
-                               return <Notification data={e} />
+                            data.map((item, index) => {
+                                return <Notification hideNotif={hideNotif} style={isHide ? { display: 'none' } : {}} key={index} data={item} />
                             })
                         }
                     </div>

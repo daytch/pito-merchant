@@ -8,7 +8,6 @@ const Dropdown = ({ title, items = [], onClick, idx }) => {
     const [open, setOpen] = useState(false)
     const toggle = () => setOpen(!open)
     function handleOnClick(item) {
-        console.log(onClick)
         onClick(item, idx)
         setTitles(item.value)
         setOpen(false)

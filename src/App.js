@@ -32,8 +32,9 @@ function App() {
           render={({ match: { url } }) => (
             <>
               <PrivateRoute path={`${url}/`} component={Dashboard} exact />
-              <PrivateRoute path={`${url}/create`} component={CreateDashboard} />
+              <PrivateRoute path={`${url}/create/`} component={CreateDashboard} />
               <PrivateRoute path={`${url}/edit/:id`} component={EditDashboard} />
+              <PrivateRoute path={`${url}/copy/:id`} component={EditDashboard} />
             </>
           )} />
         <Route path="/profile"

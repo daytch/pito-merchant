@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect,useState } from 'react'
 import SideNavbarMerchant from 'components/SideNavbarMerchant'
 
 import { ReactComponent as FbIcon } from 'assets/images/fb-icon-blue.svg'
@@ -6,7 +6,6 @@ import { ReactComponent as EmailIcon } from 'assets/images/email-icon.svg'
 import { ReactComponent as GoogleIcon } from 'assets/images/google-icon-colorful.svg'
 import Avatar from 'react-avatar';
 import users from 'api/users'
-import { useState } from 'react'
 import { toast, ToastContainer } from 'react-toastify'
 import Dropdown from 'components/forms/dropdown'
 import livestream from 'api/livestream';
@@ -43,12 +42,7 @@ const ProfileEdit = () => {
         users.getProfile().then(e => {
             setData(e.data);
             let categories = e.data.categories;
-            // let c1 = categories[0] && categories[0].name ? categories[0].name : 'Category';
-            // let c2 = categories[1] && categories[1].name ? categories[1].name : 'Category';
-            // let c3 = categories[2] && categories[2].name ? categories[2].name : 'Category';
-            // categories[0] && categories[0].name ? setCat1(categories[0].name) : setCat1('Category');
-            // categories[1] && categories[1].name ? setCat2(categories[1].name) : setCat2('Category');
-            // categories[2] && categories[2].name ? setCat3(categories[2].name) : setCat3('Category');
+            
             setCat1()
             setCat2(categories[1] && categories[1].name ? categories[1].name : 'Category')
             setCat3(categories[2] && categories[2].name ? categories[2].name : 'Category')
@@ -90,7 +84,6 @@ const ProfileEdit = () => {
         setLoading(true);
         let cat = []
         for (const [key, value] of Object.entries(categoryid)) {
-            console.log(key);
             cat.push(value)
         }
         if (new Set(cat).size !== cat.length) {

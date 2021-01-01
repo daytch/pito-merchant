@@ -10,15 +10,37 @@ import { ReactComponent as LikeIcon } from 'assets/images/thumbs-like-icon.svg'
 import { ReactComponent as FbIcon } from 'assets/images/fb-icon.svg'
 import { ReactComponent as IgIcon } from 'assets/images/ig-icon.svg'
 import { ReactComponent as TtIcon } from 'assets/images/tiktok-icon.svg'
+import Modal from 'react-modal'
+import  DefaultImg from 'assets/images/default.svg'
+Modal.setAppElement('*'); // suppresses modal-related test warnings.
 
 const UserLivestreamVideos = ({ ListVideo }) => {
-    const [showModal, setShowModal] = useState(false);
-    const [dataModal, setDataModal] = useState('');
 
-    const changeDataModal = (val, data) => {
-        setDataModal(data);
-        setShowModal(val)
+    const [dataModal, setDataModal] = useState('');
+    const [modalIsOpen, setIsOpen] = useState(false)
+    let subtitle;
+
+    const openModal = (data) => {
+        setIsOpen(true)
+        setDataModal(data)
     }
+    const closeModal = () => { setIsOpen(false) }
+
+    function afterOpenModal() {
+        // references are now sync'd and can be accessed.
+        subtitle.style.color = '#f00';
+    }
+
+    const customStyles = {
+        content: {
+            top: '50%',
+            left: '50%',
+            right: 'auto',
+            bottom: 'auto',
+            marginRight: '-50%',
+            transform: 'translate(-50%, -50%)'
+        }
+    };
 
     return (
         <>
@@ -26,18 +48,19 @@ const UserLivestreamVideos = ({ ListVideo }) => {
                 ListVideo.map((item, index) => {
                     return (
                         <div key={index} className="mt-8 flex flex-wrap xl:flex-no-wrap">
-                            <div className="">
+                            <div className="flex">
                                 <div className="item relative">
-                                    <figure className="item-image-user">
-                                        <div className="minute-user py-2 px-2">
-                                            <p className="font-medium text-sm text-white float-right">30:32</p>
-                                        </div>
-                                        <PlayIcon style={{ transition: "all .15s ease" }}
-                                            onClick={() => changeDataModal(true, item.iframe)} className="icon" />
-                                        <img src={item.img_thumbnail} onError={(e) => { e.target.onerror = null; e.target.src = "https://alppetro.co.id/dist/assets/images/default.jpg" }} alt={item.title} />
-                                    </figure>
+                                    <Link to={`/livestream/${item.id}`} className="link-wrapped">
+                                        <figure className="item-image-user">
+                                            <div className="minute-user py-2 px-2">
+                                                <p className="font-medium text-sm text-white float-right">30:32</p>
+                                            </div>
+                                            <PlayIcon style={{ transition: "all .15s ease" }}
+                                                onClick={() => openModal(item.iframe)} className="icon" />
+                                            <img src={item.img_thumbnail} onError={(e) => { e.target.onerror = null; e.target.src = DefaultImg }} alt={item.title} />
+                                        </figure>
+                                    </Link>
                                 </div>
-                                <Link to="/" className="link-wrapped hidden"></Link>
                             </div>
                             <div className="item-meta xl:px-4 w-full xl:w-2/3">
                                 <h4 className="font-semibold text-lg md:text-xl text-gray-700 break-all">{item.title}</h4>
@@ -72,57 +95,42 @@ const UserLivestreamVideos = ({ ListVideo }) => {
                                     {
                                         item.facebook_url && (
                                             <button style={{ transition: "all .15s ease" }}
-                                                onClick={() => changeDataModal(true, item.facebook_url)}><FbIcon className="mr-4" />
+                                                onClick={() => openModal(item.facebook_url)}><FbIcon className="mr-4" />
                                             </button>)
                                     }
                                     {
                                         item.instagram_url && (<button style={{ transition: "all .15s ease" }}
-                                            onClick={() => changeDataModal(true, item.instagram_url)}><IgIcon className="mr-4" /></button>)
+                                            onClick={() => openModal(item.instagram_url)}><IgIcon className="mr-4" /></button>)
                                     }
                                     {
                                         item.tiktok_url && (<button style={{ transition: "all .15s ease" }}
-                                            onClick={() => changeDataModal(true, item.tiktok_url)}><TtIcon className="mr-4" /></button>)
+                                            onClick={() => openModal(item.tiktok_url)}><TtIcon className="mr-4" /></button>)
                                     }
                                     <button href=""><ShareIconMobile className="mr-4" /></button>
                                 </div>
-                                {showModal ? (
-                                    <>
-                                        <div
-                                            className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
-                                            onClick={() => setShowModal(false)}
-                                        >
-                                            <div className="relative w-auto my-6 mx-auto max-w-3xl">
-                                                {/*content*/}
-                                                <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-                                                    {/*header*/}
-                                                    <div className="flex items-start justify-between p-2 border-b border-solid border-gray-300 rounded-t">
-                                                        <h6 className="text-2xl font-semibold">{item.title}</h6>
-                                                        <button
-                                                            className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
-                                                            onClick={() => setShowModal(false)} >
-                                                            <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">×</span>
-                                                        </button>
-                                                    </div>
-                                                    {/*body*/}
-                                                    <div className="relative p-6 flex-auto">
-                                                        {dataModal && ReactHtmlParserfrom(dataModal)}
-                                                    </div>
-                                                    {/*footer*/}
-                                                    {/* <div className="flex items-center justify-end p-6 border-t border-solid border-gray-300 rounded-b">
-                                                <button
-                                                    className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1"
-                                                    type="button"
-                                                    style={{ transition: "all .15s ease" }}
-                                                    onClick={() => setShowModal(false)}
-                                                >Close</button>
 
-                                            </div> */}
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
-                                    </>
-                                ) : null}
+                                <Modal
+                                    isOpen={modalIsOpen}
+                                    onAfterOpen={afterOpenModal}
+                                    onRequestClose={closeModal}
+                                    style={customStyles}
+                                    contentLabel="Livestream Modal"
+                                    shouldCloseOnOverlayClick={false}
+                                >
+                                    <div className="flex items-start justify-between border-b border-solid border-gray-300 rounded-t">
+                                        <h6 ref={_subtitle => (subtitle = _subtitle)}>{item.title}</h6>
+                                        <button
+                                            className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+                                            onClick={closeModal}  >
+                                            <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">×</span>
+                                        </button>
+                                    </div>
+                                    {/*body*/}
+                                    <div className="relative p-6 flex-auto">
+                                        {ReactHtmlParserfrom(dataModal)}
+                                    </div>
+                                </Modal>
+
                             </div>
                         </div>
                     )

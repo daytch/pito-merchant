@@ -145,13 +145,13 @@ const Profile = () => {
                         <div className="flex justify-end pt-8">
                             <Link to={{
                                 pathname: "/profile/edit",
-                                data: data // your data array of objects
+                                data: data
                             }} >
                                 <button className="rounded-3xl text-sm md:text-base font-medium mr-2 md:mr-6 text-white bg-red-600 px-6 py-2 md:px-10 md:py-2">Edit Account</button>
                             </Link>
                         </div>
                         <div className="pt-8">
-                            <LineCustom />
+                            <LineCustom favData={fav} shareData={share} viewData={view} />
                         </div>
                     </div>
                     <div className="w-full md:w-1/2 flex flex-col">

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { withRouter } from "react-router";
 import SideNavbarMerchant from 'components/SideNavbarMerchant'
 import livestream from 'api/livestream';
 import 'react-toastify/dist/ReactToastify.css';
@@ -12,14 +13,14 @@ import Dropdown from 'components/forms/dropdown'
 import Spinner from 'components/spinner'
 
 const MySwal = withReactContent(Swal)
-const CreateDashboard = () => {
+const CreateDashboard = ({ state }) => {
     const [isLoading, setLoading] = useState(true)
     const [mypic, setMypic] = useState('')
     const [startDate, setStartDate] = useState('')
     const [startTime, setStartTime] = useState('')
     const [endTime, setEndTime] = useState('')
-    const [title, setTitle] = useState('')
-    const [desc, setDesc] = useState('')
+    const [titleNew, setTitle] = useState('')
+    const [descNew, setDesc] = useState('')
     const [fb_url, setFburl] = useState('')
     const [tiktok_url, setTiktokurl] = useState('')
     const [ig_url, setIgurl] = useState('')
@@ -27,6 +28,7 @@ const CreateDashboard = () => {
     const [categoryid, setCategoryid] = useState({})
 
     useEffect(() => {
+        
         livestream.getCategory().then((res) => {
             const ListCategory = res.data.map((i) => {
                 return { "id": i.id, "value": i.text }
@@ -82,7 +84,7 @@ const CreateDashboard = () => {
             cat.push(value)
         }
 
-        if (!title) {
+        if (!titleNew) {
             setLoading(false)
             MySwal.fire('Validation!', 'Title cannot be empty.', 'warning');
             return;
@@ -130,8 +132,8 @@ const CreateDashboard = () => {
         formData.append("mypic", mypic);
         formData.append("startDate", start);
         formData.append("endDate", endDate);
-        formData.append("title", title);
-        formData.append("desc", desc);
+        formData.append("title", titleNew);
+        formData.append("desc", descNew);
         formData.append("fb_url", fb_url);
         formData.append("tiktok_url", tiktok_url);
         formData.append("ig_url", ig_url);
@@ -160,11 +162,11 @@ const CreateDashboard = () => {
                             <form>
                                 <div className="flex flex-wrap w-full items-start">
                                     <label htmlFor="title" className="w-full md:w-1/5 text-lg text-gray-700">Title <span className="text-red-700">*</span></label>
-                                    <input type="text" placeholder="Title" value={title} onChange={titleChange} className="w-full md:w-2/5 px-4 py-2 my-2 md:my-0 md:ml-4 border border-gray-300 rounded-lg" />
+                                    <input type="text" placeholder="Title" value={titleNew} onChange={titleChange} className="w-full md:w-2/5 px-4 py-2 my-2 md:my-0 md:ml-4 border border-gray-300 rounded-lg" />
                                 </div>
                                 <div className="flex flex-wrap w-full items-start mt-4">
                                     <label htmlFor="desc" className="w-full md:w-1/5 text-lg text-gray-700">Description</label>
-                                    <textarea placeholder="Description" value={desc} onChange={descChange} className="w-full md:w-2/5 h-32 px-4 py-2 md:ml-4 my-2 md:my-0 border border-gray-300 rounded-lg" />
+                                    <textarea placeholder="Description" value={descNew} onChange={descChange} className="w-full md:w-2/5 h-32 px-4 py-2 md:ml-4 my-2 md:my-0 border border-gray-300 rounded-lg" />
                                 </div>
                                 <div className="flex flex-wrap w-full items-center mt-4">
                                     <div className="md:pr-4">
@@ -182,34 +184,41 @@ const CreateDashboard = () => {
                                 </div>
                                 <div className="flex space-x-3 flex-wrap w-full items-center mt-4">
                                     <label htmlFor="category" className="w-full md:w-auto text-lg text-gray-700">Categories</label>
-                                    <div className="flex-1 form-categories border border-gray-300 rounded-lg px-2 py-2 mr-4 my-2 md:ml-4 w-full" role="button">
+                                    <div className="flex-2 md:flex-1 form-categories border border-gray-300 rounded-lg px-2 py-2 mr-4 my-2 md:ml-4 w-full" role="button">
                                         <Dropdown title="Category" placeholder="Category 1" items={category} onClick={changeCategoryid} idx={1} />
                                     </div>
-                                    <div className="flex-1 form-categories border border-gray-300 rounded-lg px-2 py-2 mr-4 my-2 md:ml-4 w-full" role="button">
+                                    <div className="flex-2 md:flex-1 form-categories border border-gray-300 rounded-lg px-2 py-2 mr-4 my-2 md:ml-4 w-full" role="button">
                                         <Dropdown title="Category" placeholder="Category 2" items={category} onClick={changeCategoryid} idx={2} />
                                     </div>
-                                    <div className="flex-1 form-categories border border-gray-300 rounded-lg px-2 py-2 mr-4 my-2 md:ml-4 w-full" role="button">
+                                    <div className="flex-2 md:flex-1 form-categories border border-gray-300 rounded-lg px-2 py-2 mr-4 my-2 md:ml-4 w-full" role="button">
                                         <Dropdown title="Category" placeholder="Category 3" items={category} onClick={changeCategoryid} idx={3} />
                                     </div>
                                 </div>
                                 <div className="form-dashboard flex flex-wrap w-full items-center mt-4">
-                                    <label htmlFor="fbLink" className="w-full md:w-1/3 text-lg text-gray-700">Facebook Livestreams Link <span className="text-red-700">*</span></label>
-                                    <input type="text" value={fb_url} onChange={fburlChange} placeholder="https://facebook.com/live/url" className="w-4/5 md:w-2/5 px-4 py-2 mr-2 md:mx-4 border border-gray-300 rounded-lg" />
+                                    <label htmlFor="fbLink" className="flex-3 md:flex-5 text-lg text-gray-700">Facebook Livestreams Link <span className="text-red-700">*</span></label>
+                                    <input type="text" value={fb_url} onChange={fburlChange} placeholder="https://facebook.com/live/url" className="w-auto flex-2 md:flex-1 px-4 py-2 mr-2 md:mx-4 border border-gray-300 rounded-lg" />
                                     <FbIcon />
                                 </div>
                                 <div className="form-dashboard flex flex-wrap w-full items-center mt-4">
-                                    <label htmlFor="igLink" className="w-full md:w-1/3 text-lg text-gray-700">Instagram Livestreams Link <span className="text-red-700">*</span></label>
-                                    <input type="text" value={ig_url} onChange={igurlChange} placeholder="https://instagram.com/live/url" className="w-4/5 md:w-2/5 px-4 py-2 mr-2 md:mx-4 border border-gray-300 rounded-lg" />
+                                    <label htmlFor="igLink" className="flex-3 md:flex-5 text-lg text-gray-700">Instagram Livestreams Link <span className="text-red-700">*</span></label>
+                                    <input type="text" value={ig_url} onChange={igurlChange} placeholder="https://instagram.com/live/url" className="w-auto flex-2 md:flex-1 px-4 py-2 mr-2 md:mx-4 border border-gray-300 rounded-lg" />
                                     <IgIcon />
                                 </div>
                                 <div className="form-dashboard flex flex-wrap w-full items-center mt-4">
-                                    <label htmlFor="ttLink" className="w-full md:w-1/3 text-lg text-gray-700">Tiktok Livestreams Link <span className="text-red-700">*</span></label>
-                                    <input type="text" value={tiktok_url} onChange={tiktokurlChange} placeholder="https://tiktok.com/live/url" className="w-4/5 md:w-2/5 px-4 py-2 mr-2 md:mx-4 border border-gray-300 rounded-lg" />
+                                    <label htmlFor="ttLink" className="flex-3 md:flex-5 text-lg text-gray-700">Tiktok Livestreams Link <span className="text-red-700">*</span></label>
+                                    <input type="text" value={tiktok_url} onChange={tiktokurlChange} placeholder="https://tiktok.com/live/url" className="w-auto flex-2 md:flex-1 px-4 py-2 mr-2 md:mx-4 border border-gray-300 rounded-lg" />
                                     <TtIcon />
                                 </div>
                                 <div className="form-dashboard flex flex-wrap w-full items-center mt-4">
-                                    <UploadIcon />
-                                    <input type="file" onChange={mypicChange} className="w-4/5 xl:w-2/5 px-4 py-2 mx-2 md:mx-4 border border-gray-300 rounded-lg" />
+                                    {/* <label htmlFor="ttLink" className="flex-3 md:flex-5 text-lg text-gray-700">Thumbnail</label>
+                        <input type="file" onChange={mypicChange} className="w-auto flex-2 md:flex-1 px-4 py-2 mr-2 md:mx-4 border border-gray-300 rounded-lg" /> */}
+                                    <label htmlFor="ttLink" className="flex-3 md:flex-5 text-lg text-gray-700">Thumbnail</label>
+                                    <label className="md:flex-1 md:px-4 md:py-2 md:mr-2 md:mx-4 md:border md:border-gray-300 md:rounded-lg">
+                                        <input type="file" onChange={mypicChange} aria-label="File browser thumbnail" />
+                                        <span class="file-custom"></span>
+                                    </label>
+                                        <UploadIcon className="icon-upload" />
+                                    <br />
                                     {mypic && <ImageThumb image={mypic} />}
                                 </div>
                                 <div className="flex mt-6">
@@ -229,4 +238,4 @@ const ImageThumb = ({ image }) => {
     return <img className="img-livestream" src={URL.createObjectURL(image)} alt={image.name} />;
 };
 
-export default CreateDashboard;
+export default withRouter(CreateDashboard);

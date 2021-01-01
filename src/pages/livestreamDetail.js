@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useHistory } from 'react-router-dom'
 import SideNavbarMerchant from 'components/SideNavbarMerchant'
 import { Link } from 'react-router-dom'
-import { ReactComponent as PlayIcon } from 'assets/images/icon-play.svg'
+import { withRouter } from "react-router"
+// import { ReactComponent as PlayIcon } from 'assets/images/icon-play.svg'
 import { ReactComponent as FbIcon } from 'assets/images/fb-icon.svg'
 import { ReactComponent as IgIcon } from 'assets/images/ig-icon.svg'
 import { ReactComponent as TtIcon } from 'assets/images/tiktok-icon.svg'
@@ -10,6 +11,9 @@ import livestream from 'api/livestream'
 import Spinner from 'components/spinner'
 import moment from 'moment'
 import ReactHtmlParserfrom from 'react-html-parser'
+import Modal from 'react-modal'
+// import DefaultImg from 'assets/images/default.svg'
+Modal.setAppElement('*'); // suppresses modal-related test warnings.
 
 const LivestreamDetail = () => {
 
@@ -30,14 +34,33 @@ const LivestreamDetail = () => {
     const [share, setShared] = useState("")
     const [thumbnail, setThumbnail] = useState("")
     const { id } = useParams();
-    const [showModal, setShowModal] = useState(false);
     const [dataModal, setDataModal] = useState('');
     const [iframe, setIframe] = useState('');
+    const [modalIsOpen, setIsOpen] = useState(false)
+    let subtitle;
+    const history = useHistory()
 
-    const changeDataModal = (val, data) => {
-        setDataModal(data);
-        setShowModal(val)
+    const openModal = (data) => {
+        setIsOpen(true)
+        setDataModal(data)
     }
+    const closeModal = () => { setIsOpen(false) }
+
+    function afterOpenModal() {
+        // references are now sync'd and can be accessed.
+        subtitle.style.color = '#f00';
+    }
+
+    const customStyles = {
+        content: {
+            top: '50%',
+            left: '50%',
+            right: 'auto',
+            bottom: 'auto',
+            marginRight: '-50%',
+            transform: 'translate(-50%, -50%)'
+        }
+    };
 
     useEffect(() => {
         livestream.getLivestreamDetail(id).then((res) => {
@@ -79,55 +102,51 @@ const LivestreamDetail = () => {
                     <div className="flex flex-col-reverse md:flex-row w-full justify-between">
                         <h6 className="text-red-600 font-semibold text-lg text-center pt-8 md:pt-0">Livestreams Detail</h6>
                         <div className="flex items-center md:mb-0 justify-end">
-                            <Link to="/dashboard"><h6 className="text-red-600 font-semibold text-lg">Back</h6></Link>
-                            <button className="text-white bg-red-600 font-semibold text-sm xl:text-lg px-4 mx-4 py-1 rounded-2xl">Copy For New Livestreams</button>
+                            <button onClick={() => { history.goBack() }}><h6 className="text-red-600 font-semibold text-lg">Back</h6></button>
+                            <Link to={{
+                                pathname: '/dashboard/copy/' + id,
+                                query: {
+                                    title,
+                                    desc,
+                                    category1,
+                                    category2,
+                                    category3,
+                                    thumbnail
+                                }
+                            }} className="text-white bg-red-600 font-semibold text-sm xl:text-lg px-4 mx-4 py-1 rounded-2xl">Copy For New Livestreams</Link>
                         </div>
                     </div>
-                    {showModal ? (
-                        <>
-                            <div
-                                className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
-                                onClick={() => setShowModal(false)}
-                            >
-                                <div className="relative w-auto my-6 mx-auto max-w-3xl">
-                                    {/*content*/}
-                                    <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-                                        {/*header*/}
-                                        <div className="flex items-start justify-between p-2 border-b border-solid border-gray-300 rounded-t">
-                                            <h6 className="text-2xl font-semibold">{title}</h6>
-                                            <button
-                                                className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
-                                                onClick={() => setShowModal(false)} >
-                                                <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">×</span>
-                                            </button>
-                                        </div>
-                                        {/*body*/}
-                                        <div className="relative p-6 flex-auto">
-                                            {dataModal && ReactHtmlParserfrom(dataModal)}
-                                        </div>
-                                        {/*footer*/}
-                                        {/* <div className="flex items-center justify-end p-6 border-t border-solid border-gray-300 rounded-b">
-                                                <button
-                                                    className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1"
-                                                    type="button"
-                                                    style={{ transition: "all .15s ease" }}
-                                                    onClick={() => setShowModal(false)}
-                                                >Close</button>
 
-                                            </div> */}
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
-                        </>
-                    ) : null}
+                    <Modal
+                        isOpen={modalIsOpen}
+                        onAfterOpen={afterOpenModal}
+                        onRequestClose={closeModal}
+                        style={customStyles}
+                        contentLabel="Livestream Modal"
+                        shouldCloseOnOverlayClick={false}
+                    >
+                        <div className="flex items-start justify-between border-b border-solid border-gray-300 rounded-t">
+                            <h6 ref={_subtitle => (subtitle = _subtitle)}>{title}</h6>
+                            <button
+                                className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+                                onClick={closeModal}  >
+                                <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">×</span>
+                            </button>
+                        </div>
+                        {/*body*/}
+                        <div className="relative p-6 flex-auto">
+                            {ReactHtmlParserfrom(dataModal)}
+                        </div>
+                    </Modal>
+
                     <div className="mt-0 md:mt-10">
                         <div className="item relative w-full md:w-1/2 mx-auto">
-                            <figure className="item-image-live-detail">
+                            {ReactHtmlParserfrom(iframe)}
+                            {/* <figure className="item-image-live-detail">
                                 <PlayIcon className="play-icon-lvdetail icon" style={{ transition: "all .15s ease", marginLeft: "-8vw !important" }}
-                                    onClick={() => changeDataModal(true, iframe)} />
-                                <img className="thumbnail-live-detail thumbnail-lvdetail" src={thumbnail} onError={(e) => { e.target.onerror = null; e.target.src = "https://alppetro.co.id/dist/assets/images/default.jpg" }} alt={title} width={580} />
-                            </figure>
+                                    onClick={() => openModal(iframe)} />
+                                <img className="thumbnail-live-detail thumbnail-lvdetail" src={thumbnail} onError={(e) => { e.target.onerror = null; e.target.src = DefaultImg }} alt={title} width={580} />
+                            </figure> */}
                         </div>
                         <div className="flex flex-wrap mt-4 md:mt-2 mx-auto justify-center w-full md:w-1/2">
                             <div className="flex flex-col mr-8 text-center">
@@ -202,4 +221,4 @@ const LivestreamDetail = () => {
     )
 }
 
-export default LivestreamDetail
+export default withRouter(LivestreamDetail)

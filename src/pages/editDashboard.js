@@ -1,21 +1,28 @@
 import React, { useState } from 'react'
 import SideNavbarMerchant from 'components/SideNavbarMerchant'
-import Create from 'components/forms/create'
+import Edit from 'components/forms/edit'
+import Spinner from 'components/spinner'
 
 const EditDashboard = ({ match, location }) => {
     const [data] = useState(location.query)
+    const [isLoading, setLoading] = useState(true)
+
+    function openLoading() { setLoading(true) }
+
+    function closeLoading() { setLoading(false) }
+
     return (
-        <>
+        <Spinner isLoading={isLoading} className="min-h-screen">
             <section className="min-h-screen flex flex-col xl:flex-row">
                 <SideNavbarMerchant />
                 <div className="py-10 md:py-20 px-5 w-full">
-                    <h6 className="text-red-600 font-bold text-lg">Edit Livestreams</h6>
+                    <h6 className="text-red-600 font-bold text-lg">{typeof data.desc === "undefined" ? "Copy" : "Edit"} Livestreams</h6>
                     <div className="mt-4">
-                        <Create id={match.params.id} data={data} />
+                        <Edit id={match.params.id} openLoading={openLoading} closeLoading={closeLoading} data={data} />
                     </div>
                 </div>
             </section>
-        </>
+        </Spinner>
     )
 }
 

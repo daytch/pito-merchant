@@ -542,8 +542,8 @@ pre, code, kbd, samp {
 img, svg, video, canvas, audio, iframe, embed, object {
     display: block;
     /* vertical-align: middle; */
-    margin-left:auto;
-    margin-right:auto;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /**
@@ -19725,6 +19725,10 @@ img, video {
 
 .list-menu svg.icon {
     fill: #666666;
+}
+
+.active svg.icon {
+    fill: #E0472D;
 }
 
 .list-menu:hover svg.icon {
@@ -95904,4 +95908,10 @@ item:hover figure.item-image-live-detail svg.icon {
     margin-right: auto;
     left: 50% !important;
     transform: translate(-50%, -50%) !important;
+}
+
+@media only screen and (max-width: 600px) {
+    .icon-upload {
+        display: none;
+    }
 }

@@ -91,7 +91,7 @@ const Dashboard = () => {
 
                                         return (
                                             <div key={index} className="flex flex-wrap w-full xl:w-1/2 mt-4">
-                                                <FullWidth actionLinks={'/dashboard/edit/' + item.id} dataVideos={videos} title={item.title} viewsElement={true} actions={false} ig={item.instagram_url} fb={item.facebook_url} tiktok={item.tiktok_url} caption={item.description} category={item.categories} socmedCustom={true} />
+                                                <FullWidth actionLinks={'/dashboard/edit/' + item.id} dataVideos={videos} title={item.title} viewsElement={true} DeleteButton={DeleteButton} actions={true} ig={item.instagram_url} fb={item.facebook_url} tiktok={item.tiktok_url} caption={item.description} category={item.categories} socmedCustom={true} />
                                             </div>
                                         )
                                     })
