@@ -95915,3 +95915,9 @@ item:hover figure.item-image-live-detail svg.icon {
         display: none;
     }
 }
+
+@media only screen and (min-width: 1920px) {
+    .clipper {
+        width: 40vw !important;
+    }
+}

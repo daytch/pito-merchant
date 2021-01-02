@@ -98,7 +98,7 @@ const Login = ({ history }) => {
     return (
         <section className="min-h-screen login-clipping w-full">
             <ToastContainer position="top-right" />
-            <div className="clipper hidden xl:block"></div>
+            <div className="xxl:min-h-screen xxl:w-full clipper hidden xl:block"></div>
             <div className="img-phone xl:w-1/2 hidden xl:absolute py-20 xl:flex justify-end">
                 <img draggable="false" src={PHONE} alt="pito logo" />
             </div>
