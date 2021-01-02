@@ -5,9 +5,10 @@ import NotifAPI from 'api/notification'
 
 const Notif = () => {
     const [data, setData] = useState([])
+    let arrRef = []
 
     function hideNotif(id) {
-        id.currentTarget.parentElement.style="none";
+        arrRef[id].current.style.display = 'none'
     }
 
     useEffect(() => {
@@ -27,7 +28,9 @@ const Notif = () => {
                     <div className="mt-4">
                         {
                             data.map((item, index) => {
-                                return <Notification hideNotif={hideNotif} style={isHide ? { display: 'none' } : {}} key={index} data={item} />
+                                let notif = React.createRef()
+                                arrRef.push(notif)
+                                return <Notification hideNotif={hideNotif} ref={notif} index={index} key={index} data={item} />
                             })
                         }
                     </div>

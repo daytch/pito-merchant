@@ -30,6 +30,7 @@
     "react-toastify": "^6.0.9",
     "sweetalert2": "^10.11.1",
     "sweetalert2-react-content": "^3.2.2",
+    "use-dynamic-refs": "^1.0.0",
     "webpack-merge": "^5.7.3"
   },
   "scripts": {
