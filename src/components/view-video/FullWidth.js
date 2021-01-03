@@ -14,9 +14,10 @@ import iconLive from 'assets/images/live-icon.png'
 import ReactHtmlParserfrom from 'react-html-parser';
 import Modal from 'react-modal'
 import DefaultImg from 'assets/images/default.svg'
+import { CopyToClipboard } from 'react-copy-to-clipboard'
 Modal.setAppElement('*'); // suppresses modal-related test warnings.
 
-const FullWidth = ({ DeleteButton, linkVideo, actionLinks, viewsElement, actions, dataVideos, socmedVertical, socmedCustom, liveRecord, title, name, subtitle, caption, ig, tiktok, fb, category, buttons }) => {
+const FullWidth = ({ displayToolTip, DeleteButton, linkVideo, actionLinks, viewsElement, actions, dataVideos, socmedVertical, socmedCustom, liveRecord, title, name, subtitle, caption, ig, tiktok, fb, category, buttons }) => {
 
     const [dataModal, setDataModal] = useState('');
     const [modalIsOpen, setIsOpen] = useState(false)
@@ -63,8 +64,8 @@ const FullWidth = ({ DeleteButton, linkVideo, actionLinks, viewsElement, actions
             {
                 dataVideos.map((item, index) => {
                     return (
-                        <div className="flex mb-6 flex-col lg:flex-row" key={index}>
-                            <div className="flex">
+                        <div className="inline-flex" key={index}>
+                            <div className="flex-1">
                                 <div className="item relative w-auto">
                                     <Link to={`/livestream/${item.id}`} className="link-wrapped">
                                         <figure className="item-image-live">
@@ -96,7 +97,7 @@ const FullWidth = ({ DeleteButton, linkVideo, actionLinks, viewsElement, actions
                                     </div>
                                 }
                             </div>
-                            <div className="flex flex-col-reverse md:flex-row">
+                            <div className="flex-1">
                                 {
                                     liveRecord &&
                                     <div className="flex md:flex-col px-2 xxl:px-8 items-center">
@@ -138,7 +139,7 @@ const FullWidth = ({ DeleteButton, linkVideo, actionLinks, viewsElement, actions
                                             subtitle && <h5 className="text-gray-700 font-semibold mb-2 break-all">Title Lorem Ipsum...</h5>
                                         }
                                         {
-                                            caption && <p className="text-justify text-sm md:text-base break-all">
+                                            caption && <p className="text-justify text-sm break-all">
                                                 {caption}
                                             </p>
                                         }
@@ -162,7 +163,7 @@ const FullWidth = ({ DeleteButton, linkVideo, actionLinks, viewsElement, actions
                                             category && <div className="flex flex-wrap text-sm font-medium text-gray-700 items-center mt-2">
                                                 {
                                                     category.map((item, index) => {
-                                                        return (<span key={index}><div className="rounded-full inline-block w-2 h-2 bg-gray-700 mx-2"></div><h6 className="inline-block">{item}</h6></span>)
+                                                        return (<span key={index}><div className="rounded-full inline-block w-2 h-2 bg-gray-700 mx-2"></div><h6 className="inline-block text-sm">{item}</h6></span>)
                                                         // : (<span key={index}><div className="rounded-full w-2 h-2 bg-gray-700 mx-2"></div><h6>{item}</h6></span>)
                                                     })
                                                 }
@@ -185,7 +186,9 @@ const FullWidth = ({ DeleteButton, linkVideo, actionLinks, viewsElement, actions
                                                     tiktok && (<button style={{ transition: "all .15s ease" }}
                                                         onClick={() => openModal(tiktok)}><TtIcon className="mr-4" /></button>)
                                                 }
-                                                <button href=""><ShareIconMobile className="mr-4" /></button>
+                                                <CopyToClipboard text={'Shared URL here'}>
+                                                    <button onClick={displayToolTip}><ShareIconMobile className="mr-4" /></button>
+                                                </CopyToClipboard>
                                             </div>
                                         }
 

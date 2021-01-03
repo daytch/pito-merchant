@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 import { ReactComponent as FbIcon } from 'assets/images/fb-icon.svg'
 import { ReactComponent as IgIcon } from 'assets/images/ig-icon.svg'
 import { ReactComponent as TtIcon } from 'assets/images/tiktok-icon.svg'
@@ -76,6 +76,7 @@ const Edit = ({ data, openLoading, closeLoading }) => {
 
     //state error handler
     const [errors, seterrors] = useState(null)
+
     const submit = (e) => {
         e.preventDefault();
         openLoading()
@@ -114,11 +115,11 @@ const Edit = ({ data, openLoading, closeLoading }) => {
         }
 
 
-        if (!endTime) {
-            closeLoading()
-            MySwal.fire('Validation!', 'End Time cannot be empty.', 'warning');
-            return;
-        }
+        // if (!endTime) {
+        //     closeLoading()
+        //     MySwal.fire('Validation!', 'End Time cannot be empty.', 'warning');
+        //     return;
+        // }
 
         if (!ids) {
             closeLoading()
@@ -162,70 +163,69 @@ const Edit = ({ data, openLoading, closeLoading }) => {
             <div className="w-full xl:w-4/5">
                 <form>
                     <div className="flex flex-wrap w-full items-start">
-                        <label htmlFor="title" className="w-full md:w-1/5 text-lg text-gray-700">Title <span className="text-red-700">*</span></label>
-                        <input type="text" placeholder="Title" value={title} onChange={titleChange} className="w-full md:w-2/5 px-4 py-2 my-2 md:my-0 md:ml-4 border border-gray-300 rounded-lg" />
+                        <label htmlFor="title" className="w-full md:w-1/6 text-sm text-gray-700">Title <span className="text-red-700">*</span></label>
+                        <input type="text" placeholder="Title" value={title} onChange={titleChange} className="text-sm w-full md:w-2/5 px-4 py-2 my-2 md:my-0 md:ml-4 border border-gray-300 rounded-md" />
                     </div>
                     <div className="flex flex-wrap w-full items-start mt-4">
-                        <label htmlFor="desc" className="w-full md:w-1/5 text-lg text-gray-700">Description</label>
-                        <textarea placeholder="Description" value={desc} onChange={descChange} className="w-full md:w-2/5 h-32 px-4 py-2 md:ml-4 my-2 md:my-0 border border-gray-300 rounded-lg" />
+                        <label htmlFor="desc" className="w-full md:w-1/6 text-sm text-gray-700">Description</label>
+                        <textarea placeholder="Description" value={desc} onChange={descChange} className="text-sm w-full md:w-2/5 h-32 px-4 py-2 md:ml-4 my-2 md:my-0 border border-gray-300 rounded-md" />
                     </div>
                     <div className="flex flex-wrap w-full items-center mt-4">
+                        <label htmlFor="category" className="w-full md:w-1/6 text-sm text-gray-700">Categories</label>
                         <div className="md:pr-4">
-                            <label htmlFor="date" className="text-lg text-gray-700">Date <span className="text-red-700">*</span></label>
-                            <input type="date" value={startDate} onChange={startdateChange} name="date" className="px-4 py-2 mx-4 md:ml-4 my-2 md:my-0 border border-gray-300 rounded-lg" />
+                            <input type="date" value={startDate} onChange={startdateChange} name="date" className="px-4 py-2 mx-4 md:ml-4 my-2 md:my-0 border border-gray-300 rounded-md" />
                         </div>
                         <div className="md:pr-4">
-                            <label htmlFor="start" className="text-lg text-gray-700">Start Time <span className="text-red-700">*</span></label>
-                            <input type="time" name="start" value={startTime} onChange={startTimeChange} className="px-4 py-2 mx-4 md:ml-4 my-2 md:my-0 border border-gray-300 rounded-lg" />
+                            <label htmlFor="start" className="text-sm text-gray-700">Start Time <span className="text-red-700">*</span></label>
+                            <input type="time" name="start" value={startTime} onChange={startTimeChange} className="px-4 py-2 mx-4 md:ml-4 my-2 md:my-0 border border-gray-300 rounded-md" />
                         </div>
                         <div className="md:pr-4">
-                            <label htmlFor="end" className="text-lg text-gray-700">End Time <span className="text-red-700">*</span></label>
-                            <input type="time" name="start" value={endTime} onChange={endTimeChange} className="px-4 py-2 mx-4 md:ml-4 my-2 md:my-0 border border-gray-300 rounded-lg" />
+                            <label htmlFor="end" className="text-sm text-gray-700">End Time</label>
+                            <input type="time" name="start" value={endTime} onChange={endTimeChange} className="px-4 py-2 mx-4 md:ml-4 my-2 md:my-0 border border-gray-300 rounded-md" />
                         </div>
                     </div>
                     <div className="flex space-x-3 flex-wrap w-full items-center mt-4">
-                        <label htmlFor="category" className="w-full md:w-auto text-lg text-gray-700">Categories</label>
-
-                        <div className="flex-2 md:flex-1 form-categories border border-gray-300 rounded-lg px-2 py-2 mr-4 my-2 md:ml-4 w-full" role="button">
+                        <label htmlFor="category" className="w-full md:w-1/6 text-sm text-gray-700">Categories</label>
+                        <div className="flex-2 md:flex-1 form-categories border border-gray-300 rounded-md px-2 py-2 mr-4 my-2 md:ml-4 w-full" role="button">
                             <Dropdown title={category1} placeholder="Category 1" items={category} onClick={changeCategoryid} idx={1} />
                         </div>
-                        <div className="flex-2 md:flex-1 form-categories border border-gray-300 rounded-lg px-2 py-2 mr-4 my-2 md:ml-4 w-full" role="button">
+                        <div className="flex-2 md:flex-1 form-categories border border-gray-300 rounded-md px-2 py-2 mr-4 my-2 md:ml-4 w-full" role="button">
                             <Dropdown title={category2} placeholder="Category 2" items={category} onClick={changeCategoryid} idx={2} />
                         </div>
-                        <div className="flex-2 md:flex-1 form-categories border border-gray-300 rounded-lg px-2 py-2 mr-4 my-2 md:ml-4 w-full" role="button">
+                        <div className="flex-2 md:flex-1 form-categories border border-gray-300 rounded-md px-2 py-2 mr-4 my-2 md:ml-4 w-full" role="button">
                             <Dropdown title={category3} placeholder="Category 3" items={category} onClick={changeCategoryid} idx={3} />
                         </div>
                     </div>
                     <div className="form-dashboard flex flex-wrap w-full items-center mt-4">
-                        <label htmlFor="fbLink" className="flex-3 md:flex-5 text-lg text-gray-700">Facebook Livestreams Link <span className="text-red-700">*</span></label>
-                        <input type="text" value={fb_url} onChange={fburlChange} placeholder="https://facebook.com/live/url" className="w-auto flex-2 md:flex-1 px-4 py-2 mr-2 md:mx-4 border border-gray-300 rounded-lg" />
+                        <label htmlFor="fbLink" className="w-full md:w-1/6 text-sm text-gray-700">Facebook Livestreams Link <span className="text-red-700">*</span></label>
+                        <input type="text" value={fb_url} onChange={fburlChange} placeholder="https://facebook.com/live/url" className="w-auto flex-2 md:flex-1 px-4 py-2 mr-2 md:mx-4 border border-gray-300 rounded-md" />
                         <FbIcon />
                     </div>
                     <div className="form-dashboard flex flex-wrap w-full items-center mt-4">
-                        <label htmlFor="igLink" className="flex-3 md:flex-5 text-lg text-gray-700">Instagram Livestreams Link <span className="text-red-700">*</span></label>
-                        <input type="text" value={ig_url} onChange={igurlChange} placeholder="https://instagram.com/live/url" className="w-auto flex-2 md:flex-1 px-4 py-2 mr-2 md:mx-4 border border-gray-300 rounded-lg" />
+                        <label htmlFor="igLink" className="w-full md:w-1/6 text-sm text-gray-700">Instagram Livestreams Link</label>
+                        <input type="text" value={ig_url} onChange={igurlChange} placeholder="https://instagram.com/live/url" className="w-auto flex-2 md:flex-1 px-4 py-2 mr-2 md:mx-4 border border-gray-300 rounded-md" />
                         <IgIcon />
                     </div>
                     <div className="form-dashboard flex flex-wrap w-full items-center mt-4">
-                        <label htmlFor="ttLink" className="flex-3 md:flex-5 text-lg text-gray-700">Tiktok Livestreams Link <span className="text-red-700">*</span></label>
-                        <input type="text" value={tiktok_url} onChange={tiktokurlChange} placeholder="https://tiktok.com/live/url" className="w-auto flex-2 md:flex-1 px-4 py-2 mr-2 md:mx-4 border border-gray-300 rounded-lg" />
+                        <label htmlFor="ttLink" className="w-full md:w-1/6 text-sm text-gray-700">Tiktok Livestreams Link</label>
+                        <input type="text" value={tiktok_url} onChange={tiktokurlChange} placeholder="https://tiktok.com/live/url" className="w-auto flex-2 md:flex-1 px-4 py-2 mr-2 md:mx-4 border border-gray-300 rounded-md" />
                         <TtIcon />
                     </div>
                     <div className="form-dashboard flex flex-wrap w-full items-center mt-4">
-                        {/* <label htmlFor="ttLink" className="flex-3 md:flex-5 text-lg text-gray-700">Thumbnail</label>
-                        <input type="file" onChange={mypicChange} className="w-auto flex-2 md:flex-1 px-4 py-2 mr-2 md:mx-4 border border-gray-300 rounded-lg" /> */}
-                        <label htmlFor="ttLink" className="flex-3 md:flex-5 text-lg text-gray-700">Thumbnail</label>
-                        <label className="md:flex-1 md:px-4 md:py-2 md:mr-2 md:mx-4 md:border md:border-gray-300 md:rounded-lg">
+                        {/* <label htmlFor="ttLink" className="flex-3 md:flex-5 text-sm text-gray-700">Thumbnail</label>
+                        <input type="file" onChange={mypicChange} className="w-auto flex-2 md:flex-1 px-4 py-2 mr-2 md:mx-4 border border-gray-300 rounded-md" /> */}
+                        <label htmlFor="ttLink" className="w-full md:w-1/6 text-sm text-gray-700">Thumbnail</label>
+                        <label className="md:flex-1 md:px-4 md:py-2 md:mr-2 md:mx-4 md:border md:border-gray-300 md:rounded-md">
                             <input type="file" onChange={mypicChange} aria-label="File browser thumbnail" />
                             <span className="file-custom"></span>
                         </label>
-                            <UploadIcon className="icon-upload" />
+                        <UploadIcon className="icon-upload" />
                         <br />
                         {mypic && <ImageThumb image={mypic} />}
                     </div>
                     <div className="flex mt-6">
-                        <button className="border border-gray-300 text-red-600 rounded-lg text-lg px-6 py-2 mr-4">Cancel</button>
-                        <button onClick={submit} className="border  text-white font-medium bg-red-600 rounded-lg text-lg px-10 py-2">Save</button>
+                        <Link to={`/livestream/${id}`} className="border border-gray-300 text-red-600 rounded-md text-sm px-6 py-2 mr-4">Cancel</Link>
+                        <button onClick={submit} className="border  text-white font-medium bg-red-600 rounded-md text-sm px-10 py-2">Save</button>
                     </div>
                 </form>
             </div>

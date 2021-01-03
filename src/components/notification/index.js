@@ -22,7 +22,7 @@ const index = React.forwardRef((props, ref) => {
                 </div>
             </div>
             <div className="notif-minute">
-                <p className="text-white font-light text-sm">{moment(props.data.createdAt).fromNow()}</p>
+                <p className="font-light text-sm">{moment(props.data.createdAt).fromNow()}</p>
             </div>
         </div >
     )

@@ -64,7 +64,7 @@ const UserLivestreamVideos = ({ ListVideo }) => {
                             </div>
                             <div className="item-meta xl:px-4 w-full xl:w-2/3">
                                 <h4 className="font-semibold text-lg md:text-xl text-gray-700 break-all">{item.title}</h4>
-                                <p className="font-light mt-2 text-xs md:text-sm text-justify text-gray-700">
+                                <p className="overflow-ellipsis overflow-hidden h-10 break-all font-light mt-2 text-xs md:text-sm text-justify text-gray-700">
                                     {item.description}
                                 </p>
                                 <div className="icon-controller-user flex flex-wrap items-center py-2">

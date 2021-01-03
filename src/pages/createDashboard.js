@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { withRouter } from "react-router";
+import { Link } from "react-router-dom"
 import SideNavbarMerchant from 'components/SideNavbarMerchant'
 import livestream from 'api/livestream';
 import 'react-toastify/dist/ReactToastify.css';
@@ -25,10 +26,10 @@ const CreateDashboard = ({ state }) => {
     const [tiktok_url, setTiktokurl] = useState('')
     const [ig_url, setIgurl] = useState('')
     const [category, setCategory] = useState([])
-    const [categoryid, setCategoryid] = useState({})
+    const [categoryid, setCategoryid] = useState([])
 
     useEffect(() => {
-        
+
         livestream.getCategory().then((res) => {
             const ListCategory = res.data.map((i) => {
                 return { "id": i.id, "value": i.text }
@@ -66,7 +67,18 @@ const CreateDashboard = ({ state }) => {
         setIgurl(e.target.value)
     }
     function changeCategoryid(e, idx) {
-        setCategoryid({ ...categoryid, [idx]: e.id });
+        debugger;
+        let idCat = e ? e.id : ""
+        let arrCat = [...categoryid]
+        let idxCat = arrCat.map((el) => el[idx]).indexOf(idx);
+        if (idx !== -1 && !e) {
+            arrCat.splice(idxCat, 1)
+        }
+        if (e) {
+            setCategoryid([...categoryid, { [idx]: e.id }]);
+        } else {
+            setCategoryid(arrCat)
+        }
     }
 
     //state error handler
@@ -75,10 +87,10 @@ const CreateDashboard = ({ state }) => {
         e.preventDefault();
         setLoading(true)
 
-        let ids = Object.values(categoryid);
+        let ids = categoryid; // Object.values(categoryid);
         let endDate = startDate + " " + endTime;
         let start = startDate + " " + startTime;
-
+        debugger
         let cat = []
         for (const [value] of Object.entries(categoryid)) {
             cat.push(value)
@@ -108,17 +120,18 @@ const CreateDashboard = ({ state }) => {
             return;
         }
 
+        // if (!endTime) {
+        //     setLoading(false)
+        //     MySwal.fire('Validation!', 'End Time cannot be empty.', 'warning');
+        //     return;
+        // }
 
-        if (!endTime) {
-            setLoading(false)
-            MySwal.fire('Validation!', 'End Time cannot be empty.', 'warning');
-            return;
-        }
-
-        if (!ids) {
+        if (ids.length < 1) {
             setLoading(false)
             MySwal.fire('Validation!', 'Category cannot be empty.', 'warning');
             return;
+        } else {
+            ids = ids.map((el, index) => el[index + 1])
         }
 
         if (!fb_url && !tiktok_url && !ig_url) {
@@ -161,73 +174,72 @@ const CreateDashboard = ({ state }) => {
                         <div className="w-full xl:w-4/5">
                             <form>
                                 <div className="flex flex-wrap w-full items-start">
-                                    <label htmlFor="title" className="w-full md:w-1/5 text-lg text-gray-700">Title <span className="text-red-700">*</span></label>
-                                    <input type="text" placeholder="Title" value={titleNew} onChange={titleChange} className="w-full md:w-2/5 px-4 py-2 my-2 md:my-0 md:ml-4 border border-gray-300 rounded-lg" />
+                                    <label htmlFor="title" className="w-full md:w-1/6 text-sm text-gray-700">Title <span className="text-red-700">*</span></label>
+                                    <input type="text" placeholder="Title" value={titleNew} onChange={titleChange} className="text-sm w-full md:w-2/5 px-4 py-2 my-2 md:my-0 md:ml-4 border border-gray-300 rounded-md" />
                                 </div>
                                 <div className="flex flex-wrap w-full items-start mt-4">
-                                    <label htmlFor="desc" className="w-full md:w-1/5 text-lg text-gray-700">Description</label>
-                                    <textarea placeholder="Description" value={descNew} onChange={descChange} className="w-full md:w-2/5 h-32 px-4 py-2 md:ml-4 my-2 md:my-0 border border-gray-300 rounded-lg" />
+                                    <label htmlFor="desc" className="w-full md:w-1/6 text-sm text-gray-700">Description</label>
+                                    <textarea placeholder="Description" value={descNew} onChange={descChange} className="text-sm w-full md:w-2/5 h-32 px-4 py-2 md:ml-4 my-2 md:my-0 border border-gray-300 rounded-md" />
                                 </div>
                                 <div className="flex flex-wrap w-full items-center mt-4">
+                                    <label htmlFor="category" className="w-full md:w-1/6 text-sm text-gray-700">Start Date</label>
                                     <div className="md:pr-4">
-                                        <label htmlFor="date" className="text-lg text-gray-700">Date <span className="text-red-700">*</span></label>
-                                        <input type="date" value={startDate} onChange={startdateChange} name="date" className="px-4 py-2 mx-4 md:ml-4 my-2 md:my-0 border border-gray-300 rounded-lg" />
+                                        <input type="date" value={startDate} onChange={startdateChange} name="date" className="px-4 py-2 mx-4 md:ml-4 my-2 md:my-0 border border-gray-300 rounded-md" />
                                     </div>
                                     <div className="md:pr-4">
-                                        <label htmlFor="start" className="text-lg text-gray-700">Start Time <span className="text-red-700">*</span></label>
-                                        <input type="time" name="start" value={startTime} onChange={startTimeChange} className="px-4 py-2 mx-4 md:ml-4 my-2 md:my-0 border border-gray-300 rounded-lg" />
+                                        <label htmlFor="start" className="text-sm text-gray-700">Start Time <span className="text-red-700">*</span></label>
+                                        <input type="time" name="start" value={startTime} onChange={startTimeChange} className="px-4 py-2 mx-4 md:ml-4 my-2 md:my-0 border border-gray-300 rounded-md" />
                                     </div>
                                     <div className="md:pr-4">
-                                        <label htmlFor="end" className="text-lg text-gray-700">End Time <span className="text-red-700">*</span></label>
-                                        <input type="time" name="start" value={endTime} onChange={endTimeChange} className="px-4 py-2 mx-4 md:ml-4 my-2 md:my-0 border border-gray-300 rounded-lg" />
+                                        <label htmlFor="end" className="text-sm text-gray-700">End Time</label>
+                                        <input type="time" name="start" value={endTime} onChange={endTimeChange} className="px-4 py-2 mx-4 md:ml-4 my-2 md:my-0 border border-gray-300 rounded-md" />
                                     </div>
                                 </div>
                                 <div className="flex space-x-3 flex-wrap w-full items-center mt-4">
-                                    <label htmlFor="category" className="w-full md:w-auto text-lg text-gray-700">Categories</label>
-                                    <div className="flex-2 md:flex-1 form-categories border border-gray-300 rounded-lg px-2 py-2 mr-4 my-2 md:ml-4 w-full" role="button">
-                                        <Dropdown title="Category" placeholder="Category 1" items={category} onClick={changeCategoryid} idx={1} />
+                                    <label htmlFor="category" className="w-full md:w-1/6 text-sm text-gray-700">Categories</label>
+                                    <div className="flex-2 md:flex-1 form-categories border border-gray-300 rounded-md px-2 py-2 mr-4 my-2 md:ml-4 w-full" role="button">
+                                        <Dropdown title="Select..." placeholder="Category 1" items={category} onClick={changeCategoryid} idx={1} />
                                     </div>
-                                    <div className="flex-2 md:flex-1 form-categories border border-gray-300 rounded-lg px-2 py-2 mr-4 my-2 md:ml-4 w-full" role="button">
-                                        <Dropdown title="Category" placeholder="Category 2" items={category} onClick={changeCategoryid} idx={2} />
+                                    <div className="flex-2 md:flex-1 form-categories border border-gray-300 rounded-md px-2 py-2 mr-4 my-2 md:ml-4 w-full" role="button">
+                                        <Dropdown title="Select..." placeholder="Category 2" items={category} onClick={changeCategoryid} idx={2} />
                                     </div>
-                                    <div className="flex-2 md:flex-1 form-categories border border-gray-300 rounded-lg px-2 py-2 mr-4 my-2 md:ml-4 w-full" role="button">
-                                        <Dropdown title="Category" placeholder="Category 3" items={category} onClick={changeCategoryid} idx={3} />
+                                    <div className="flex-2 md:flex-1 form-categories border border-gray-300 rounded-md px-2 py-2 mr-4 my-2 md:ml-4 w-full" role="button">
+                                        <Dropdown title="Select..." placeholder="Category 3" items={category} onClick={changeCategoryid} idx={3} />
                                     </div>
                                 </div>
                                 <div className="form-dashboard flex flex-wrap w-full items-center mt-4">
-                                    <label htmlFor="fbLink" className="flex-3 md:flex-5 text-lg text-gray-700">Facebook Livestreams Link <span className="text-red-700">*</span></label>
-                                    <input type="text" value={fb_url} onChange={fburlChange} placeholder="https://facebook.com/live/url" className="w-auto flex-2 md:flex-1 px-4 py-2 mr-2 md:mx-4 border border-gray-300 rounded-lg" />
+                                    <label htmlFor="fbLink" className="w-full md:w-1/6 text-sm text-gray-700">Facebook Livestreams Link <span className="text-red-700">*</span></label>
+                                    <input type="text" value={fb_url} onChange={fburlChange} placeholder="https://facebook.com/live/url" className="w-auto flex-2 md:flex-1 px-4 py-2 mr-2 md:mx-4 border border-gray-300 rounded-md" />
                                     <FbIcon />
                                 </div>
                                 <div className="form-dashboard flex flex-wrap w-full items-center mt-4">
-                                    <label htmlFor="igLink" className="flex-3 md:flex-5 text-lg text-gray-700">Instagram Livestreams Link <span className="text-red-700">*</span></label>
-                                    <input type="text" value={ig_url} onChange={igurlChange} placeholder="https://instagram.com/live/url" className="w-auto flex-2 md:flex-1 px-4 py-2 mr-2 md:mx-4 border border-gray-300 rounded-lg" />
+                                    <label htmlFor="igLink" className="w-full md:w-1/6 text-sm text-gray-700">Instagram Livestreams Link</label>
+                                    <input type="text" value={ig_url} onChange={igurlChange} placeholder="https://instagram.com/live/url" className="w-auto flex-2 md:flex-1 px-4 py-2 mr-2 md:mx-4 border border-gray-300 rounded-md" />
                                     <IgIcon />
                                 </div>
                                 <div className="form-dashboard flex flex-wrap w-full items-center mt-4">
-                                    <label htmlFor="ttLink" className="flex-3 md:flex-5 text-lg text-gray-700">Tiktok Livestreams Link <span className="text-red-700">*</span></label>
-                                    <input type="text" value={tiktok_url} onChange={tiktokurlChange} placeholder="https://tiktok.com/live/url" className="w-auto flex-2 md:flex-1 px-4 py-2 mr-2 md:mx-4 border border-gray-300 rounded-lg" />
+                                    <label htmlFor="ttLink" className="w-full md:w-1/6 text-sm text-gray-700">Tiktok Livestreams Link</label>
+                                    <input type="text" value={tiktok_url} onChange={tiktokurlChange} placeholder="https://tiktok.com/live/url" className="w-auto flex-2 md:flex-1 px-4 py-2 mr-2 md:mx-4 border border-gray-300 rounded-md" />
                                     <TtIcon />
                                 </div>
                                 <div className="form-dashboard flex flex-wrap w-full items-center mt-4">
-                                    {/* <label htmlFor="ttLink" className="flex-3 md:flex-5 text-lg text-gray-700">Thumbnail</label>
-                        <input type="file" onChange={mypicChange} className="w-auto flex-2 md:flex-1 px-4 py-2 mr-2 md:mx-4 border border-gray-300 rounded-lg" /> */}
-                                    <label htmlFor="ttLink" className="flex-3 md:flex-5 text-lg text-gray-700">Thumbnail</label>
-                                    <label className="md:flex-1 md:px-4 md:py-2 md:mr-2 md:mx-4 md:border md:border-gray-300 md:rounded-lg">
+                                    {/* <label htmlFor="ttLink" className="flex-3 md:flex-5 text-sm text-gray-700">Thumbnail</label>
+                        <input type="file" onChange={mypicChange} className="w-auto flex-2 md:flex-1 px-4 py-2 mr-2 md:mx-4 border border-gray-300 rounded-md" /> */}
+                                    <label htmlFor="ttLink" className="w-full md:w-1/6 text-sm text-gray-700">Thumbnail</label>
+                                    <label className="md:flex-1 md:px-4 md:py-2 md:mr-2 md:mx-4 md:border md:border-gray-300 md:rounded-md">
                                         <input type="file" onChange={mypicChange} aria-label="File browser thumbnail" />
-                                        <span class="file-custom"></span>
+                                        <span className="file-custom"></span>
                                     </label>
-                                        <UploadIcon className="icon-upload" />
+                                    <UploadIcon className="icon-upload" />
                                     <br />
-                                    {mypic && <ImageThumb image={mypic} />}
+                                    {mypic ? <ImageThumb image={mypic} /> : null}
                                 </div>
                                 <div className="flex mt-6">
-                                    <button className="border border-gray-300 text-red-600 rounded-lg text-lg px-6 py-2 mr-4">Cancel</button>
-                                    <button onClick={submit} className="border  text-white font-medium bg-red-600 rounded-lg text-lg px-10 py-2">Save</button>
+                                    <Link to={"/dashboard"} className="border border-gray-300 text-red-600 rounded-md text-sm px-6 py-2 mr-4">Cancel</Link>
+                                    <button onClick={submit} className="border  text-white font-medium bg-red-600 rounded-md text-sm px-10 py-2">Save</button>
                                 </div>
                             </form>
                         </div>
-
                     </div>
                 </div>
             </section>

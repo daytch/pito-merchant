@@ -98,7 +98,7 @@ const Profile = () => {
         <Spinner isLoading={isLoading} className="min-h-screen">
             <section className="min-h-screen flex flex-col xl:flex-row">
                 <SideNavbarMerchant />
-                <div className="py-10 md:py-20 flex flex-col md:flex-row w-full">
+                <div className="py-10 md:pt-10 flex flex-col md:flex-row w-full">
                     <div className="w-full md:w-3/5 xxl:w-1/2 px-4">
                         <div className="flex flex-col xl:flex-row xl:items-center">
                             <img src={avatar} draggable={false} className="rounded-full w-4/5 xl:w-1/3 border-8 mb-4 xl:mb-0 xl:mr-4 border-red-600 mx-auto" alt="" />
@@ -158,11 +158,11 @@ const Profile = () => {
                         <div className="pt-8 flex flex-col px-4">
                             <div className="flex justify-between items-center">
                                 <p className="text-red-600 font-bold text-base">Livestreams History</p>
-                                <Dropdown title="Date" items={MostRecent2} onClick={changeDateid} idx={1} />
-
-                                {/* <Dropdown title="Category" placeholder="Category 1" items={category} onClick={changeDateid} idx={1} /> */}
+                                <div className="w-40">
+                                    <Dropdown title="Date" items={MostRecent2} onClick={changeDateid} idx={1} />
+                                </div>
                             </div>
-                            <div className="pt-6">
+                            <div className="history-vid-profile overflow-auto pt-6">
                                 {
                                     videos && <HistoryLivestreams ListVideo={videos} />
                                 }

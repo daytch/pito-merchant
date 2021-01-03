@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react'
 import Sidebar from 'components/SideNavbarMerchant'
 import Table from 'components/table/index'
 import { Link } from 'react-router-dom'
-import axios from 'configs/axios'
-
+import Support from 'api/support'
+import Spinner from 'components/spinner'
 
 const Supports = () => {
+    const [isLoading, setLoading] = useState(false)
+
     const tableHeadTickets = [
         {
             title: "Ticket Number"
@@ -25,7 +27,8 @@ const Supports = () => {
     const [ticket, setTicket] = useState([])
 
     useEffect(() => {
-       axios.get('/merchant/listTicket').then(e=>{
+        setLoading(true)
+        Support.getList().then(e=>{
            const a = e.data.map(e=>{
                return {
                    ticketNumber: e.id,
@@ -36,16 +39,17 @@ const Supports = () => {
            })
 
            setTicket(a)
+           setLoading(false)
        });
     }, [])
 
     return (
-        <>
+        <Spinner isLoading={isLoading}>
             <section className="min-h-screen flex flex-col xl:flex-row ">
                 <Sidebar />
                 <div className="py-20 px-5 w-full">
                     <div className="tickets flex justify-end">
-                    <Link to="/support/create" className="flex w-full justify-end">
+                    <Link to="/support/create" className="flex w-3/5 justify-end">
                         <button className="bg-red-600 rounded-2xl text-sm xl:text-lg px-6 py-2 w-2/5 md:w-1/4 text-white">New Tickets</button>
                         </Link>
                     </div>
@@ -55,7 +59,7 @@ const Supports = () => {
                 </div>
 
             </section>
-        </>
+        </Spinner>
     )
 }
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Sidebar from 'components/SideNavbarMerchant'
-import { ReactComponent as UploadIcon } from 'assets/images/upload-icon.svg'
+// import { ReactComponent as UploadIcon } from 'assets/images/upload-icon.svg'
 import support from 'api/support';
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
@@ -84,37 +84,37 @@ const CreateSupport = () => {
         <Spinner isLoading={isLoading}>
             <section className="min-h-screen flex flex-col xl:flex-row ">
                 <Sidebar />
-                <div className="lg:py-20 px-5 w-full">
+                <div className="py-10 md:py-20 px-5 w-full">
+                    <h6 className="text-red-600 font-bold text-lg">Create Ticket Support</h6><br />
                     <div className="flex lg:pt-10 overflow-x-auto">
                         <form className="lg:w-2/5">
                             <div className="flex flex-wrap w-full items-start mt-4">
-                                <label htmlFor="title" className="w-full md:w-1/5 text-lg text-gray-700">Subject <span className="text-red-700">*</span></label>
-                                <input type="text" placeholder="Subject" value={subject} onChange={changeSubject} className="w-full md:w-4/5 px-4 py-2 border border-gray-300 rounded-lg" />
+                                <label htmlFor="title" className="w-full md:w-1/5 text-sm text-gray-700">Subject <span className="text-red-700">*</span></label>
+                                <input type="text" placeholder="Subject" value={subject} onChange={changeSubject} className="text-sm w-full md:w-4/5 px-4 py-2 border border-gray-300 rounded-lg" />
                             </div>
                             <div className="flex flex-wrap w-full items-start mt-4">
-                                <label htmlFor="desc" className="w-full md:w-1/5 text-lg text-gray-700">Message <span className="text-red-700">*</span></label>
-                                <textarea placeholder="Message" value={message} onChange={changeMessage} className="w-full md:w-4/5 h-32 px-4 py-2 border border-gray-300 rounded-lg" />
+                                <label htmlFor="desc" className="w-full md:w-1/5 text-sm text-gray-700">Message <span className="text-red-700">*</span></label>
+                                <textarea placeholder="Message" value={message} onChange={changeMessage} className="text-sm w-full md:w-4/5 h-32 px-4 py-2 border border-gray-300 rounded-lg" />
                             </div><br />
                             <div className="flex flex-wrap w-full items-start">
-                                <UploadIcon />
-                                <input type="file" onChange={changeAttachment1} className="w-4/5 xl:w-2/5 px-4 py-2 mx-2 md:mx-4 border border-gray-300 rounded-lg" />
-                            </div><br />
-                            <div className="flex flex-wrap w-full items-start">
+                                <label htmlFor="attachment" className="w-full md:w-1/5 text-sm text-gray-700">Attachment</label>
+                                <input type="file" onChange={changeAttachment1} className="text-xs w-4/5 xl:w-2/5 px-4 py-2 mx-2 md:mx-4 border border-gray-300 rounded-lg" />
+                            </div>
+                            {/* <br /><div className="flex flex-wrap w-full items-start">
                                 <UploadIcon />
                                 <input type="file" onChange={changeAttachment2} className="w-4/5 xl:w-2/5 px-4 py-2 mx-2 md:mx-4 border border-gray-300 rounded-lg" />
                             </div><br />
                             <div className="flex flex-wrap w-full items-start">
                                 <UploadIcon />
                                 <input type="file" onChange={changeAttachment3} className="w-4/5 xl:w-2/5 px-4 py-2 mx-2 md:mx-4 border border-gray-300 rounded-lg" />
-                            </div>
+                            </div> */}
                             <div className="flex mt-6">
-                                <Link to="/support"><button className="border border-gray-300 text-red-600 rounded-lg text-lg px-6 py-2 mr-4">Cancel</button></Link>
-                                <button onClick={submit} className="border lg:w-32 w-full text-white font-medium bg-red-600 rounded-lg text-lg px-10 py-2">Save</button>
+                                <Link to="/support"><button className="border border-gray-300 text-red-600 rounded-lg text-sm px-6 py-2 mr-4">Cancel</button></Link>
+                                <button onClick={submit} className="border lg:w-32 w-full text-white font-medium bg-red-600 rounded-lg text-sm px-10 py-2">Save</button>
                             </div>
                         </form>
                     </div>
                 </div>
-
             </section>
         </Spinner>
     )

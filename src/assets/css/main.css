@@ -95910,9 +95910,31 @@ item:hover figure.item-image-live-detail svg.icon {
     transform: translate(-50%, -50%) !important;
 }
 
+.coolclass {
+    max-height: 0%;
+    transition: 0.5s;
+    overflow: hidden;
+}
+
 @media only screen and (max-width: 600px) {
     .icon-upload {
         display: none;
+    }
+    .livestream-detail-vid {
+        margin-bottom: -115px;
+    }
+}
+
+/**Desktop Query*/
+
+@media only screen and (min-width: 768px) {
+    .category2-livestream {
+        margin-left: 3px;
+        margin-right: 3px;
+        width: fit-content;
+    }
+    .history-vid-profile {
+        height: 48rem;
     }
 }
 
