@@ -16,10 +16,10 @@ import Spinner from 'components/spinner'
 const MySwal = withReactContent(Swal)
 const ProfileEdit = () => {
 
-    const [data, setData] = useState([]);
+    const [data, setData] = useState('');
     const [mypic, setMypic] = useState('')
     const [category, setCategory] = useState(data.category)
-    const [categoryid, setCategoryid] = useState({})
+    const [categoryid, setCategoryid] = useState([])
     const [isLoading, setLoading] = useState(true)
     const [newPass, setnewPass] = useState('')
     const [rePass, setrePass] = useState('')
@@ -29,7 +29,7 @@ const ProfileEdit = () => {
     const [cat2, setCat2] = useState('Select...')
     const [cat3, setCat3] = useState('Select...')
     const [ava, setAva] = useState('')
-    const [_, forceUpdate] = useReducer((x) => x + 1, 0);
+    const [value, setValue] = useState(0);
 
     function handleCurrent(data) {
         setcurrentPass(data)
@@ -39,6 +39,15 @@ const ProfileEdit = () => {
     }
     function handleRe(data) {
         setrePass(data)
+    }
+
+    function useForceUpdate(c1, c2, c3) {// integer state
+        return () => {
+            setValue(value => value + 1)
+            setCat1(c1)
+            setCat2(c2)
+            setCat3(c3)
+        }; // update the state to force render
     }
 
     const getData = () => {
@@ -59,16 +68,18 @@ const ProfileEdit = () => {
                     value: item.category_id
                 }
             })
-            var result = {};
+            var result = [];
+            let idx = 1;
             for (var i = 0; i < c.length; i++) {
-                result[c[i].key] = c[i].value;
+                result = [...result, { [idx]: c[i].value }];
+                idx = idx + i
             }
+            
             setCategoryid(result)
             setLoading(false);
-            forceUpdate()
+            // useForceUpdate(c1, c2, c3)
         })
     }
-    console.log(data.img_avatar)
 
     useEffect(() => {
         livestream.getCategory().then((res) => {
@@ -85,15 +96,28 @@ const ProfileEdit = () => {
         setMypic(e.target.files[0])
         data.img_avatar = URL.createObjectURL(e.target.files[0])
     }
+
     function changeCategoryid(e, idx) {
-        setCategoryid({ ...categoryid, [idx]: e.id });
+        console.log(typeof categoryid)
+        let arrCat = [...categoryid]
+        let idxCat = arrCat.map((el) => el[idx]).indexOf(idx);
+        if (idx !== -1 && !e) {
+            arrCat.splice(idxCat, 1)
+        }
+        if (e) {
+            setCategoryid([...categoryid, { [idx]: e.id }]);
+        } else {
+            setCategoryid(arrCat)
+        }
     }
+
     function handleEdit() {
         setLoading(true);
         let cat = []
         for (const [key, value] of Object.entries(categoryid)) {
             cat.push(value)
         }
+        
         if (new Set(cat).size !== cat.length) {
             setLoading(false)
             MySwal.fire('Validation!', 'Cannot pick same categories.', 'warning');
@@ -147,26 +171,26 @@ const ProfileEdit = () => {
                 <ToastContainer position="top-right" />
                 <div className="py-10 md:py-10 flex flex-col md:flex-row w-full">
                     <div className="w-full md:w-3/5 xxl:w-1/2 px-4">
-                        <div className="flex flex-col xl:flex-row xl:items-center">
+                        <div className="flex flex-col xl:flex-row md:pl-24 items-center">
                             <div className=" w-4/5 xl:w-1/3 ">
                                 {
                                     data.img_avatar ? (<img src={data.img_avatar ? data.img_avatar : ava} draggable={false} className="rounded-full border-8 mb-4 xl:mb-0 xl:mr-4 border-red-600 mx-auto" alt={data.name} />) :
                                         (<Avatar name={data.name} className="mx-auto" round={true} size="125px" />)
                                 }
                                 <br />
-                                <h3 className="mr-8 text-md font-light flex flex-row-reverse">{data.email}</h3>
+                                <h3 className="mr-8 text-sm font-light flex flex-row-reverse">{data && data.email}</h3>
                             </div>
                             <div className="xl:px-8 w-3/6">
                                 <div className="flex flex-wrap w-full pt-2">
                                     <input hidden type="file" onChange={(e) => mypicChange(e)} id="uploadAva" />
-                                    <button onClick={UploadNewAva} className="px-4 py-1 w-full bg-red-600 shadow-md my-2 text-white text-md rounded-xl">Upload New Avatar</button>
-                                    <button className="px-6 py-1 w-full border border-red-600 shadow-md my-2 text-red-600 text-md rounded-xl">Delete Avatar</button>
+                                    <button onClick={UploadNewAva} className="px-4 py-1 w-full bg-red-600 shadow-md my-2 text-white text-sm rounded-xl">Upload New Avatar</button>
+                                    <button className="px-6 py-1 w-full border border-red-600 shadow-md my-2 text-red-600 text-sm rounded-xl">Delete Avatar</button>
                                     <div className="user-detail w-full justify-center pt-2">
                                         {
-                                            loginBy === "facebook" ? (<span className="flex justify-center text-sm md:text-base shadow-md px-2 mt-2 py-1 border border-gray-50 rounded-xl bg white text-gray-700">
+                                            loginBy === "facebook" ? (<span className="text-sm flex justify-center text-sm md:text-base shadow-md px-2 mt-2 py-1 border border-gray-50 rounded-xl bg white text-gray-700">
                                                 <FbIcon className="mr-3" /> Facebook </span>) :   // if(a) then `b`
-                                                loginBy === "facebook" ? (<span className="flex justify-center text-sm md:text-base shadow-md px-2 mt-2 py-1 border border-gray-50 rounded-xl bg white text-gray-700">
-                                                    <GoogleIcon className="mr-3" /> Google </span>) : (<span className="flex justify-center text-sm md:text-base shadow-md px-2 mt-2 py-1 border border-gray-50 rounded-xl bg white text-gray-700">
+                                                loginBy === "facebook" ? (<span className="text-sm flex justify-center text-sm md:text-base shadow-md px-2 mt-2 py-1 border border-gray-50 rounded-xl bg white text-gray-700">
+                                                    <GoogleIcon className="mr-3" /> Google </span>) : (<span className="text-sm flex justify-center text-sm md:text-base shadow-md px-2 mt-2 py-1 border border-gray-50 rounded-xl bg white text-gray-700">
                                                         <EmailIcon className="mr-3" /> Email </span>)
                                         }
                                     </div>
@@ -179,49 +203,49 @@ const ProfileEdit = () => {
                             <h6 className="text-red-600 font-semibold text-lg">Edit Profile</h6>
                             <div className="flex flex-wrap w-full items-start my-2">
                                 <label htmlFor="name" className="w-full md:w-1/4 text-sm text-gray-700">Display Name</label>
-                                <input type="text" value={data.name} onChange={(e) => {
+                                <input type="text" value={data && data.name} onChange={(e) => {
                                     handleChange('name', e.target.value)
                                 }} placeholder="Your Display Name" className="w-full text-sm md:w-4/6 px-2 py-1 my-2 md:my-0 md:ml-4 border border-gray-300 rounded-md" />
                             </div>
                             <div className="flex flex-wrap w-full items-start my-2">
                                 <label htmlFor="about" className="w-full md:w-1/4 text-sm text-gray-700">About</label>
-                                <textarea value={data.about} onChange={(e) => {
+                                <textarea value={data && data.about} onChange={(e) => {
                                     handleChange('about', e.target.value)
                                 }} placeholder="Describe Your Self" className="w-full text-sm md:w-4/6 px-2 py-1 h-32 my-2 md:my-0 md:ml-4 border border-gray-300 rounded-lg" />
                             </div>
                             <div className="flex flex-wrap w-full items-start my-2">
                                 <label htmlFor="name" className="w-full md:w-1/4 text-sm text-gray-700">Category 1</label>
                                 <div className="w-full text-sm md:w-4/6 px-2 py-1 my-2 md:my-0 md:ml-4 border border-gray-300 rounded-md" >
-                                    <Dropdown title={cat2} placeholder="Category 1" items={category} onClick={changeCategoryid} idx={1} />
+                                    <Dropdown isNeedReset={true} title={cat1} placeholder="Category 1" items={category} onClick={changeCategoryid} idx={1} />
                                 </div>
                             </div>
                             <div className="flex flex-wrap w-full items-start my-2">
                                 <label htmlFor="name" className="w-full md:w-1/4 text-sm text-gray-700">Category 2</label>
                                 <div className="w-full text-sm md:w-4/6 px-2 py-1 my-2 md:my-0 md:ml-4 border border-gray-300 rounded-md" >
-                                    <Dropdown title={cat2} placeholder="Category 2" items={category} onClick={changeCategoryid} idx={2} />
+                                    <Dropdown isNeedReset={true} title={cat2} placeholder="Category 2" items={category} onClick={changeCategoryid} idx={2} />
                                 </div>
                             </div>
                             <div className="flex flex-wrap w-full items-start my-2">
                                 <label htmlFor="name" className="w-full md:w-1/4 text-sm text-gray-700">Category 3</label>
                                 <div className="w-full text-sm md:w-4/6 px-2 py-1 my-2 md:my-0 md:ml-4 border border-gray-300 rounded-md" >
-                                    <Dropdown title={cat2} placeholder="Category 3" items={category} onClick={changeCategoryid} idx={3} />
+                                    <Dropdown isNeedReset={true} title={cat3} placeholder="Category 3" items={category} onClick={changeCategoryid} idx={3} />
                                 </div>
                             </div>
                             <div className="flex flex-wrap w-full items-start my-2">
                                 <label htmlFor="name" className="w-full md:w-1/4 text-sm text-gray-700">Facebook Page Link</label>
-                                <input type="text" value={data.fb_url} onChange={(e) => {
+                                <input type="text" value={data && data.fb_url} onChange={(e) => {
                                     handleChange('fb_url', e.target.value)
                                 }} placeholder="https://facebook.com" className="w-full text-sm md:w-4/6 px-2 py-1 my-2 md:my-0 md:ml-4 border border-gray-300 rounded-md" />
                             </div>
                             <div className="flex flex-wrap w-full items-start my-2">
                                 <label htmlFor="name" className="w-full md:w-1/4 text-sm text-gray-700">Instagram Page Link</label>
-                                <input type="text" value={data.ig_url} onChange={(e) => {
+                                <input type="text" value={data && data.ig_url} onChange={(e) => {
                                     handleChange('ig_url', e.target.value)
                                 }} placeholder="https://instagram.com" className="w-full text-sm md:w-4/6 px-2 py-1 my-2 md:my-0 md:ml-4 border border-gray-300 rounded-md" />
                             </div>
                             <div className="flex flex-wrap w-full items-start my-2">
                                 <label htmlFor="name" className="w-full md:w-1/4 text-sm text-gray-700">Tiktok Page Link</label>
-                                <input type="text" value={data.tiktok_url} onChange={(e) => {
+                                <input type="text" value={data && data.tiktok_url} onChange={(e) => {
                                     handleChange('tiktok_url', e.target.value)
                                 }} placeholder="https://tiktok.com" className="w-full text-sm md:w-4/6 px-2 py-1 my-2 md:my-0 md:ml-4 border border-gray-300 rounded-md" />
                             </div>

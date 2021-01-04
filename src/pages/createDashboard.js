@@ -67,7 +67,8 @@ const CreateDashboard = ({ state }) => {
         setIgurl(e.target.value)
     }
     function changeCategoryid(e, idx) {
-        debugger;
+        
+        console.log(typeof categoryid)
         let idCat = e ? e.id : ""
         let arrCat = [...categoryid]
         let idxCat = arrCat.map((el) => el[idx]).indexOf(idx);
@@ -90,7 +91,7 @@ const CreateDashboard = ({ state }) => {
         let ids = categoryid; // Object.values(categoryid);
         let endDate = startDate + " " + endTime;
         let start = startDate + " " + startTime;
-        debugger
+        
         let cat = []
         for (const [value] of Object.entries(categoryid)) {
             cat.push(value)
@@ -183,14 +184,14 @@ const CreateDashboard = ({ state }) => {
                                 </div>
                                 <div className="flex flex-wrap w-full items-center mt-4">
                                     <label htmlFor="category" className="w-full md:w-1/6 text-sm text-gray-700">Start Date</label>
-                                    <div className="md:pr-4">
+                                    <div className="md:pr-2">
                                         <input type="date" value={startDate} onChange={startdateChange} name="date" className="px-4 py-2 mx-4 md:ml-4 my-2 md:my-0 border border-gray-300 rounded-md" />
                                     </div>
-                                    <div className="md:pr-4">
+                                    <div className="md:pr-2">
                                         <label htmlFor="start" className="text-sm text-gray-700">Start Time <span className="text-red-700">*</span></label>
                                         <input type="time" name="start" value={startTime} onChange={startTimeChange} className="px-4 py-2 mx-4 md:ml-4 my-2 md:my-0 border border-gray-300 rounded-md" />
                                     </div>
-                                    <div className="md:pr-4">
+                                    <div className="md:pr-2">
                                         <label htmlFor="end" className="text-sm text-gray-700">End Time</label>
                                         <input type="time" name="start" value={endTime} onChange={endTimeChange} className="px-4 py-2 mx-4 md:ml-4 my-2 md:my-0 border border-gray-300 rounded-md" />
                                     </div>
@@ -198,13 +199,13 @@ const CreateDashboard = ({ state }) => {
                                 <div className="flex space-x-3 flex-wrap w-full items-center mt-4">
                                     <label htmlFor="category" className="w-full md:w-1/6 text-sm text-gray-700">Categories</label>
                                     <div className="flex-2 md:flex-1 form-categories border border-gray-300 rounded-md px-2 py-2 mr-4 my-2 md:ml-4 w-full" role="button">
-                                        <Dropdown title="Select..." placeholder="Category 1" items={category} onClick={changeCategoryid} idx={1} />
+                                        <Dropdown isNeedReset={true} title="Select..." placeholder="Category 1" items={category} onClick={changeCategoryid} idx={1} />
                                     </div>
                                     <div className="flex-2 md:flex-1 form-categories border border-gray-300 rounded-md px-2 py-2 mr-4 my-2 md:ml-4 w-full" role="button">
-                                        <Dropdown title="Select..." placeholder="Category 2" items={category} onClick={changeCategoryid} idx={2} />
+                                        <Dropdown isNeedReset={true} title="Select..." placeholder="Category 2" items={category} onClick={changeCategoryid} idx={2} />
                                     </div>
                                     <div className="flex-2 md:flex-1 form-categories border border-gray-300 rounded-md px-2 py-2 mr-4 my-2 md:ml-4 w-full" role="button">
-                                        <Dropdown title="Select..." placeholder="Category 3" items={category} onClick={changeCategoryid} idx={3} />
+                                        <Dropdown isNeedReset={true} title="Select..." placeholder="Category 3" items={category} onClick={changeCategoryid} idx={3} />
                                     </div>
                                 </div>
                                 <div className="form-dashboard flex flex-wrap w-full items-center mt-4">

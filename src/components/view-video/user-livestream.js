@@ -11,10 +11,12 @@ import { ReactComponent as FbIcon } from 'assets/images/fb-icon.svg'
 import { ReactComponent as IgIcon } from 'assets/images/ig-icon.svg'
 import { ReactComponent as TtIcon } from 'assets/images/tiktok-icon.svg'
 import Modal from 'react-modal'
-import  DefaultImg from 'assets/images/default.svg'
+import DefaultImg from 'assets/images/default.svg'
 Modal.setAppElement('*'); // suppresses modal-related test warnings.
+import { CopyToClipboard } from 'react-copy-to-clipboard'
+import moment from 'moment'
 
-const UserLivestreamVideos = ({ ListVideo }) => {
+const UserLivestreamVideos = ({ displayToolTip, ListVideo }) => {
 
     const [dataModal, setDataModal] = useState('');
     const [modalIsOpen, setIsOpen] = useState(false)
@@ -43,9 +45,10 @@ const UserLivestreamVideos = ({ ListVideo }) => {
     };
 
     return (
-        <>
+        <div>
             {
                 ListVideo.map((item, index) => {
+                    var duration = moment.utc(moment(item.end_time).diff(moment(item.start_time))).format("HH:mm:ss")
                     return (
                         <div key={index} className="mt-8 flex flex-wrap xl:flex-no-wrap">
                             <div className="flex">
@@ -53,7 +56,7 @@ const UserLivestreamVideos = ({ ListVideo }) => {
                                     <Link to={`/livestream/${item.id}`} className="link-wrapped">
                                         <figure className="item-image-user">
                                             <div className="minute-user py-2 px-2">
-                                                <p className="font-medium text-sm text-white float-right">30:32</p>
+                                                <p className="font-medium text-sm text-white float-right">{duration}</p>
                                             </div>
                                             <PlayIcon style={{ transition: "all .15s ease" }}
                                                 onClick={() => openModal(item.iframe)} className="icon" />
@@ -106,7 +109,9 @@ const UserLivestreamVideos = ({ ListVideo }) => {
                                         item.tiktok_url && (<button style={{ transition: "all .15s ease" }}
                                             onClick={() => openModal(item.tiktok_url)}><TtIcon className="mr-4" /></button>)
                                     }
-                                    <button href=""><ShareIconMobile className="mr-4" /></button>
+                                    <CopyToClipboard text={'Shared URL here'}>
+                                        <button onClick={displayToolTip} href=""><ShareIconMobile className="mr-4" /></button>
+                                    </CopyToClipboard>
                                 </div>
 
                                 <Modal
@@ -136,7 +141,7 @@ const UserLivestreamVideos = ({ ListVideo }) => {
                     )
                 })
             }
-        </>)
+        </div>)
 }
 
 export default UserLivestreamVideos;

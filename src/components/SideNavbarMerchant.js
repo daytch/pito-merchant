@@ -28,11 +28,7 @@ const SideNavbarMerchant = () => {
         if (token) {
             toast.success('you have successfully logged out')
             localStorage.clear();
-            window.location.reload();
-            // setTimeout(() => {
-            //     localStorage.removeItem('PITO:merchant-token')
-            //     window.location.reload();
-            // }, 3000);
+            window.location.href = "/"
         }
     }
 

@@ -93,11 +93,9 @@ const EditSupport = (props) => {
                                     <div className="flex flex-wrap items-start mt-4">
                                         <textarea onChange={e => handleChange(e.target.value)} placeholder="Message" className="w-full md:w-4/5 h-32 px-4 py-2 border border-gray-300 rounded-lg" />
                                     </div>
-                                    <br />
-                                    <div className="w-48">
+                                    <div className="w-40 form-categories border border-gray-300 rounded-md px-2 py-2 mr-4 my-2" role="button">
                                         <Dropdown title="Open" items={items} />
                                     </div>
-                                    <br />
                                     <div className="flex">
                                         <Link to={"/support"} className="border border-gray-300 text-red-600 rounded-md text-lg px-6 py-2 mr-4">Back</Link>
                                         <button onClick={handleSubmit} className="border lg:w-32 w-full text-white font-medium bg-red-600 rounded-lg text-lg px-10 py-2">Reply</button>

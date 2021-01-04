@@ -187,13 +187,13 @@ const Edit = ({ data, openLoading, closeLoading }) => {
                     <div className="flex space-x-3 flex-wrap w-full items-center mt-4">
                         <label htmlFor="category" className="w-full md:w-1/6 text-sm text-gray-700">Categories</label>
                         <div className="flex-2 md:flex-1 form-categories border border-gray-300 rounded-md px-2 py-2 mr-4 my-2 md:ml-4 w-full" role="button">
-                            <Dropdown title={category1} placeholder="Category 1" items={category} onClick={changeCategoryid} idx={1} />
+                            <Dropdown isNeedReset={true} title={category1} placeholder="Category 1" items={category} onClick={changeCategoryid} idx={1} />
                         </div>
                         <div className="flex-2 md:flex-1 form-categories border border-gray-300 rounded-md px-2 py-2 mr-4 my-2 md:ml-4 w-full" role="button">
-                            <Dropdown title={category2} placeholder="Category 2" items={category} onClick={changeCategoryid} idx={2} />
+                            <Dropdown isNeedReset={true} title={category2} placeholder="Category 2" items={category} onClick={changeCategoryid} idx={2} />
                         </div>
                         <div className="flex-2 md:flex-1 form-categories border border-gray-300 rounded-md px-2 py-2 mr-4 my-2 md:ml-4 w-full" role="button">
-                            <Dropdown title={category3} placeholder="Category 3" items={category} onClick={changeCategoryid} idx={3} />
+                            <Dropdown isNeedReset={true} title={category3} placeholder="Category 3" items={category} onClick={changeCategoryid} idx={3} />
                         </div>
                     </div>
                     <div className="form-dashboard flex flex-wrap w-full items-center mt-4">

@@ -26,6 +26,23 @@ const Profile = () => {
     const [fav, setFav] = useState();
     const [share, setShare] = useState();
     const [view, setView] = useState();
+    const [tipe, setTipe] = useState('')
+    const [value, setValue] = useState(0);
+    const [phoneTooltip, setPhoneTooltip] = useState({
+        show: false,
+        x: 0,
+        y: 0,
+        orientLeft: false
+    })
+
+    const displayToolTip = () => {
+        if (!phoneTooltip.show) {
+            setPhoneTooltip(prev => ({ ...prev, show: true })); // show tooltip
+            setTimeout(() => {
+                setPhoneTooltip(prev => ({ ...prev, show: false })); // remove/hide tooltip
+            }, 1500);
+        }
+    }
 
     useEffect(() => {
         User.getProfile().then((res) => {
@@ -59,24 +76,28 @@ const Profile = () => {
     }, [])
 
     function changeDateid(e) {
-
+        setTipe(e.value)
+        let arrVideos = []
         switch (e.value) {
             case "Date":
-                setVideos(videos.sort((a, b) => (moment(a.start_time).isAfter(b.start_time)) ? 1 : -1));
+                arrVideos = videos.sort((a, b) => (moment(a.start_time).isAfter(b.start_time)) ? 1 : -1);
                 break;
             case "Views":
-                setVideos(videos.sort((a, b) => (a.views > b.views) ? 1 : -1));
+                arrVideos = videos.sort((a, b) => (a.views > b.views) ? 1 : -1);
                 break;
             case "Favourites":
-                setVideos(videos.sort((a, b) => (a.likes > b.likes) ? 1 : -1));
+                arrVideos = videos.sort((a, b) => (a.likes > b.likes) ? 1 : -1);
                 break;
             default:
-                setVideos(videos.sort((a, b) => (a.id > b.id) ? 1 : -1));
+                arrVideos = videos.sort((a, b) => (a.id > b.id) ? 1 : -1);
                 break;
-
         }
+        setVideos(arrVideos)
+        useForceUpdate()
     }
-
+    function useForceUpdate() {// integer state
+        return () => setValue(value => value + 1); // update the state to force render
+    }
     const MostRecent2 = [
         {
             id: 1,
@@ -158,13 +179,16 @@ const Profile = () => {
                         <div className="pt-8 flex flex-col px-4">
                             <div className="flex justify-between items-center">
                                 <p className="text-red-600 font-bold text-base">Livestreams History</p>
-                                <div className="w-40">
+                                <div className="w-40 form-categories border border-gray-300 rounded-md px-2 py-2 mr-4 my-2" role="button">
                                     <Dropdown title="Date" items={MostRecent2} onClick={changeDateid} idx={1} />
                                 </div>
                             </div>
+                            {
+                                phoneTooltip.show && (<h3 style={{ color: 'green', textAlign: 'center' }}>URL copied.</h3>)
+                            }
                             <div className="history-vid-profile overflow-auto pt-6">
                                 {
-                                    videos && <HistoryLivestreams ListVideo={videos} />
+                                    videos && <HistoryLivestreams displayToolTip={displayToolTip} ListVideo={videos} />
                                 }
                             </div>
                         </div>
