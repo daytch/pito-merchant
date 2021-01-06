@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import SideNavbarMerchant from 'components/SideNavbarMerchant'
 import Edit from 'components/forms/edit'
 import Spinner from 'components/spinner'
@@ -10,7 +10,9 @@ const EditDashboard = ({ match, location }) => {
     function openLoading() { setLoading(true) }
 
     function closeLoading() { setLoading(false) }
-
+    useEffect(() => {
+debugger;
+    })
     return (
         <Spinner isLoading={isLoading} className="min-h-screen">
             <section className="min-h-screen flex flex-col xl:flex-row">

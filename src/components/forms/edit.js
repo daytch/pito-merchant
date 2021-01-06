@@ -15,12 +15,13 @@ import moment from 'moment'
 const MySwal = withReactContent(Swal)
 
 const Edit = ({ data, openLoading, closeLoading }) => {
-
+ 
+    console.log(data)
     const { id } = useParams()
     const [mypic, setMypic] = useState('')
-    const [startDate, setStartDate] = useState(moment(data.start_time).format("MM/DD/YYYY"))
+    const [startDate, setStartDate] = useState(moment(data.start_time).format("yyyy-MM-DD"))
     const [startTime, setStartTime] = useState(moment(data.start_time).format("hh:mm"))
-    const [endTime, setEndTime] = useState('')
+    const [endTime, setEndTime] = useState(moment(data.end_time).format("hh:mm"))
     const [title, setTitle] = useState(data.title)
     const [desc, setDesc] = data.desc ? useState(data.desc) : useState(data.caption)
     const [category1] = useState(data.category1)
@@ -33,7 +34,7 @@ const Edit = ({ data, openLoading, closeLoading }) => {
     const [category, setCategory] = useState(data.category)
     const [categoryid, setCategoryid] = useState({})
 
-    useEffect(() => {
+    useEffect(() => {       
         livestream.getCategory().then((res) => {
             const ListCategory = res.data.map((i) => {
                 return { "id": i.id, "value": i.text }
@@ -80,7 +81,7 @@ const Edit = ({ data, openLoading, closeLoading }) => {
     const submit = (e) => {
         e.preventDefault();
         openLoading()
-
+debugger;
         let ids = Object.values(categoryid);
         let endDate = startDate + " " + endTime;
         let start = startDate + " " + startTime;
@@ -114,12 +115,11 @@ const Edit = ({ data, openLoading, closeLoading }) => {
             return;
         }
 
-
-        // if (!endTime) {
-        //     closeLoading()
-        //     MySwal.fire('Validation!', 'End Time cannot be empty.', 'warning');
-        //     return;
-        // }
+        if (endTime && startTime > endTime) {
+            closeLoading()
+            MySwal.fire('Validation!', 'End Time cannot less than Start Time.', 'warning');
+            return;
+        }
 
         if (!ids) {
             closeLoading()
@@ -171,17 +171,17 @@ const Edit = ({ data, openLoading, closeLoading }) => {
                         <textarea placeholder="Description" value={desc} onChange={descChange} className="text-sm w-full md:w-2/5 h-32 px-4 py-2 md:ml-4 my-2 md:my-0 border border-gray-300 rounded-md" />
                     </div>
                     <div className="flex flex-wrap w-full items-center mt-4">
-                        <label htmlFor="category" className="w-full md:w-1/6 text-sm text-gray-700">Categories</label>
+                        <label htmlFor="date" className="w-full md:w-1/6 text-sm text-gray-700">Date</label>
                         <div className="md:pr-4">
-                            <input type="date" value={startDate} onChange={startdateChange} name="date" className="px-4 py-2 mx-4 md:ml-4 my-2 md:my-0 border border-gray-300 rounded-md" />
+                            <input type="date" value={startDate} onChange={startdateChange} name="date" className="text-sm px-4 py-2 mx-4 md:ml-4 my-2 md:my-0 border border-gray-300 rounded-md" />
                         </div>
                         <div className="md:pr-4">
                             <label htmlFor="start" className="text-sm text-gray-700">Start Time <span className="text-red-700">*</span></label>
-                            <input type="time" name="start" value={startTime} onChange={startTimeChange} className="px-4 py-2 mx-4 md:ml-4 my-2 md:my-0 border border-gray-300 rounded-md" />
+                            <input type="time" name="start" value={startTime} onChange={startTimeChange} className="text-sm px-4 py-2 mx-4 md:ml-4 my-2 md:my-0 border border-gray-300 rounded-md" />
                         </div>
                         <div className="md:pr-4">
                             <label htmlFor="end" className="text-sm text-gray-700">End Time</label>
-                            <input type="time" name="start" value={endTime} onChange={endTimeChange} className="px-4 py-2 mx-4 md:ml-4 my-2 md:my-0 border border-gray-300 rounded-md" />
+                            <input type="time" name="start" value={endTime} onChange={endTimeChange} className="text-sm px-4 py-2 mx-4 md:ml-4 my-2 md:my-0 border border-gray-300 rounded-md" />
                         </div>
                     </div>
                     <div className="flex space-x-3 flex-wrap w-full items-center mt-4">

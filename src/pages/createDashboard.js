@@ -120,12 +120,12 @@ const CreateDashboard = ({ state }) => {
             MySwal.fire('Validation!', 'Start Time cannot be empty.', 'warning');
             return;
         }
-
-        // if (!endTime) {
-        //     setLoading(false)
-        //     MySwal.fire('Validation!', 'End Time cannot be empty.', 'warning');
-        //     return;
-        // }
+     
+        if (endTime && startTime > endTime) {
+            closeLoading()
+            MySwal.fire('Validation!', 'End Time cannot less than Start Time.', 'warning');
+            return;
+        }
 
         if (ids.length < 1) {
             setLoading(false)
