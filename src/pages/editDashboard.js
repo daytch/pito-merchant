@@ -11,7 +11,7 @@ const EditDashboard = ({ match, location }) => {
 
     function closeLoading() { setLoading(false) }
     useEffect(() => {
-debugger;
+
     })
     return (
         <Spinner isLoading={isLoading} className="min-h-screen">

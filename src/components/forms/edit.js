@@ -11,17 +11,17 @@ import 'react-toastify/dist/ReactToastify.css';
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import moment from 'moment'
+import Converter from 'configs/moment/DatetimeConverter'
 
 const MySwal = withReactContent(Swal)
 
 const Edit = ({ data, openLoading, closeLoading }) => {
- 
-    console.log(data)
+
     const { id } = useParams()
     const [mypic, setMypic] = useState('')
-    const [startDate, setStartDate] = useState(moment(data.start_time).format("yyyy-MM-DD"))
-    const [startTime, setStartTime] = useState(moment(data.start_time).format("hh:mm"))
-    const [endTime, setEndTime] = useState(moment(data.end_time).format("hh:mm"))
+    const [startDate, setStartDate] = useState(moment(Converter.convertToLocal(data.dataVideos[0].date)).format("yyyy-MM-DD"))
+    const [startTime, setStartTime] = useState(moment(Converter.convertToLocal(data.dataVideos[0].date)).format("hh:mm"))
+    const [endTime, setEndTime] = useState(moment(Converter.convertToLocal(data.dataVideos[0].end_time)).format("hh:mm"))
     const [title, setTitle] = useState(data.title)
     const [desc, setDesc] = data.desc ? useState(data.desc) : useState(data.caption)
     const [category1] = useState(data.category1)
@@ -33,8 +33,8 @@ const Edit = ({ data, openLoading, closeLoading }) => {
     const [ig_url, setIgurl] = useState(data.tiktok)
     const [category, setCategory] = useState(data.category)
     const [categoryid, setCategoryid] = useState({})
-
-    useEffect(() => {       
+    
+    useEffect(() => {
         livestream.getCategory().then((res) => {
             const ListCategory = res.data.map((i) => {
                 return { "id": i.id, "value": i.text }
@@ -81,7 +81,7 @@ const Edit = ({ data, openLoading, closeLoading }) => {
     const submit = (e) => {
         e.preventDefault();
         openLoading()
-debugger;
+        
         let ids = Object.values(categoryid);
         let endDate = startDate + " " + endTime;
         let start = startDate + " " + startTime;
@@ -109,6 +109,14 @@ debugger;
             return;
         }
 
+        var date = new Date();
+        date.setDate(date.getDate() + 7);
+        if(moment(startDate).isSameOrAfter(date, 'day')){
+            closeLoading()
+            MySwal.fire('Validation!', 'Start Date cannot more than a week.', 'warning');
+            return;
+        }
+
         if (!startTime) {
             closeLoading()
             MySwal.fire('Validation!', 'Start Time cannot be empty.', 'warning');
@@ -127,6 +135,12 @@ debugger;
             return;
         }
 
+        if (!fb_url) {
+            setLoading(false)
+            MySwal.fire('Validation!', 'Facebook link video cannot be empty.', 'warning');
+            return;
+        }
+
         if (!fb_url && !tiktok_url && !ig_url) {
             closeLoading()
             MySwal.fire('Validation!', 'Link streaming video cannot be empty.', 'warning');
@@ -136,8 +150,8 @@ debugger;
         const formData = new FormData();
         formData.append("videoId", id);
         formData.append("mypic", mypic);
-        formData.append("startDate", start);
-        formData.append("endDate", endDate);
+        formData.append("startDate", Converter.convertToUTC(start));
+        formData.append("endDate", Converter.convertToUTC(endDate));
         formData.append("title", title);
         formData.append("desc", desc);
         formData.append("fb_url", fb_url);

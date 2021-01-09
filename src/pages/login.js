@@ -45,6 +45,7 @@ const Login = ({ history }) => {
 
     //Check tokens if ready
     useEffect(() => {
+        
         if (token) {
             history.push("/dashboard")
         }

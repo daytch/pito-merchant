@@ -12,6 +12,7 @@ import { ReactComponent as TtIcon } from 'assets/images/tiktok-icon.svg'
 import { ReactComponent as UploadIcon } from 'assets/images/upload-icon.svg'
 import Dropdown from 'components/forms/dropdown'
 import Spinner from 'components/spinner'
+import moment from 'moment'
 
 const MySwal = withReactContent(Swal)
 const CreateDashboard = ({ state }) => {
@@ -31,6 +32,7 @@ const CreateDashboard = ({ state }) => {
     useEffect(() => {
 
         livestream.getCategory().then((res) => {
+            
             const ListCategory = res.data.map((i) => {
                 return { "id": i.id, "value": i.text }
             })
@@ -114,6 +116,14 @@ const CreateDashboard = ({ state }) => {
             MySwal.fire('Validation!', 'Start Date cannot be empty.', 'warning');
             return;
         }
+debugger;
+        var date = new Date();
+        date.setDate(date.getDate() + 7);
+        if(moment(startDate).isSameOrAfter(date, 'day')){
+            setLoading(false)
+            MySwal.fire('Validation!', 'Start Date cannot more than a week.', 'warning');
+            return;
+        }
 
         if (!startTime) {
             setLoading(false)
@@ -135,6 +145,12 @@ const CreateDashboard = ({ state }) => {
             ids = ids.map((el, index) => el[index + 1])
         }
 
+        if (!fb_url) {
+            setLoading(false)
+            MySwal.fire('Validation!', 'Facebook link video cannot be empty.', 'warning');
+            return;
+        }
+
         if (!fb_url && !tiktok_url && !ig_url) {
             setLoading(false)
             MySwal.fire('Validation!', 'Link streaming video cannot be empty.', 'warning');
@@ -144,8 +160,8 @@ const CreateDashboard = ({ state }) => {
         const formData = new FormData();
         formData.append("videoId", "");
         formData.append("mypic", mypic);
-        formData.append("startDate", start);
-        formData.append("endDate", endDate);
+        formData.append("startDate", Converter.convertToUTC(start));
+        formData.append("endDate", Converter.convertToUTC(endDate));
         formData.append("title", titleNew);
         formData.append("desc", descNew);
         formData.append("fb_url", fb_url);
