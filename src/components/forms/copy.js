@@ -15,21 +15,22 @@ import Converter from 'configs/moment/DatetimeConverter'
 
 const MySwal = withReactContent(Swal)
 
-const Edit = ({ data, openLoading, closeLoading }) => {
+const Copy = ({ data, openLoading, closeLoading }) => {
 
     const { id } = useParams()
     const [mypic, setMypic] = useState('')
-    const [startDate, setStartDate] = useState(moment(Converter.convertToLocal(data.dataVideos[0].date)).format("yyyy-MM-DD"))
-    const [startTime, setStartTime] = useState(moment(Converter.convertToLocal(data.dataVideos[0].date)).format("hh:mm"))
-    const [endTime, setEndTime] = useState(moment(Converter.convertToLocal(data.dataVideos[0].end_time)).format("hh:mm"))
+    const [startDate, setStartDate] = useState('')
+    const [startTime, setStartTime] = useState('')
+    const [endTime, setEndTime] = useState('')
     const [title, setTitle] = useState(data.title)
     const [desc, setDesc] = data.desc ? useState(data.desc) : useState(data.caption)
     const [category1] = useState(data.category1)
     const [category2] = useState(data.category2)
     const [category3] = useState(data.category3)
-    const [fb_url, setFburl] = useState(data.dataVideos[0].redirect_fb)
-    const [tiktok_url, setTiktokurl] = useState(typeof data.dataVideos[0].redirect_tiktok === 'undefined' || data.dataVideos[0].redirect_tiktok === 'undefined' ? '' : data.dataVideos[0].redirect_tiktok)
-    const [ig_url, setIgurl] = useState(typeof data.dataVideos[0].redirect_ig === 'undefined' || data.dataVideos[0].redirect_ig === 'undefined' ? '' : data.dataVideos[0].redirect_ig)
+    const [thumbnail] = useState(data.thumbnail)
+    const [fb_url, setFburl] = useState(data.fb)
+    const [tiktok_url, setTiktokurl] = useState(data.tiktok)
+    const [ig_url, setIgurl] = useState(data.tiktok)
     const [category, setCategory] = useState(data.category)
     const [categoryid, setCategoryid] = useState({})
 
@@ -76,7 +77,7 @@ const Edit = ({ data, openLoading, closeLoading }) => {
         setIgurl(e.target.value)
     }
     function changeCategoryid(e, idx) {
-
+        
         let arrCat = Object.keys(categoryid).length === 0 && categoryid.constructor === Object ? [] : [...categoryid]
         arrCat.splice(idx, 1)
         if (e) { arrCat.push(e.id) }
@@ -90,10 +91,9 @@ const Edit = ({ data, openLoading, closeLoading }) => {
         e.preventDefault();
         openLoading()
 
-        let ids = Object.values(categoryid);
         let endDate = startDate + " " + endTime;
         let start = startDate + " " + startTime;
-        debugger
+
         let cat = []
         for (const [value] of Object.entries(categoryid)) {
             cat.push(value)
@@ -137,14 +137,14 @@ const Edit = ({ data, openLoading, closeLoading }) => {
             return;
         }
 
-        if (!ids) {
+        if (!categoryid || categoryid.length < 1) {
             closeLoading()
             MySwal.fire('Validation!', 'Category cannot be empty.', 'warning');
             return;
         }
 
         if (!fb_url) {
-            setLoading(false)
+            closeLoading()
             MySwal.fire('Validation!', 'Facebook link video cannot be empty.', 'warning');
             return;
         }
@@ -155,17 +155,17 @@ const Edit = ({ data, openLoading, closeLoading }) => {
             return;
         }
 
+        
         const formData = new FormData();
-        formData.append("videoId", id);
         formData.append("mypic", mypic);
-        formData.append("startDate", Converter.converToFormatBE(Converter.convertToUTC(start)));
-        formData.append("endDate", Converter.converToFormatBE(Converter.convertToUTC(endDate)));
+        formData.append("startDate", Converter.converToFormatBE(start));
+        formData.append("endDate", Converter.converToFormatBE(endDate));
         formData.append("title", title);
         formData.append("desc", desc);
-        formData.append("fb_url", fb_url ? fb_url : '');
-        formData.append("tiktok_url", tiktok_url ? tiktok_url : '');
-        formData.append("ig_url", ig_url ? ig_url : '');
-        formData.append("category", ids);
+        if (fb_url) { formData.append("fb_url", fb_url); }
+        if (tiktok_url) { formData.append("tiktok_url", tiktok_url); }
+        if (ig_url) { formData.append("ig_url", ig_url); }
+        formData.append("category", categoryid);
 
         livestream.create(formData).then((res) => {
             closeLoading()
@@ -173,9 +173,6 @@ const Edit = ({ data, openLoading, closeLoading }) => {
                 icon: 'success',
                 title: 'Success',
                 text: res.message
-            }).then(result => {
-                console.log(result)
-                window.location.href = '/dashboard'
             })
         }).catch(err => {
             seterrors(err?.response?.data?.message)
@@ -265,4 +262,4 @@ const ImageThumb = ({ image }) => {
 };
 
 
-export default Edit;
+export default Copy;

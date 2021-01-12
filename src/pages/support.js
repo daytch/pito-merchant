@@ -13,7 +13,7 @@ const Supports = () => {
             title: "Ticket Number"
         },
         {
-            title: "Tittle"
+            title: "Title"
         },
         {
             title: "Status"
@@ -32,7 +32,7 @@ const Supports = () => {
            const a = e.data.map(e=>{
                return {
                    ticketNumber: e.id,
-                   tittle: e.title,
+                   title: e.title,
                    status: e.status,
                    lastUpdated: e.last_session
                }

@@ -98,17 +98,11 @@ const ProfileEdit = () => {
     }
 
     function changeCategoryid(e, idx) {
-        console.log(typeof categoryid)
-        let arrCat = [...categoryid]
-        let idxCat = arrCat.map((el) => el[idx]).indexOf(idx);
-        if (idx !== -1 && !e) {
-            arrCat.splice(idxCat, 1)
-        }
-        if (e) {
-            setCategoryid([...categoryid, { [idx]: e.id }]);
-        } else {
-            setCategoryid(arrCat)
-        }
+
+        let arrCat = Object.keys(categoryid).length === 0 && categoryid.constructor === Object ? [] : [...categoryid]
+        arrCat.splice(idx, 1)
+        if (e) { arrCat.push(e.id) }
+        setCategoryid(arrCat)
     }
 
     function handleEdit() {
@@ -125,9 +119,16 @@ const ProfileEdit = () => {
         }
 
         const formData = new FormData();
-        for (const [key, value] of Object.entries(data)) {
-            formData.append(key, value)
-        }
+        // for (const [key, value] of Object.entries(data)) {
+        //     formData.append(key, value)
+        // }
+        formData.append('mypic', data.mypic)
+        formData.append('company_name', data.company_name)
+        formData.append('about', data.about)
+        formData.append('company_website', data.company_website)
+        formData.append('fb_url', data.fb_url)
+        formData.append('ig_url', data.ig_url)
+        formData.append('tiktok_url', data.tiktok_url)
         formData.append('categories', cat)
 
         if (currentPass && rePass && newPass) {
@@ -191,7 +192,7 @@ const ProfileEdit = () => {
                                                 <FbIcon className="mr-3" /> Facebook </span>) :   // if(a) then `b`
                                                 loginBy === "facebook" ? (<span className="text-sm flex justify-center text-sm md:text-base shadow-md px-2 mt-2 py-1 border border-gray-50 rounded-xl bg white text-gray-700">
                                                     <GoogleIcon className="mr-3" /> Google </span>) : (<span className="text-sm flex justify-center text-sm md:text-base shadow-md px-2 mt-2 py-1 border border-gray-50 rounded-xl bg white text-gray-700">
-                                                        <EmailIcon className="mr-3" /> Email </span>)
+                                                        <EmailIcon className="mr-3" /> Connected by Email </span>)
                                         }
                                     </div>
                                 </div>

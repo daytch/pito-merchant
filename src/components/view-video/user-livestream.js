@@ -109,7 +109,7 @@ const UserLivestreamVideos = ({ displayToolTip, ListVideo }) => {
                                         item.tiktok_url && (<button style={{ transition: "all .15s ease" }}
                                             onClick={() => openModal(item.tiktok_url)}><TtIcon className="mr-4" /></button>)
                                     }
-                                    <CopyToClipboard text={'Shared URL here'}>
+                                    <CopyToClipboard text={item.share_url}>
                                         <button onClick={displayToolTip} href=""><ShareIconMobile className="mr-4" /></button>
                                     </CopyToClipboard>
                                 </div>

@@ -58,7 +58,7 @@ const FullWidth = ({ displayToolTip, DeleteButton, linkVideo, actionLinks, views
             transform: 'translate(-50%, -50%)'
         }
     };
-
+    console.log(dataVideos)
     return (
         <>
             {
@@ -132,14 +132,14 @@ const FullWidth = ({ displayToolTip, DeleteButton, linkVideo, actionLinks, views
                                         name && <h4 className="font-bold text-xl text-red-600">{name}</h4>
                                     }
                                     {
-                                        title && <h4 className="font-bold text-xl text-gray-700 break-all">{title}</h4>
+                                        title && <h4 className="font-bold text-md text-gray-700 break-all">{title}</h4>
                                     }
                                     <div className="mt-4">
                                         {
                                             subtitle && <h5 className="text-gray-700 font-semibold mb-2 break-all">Title Lorem Ipsum...</h5>
                                         }
                                         {
-                                            caption && <p className="text-justify text-sm break-all">
+                                            caption && <p className="max-lines text-sm">
                                                 {caption}
                                             </p>
                                         }
@@ -153,14 +153,10 @@ const FullWidth = ({ displayToolTip, DeleteButton, linkVideo, actionLinks, views
                                                     <LikeIcon className="icon-at-user" />
                                                     <h4 className="ml-2 text-gray-900 text-sm md:text-sm  font-medium">{item.likes && 0} Likes</h4>
                                                 </div>
-                                                {/* <div className="flex mr-2 md:mr-4 items-center">
-                                                    <CalendarIcon className="icon-at-user" />
-                                                    <h4 className="ml-2 text-gray-900 text-sm md:text-sm  font-medium">283 Likes</h4>
-                                                </div> */}
                                             </div>
                                         }
                                         {
-                                            category && <div className="flex flex-wrap text-sm font-medium text-gray-700 items-center mt-2">
+                                            category && <div className="flex flex-wrap text-xs font-medium text-gray-700 items-center mt-2">
                                                 {
                                                     category.map((item, index) => {
                                                         return (<span key={index}><div className="rounded-full inline-block w-2 h-2 bg-gray-700 mx-2"></div><h6 className="inline-block text-sm">{item}</h6></span>)
@@ -186,7 +182,7 @@ const FullWidth = ({ displayToolTip, DeleteButton, linkVideo, actionLinks, views
                                                     tiktok && (<button style={{ transition: "all .15s ease" }}
                                                         onClick={() => openModal(tiktok)}><TtIcon className="mr-4" /></button>)
                                                 }
-                                                <CopyToClipboard text={'Shared URL here'}>
+                                                <CopyToClipboard text={item.share_url}>
                                                     <button onClick={displayToolTip}><ShareIconMobile className="mr-4" /></button>
                                                 </CopyToClipboard>
                                             </div>
@@ -219,7 +215,7 @@ const FullWidth = ({ displayToolTip, DeleteButton, linkVideo, actionLinks, views
                                                 <div className="mt-4 flex items-center">
                                                     <Link to={{
                                                         pathname: actionLinks,
-                                                        query: { linkVideo, actionLinks, viewsElement, actions, dataVideos, socmedVertical, socmedCustom, liveRecord, title, name, subtitle, caption, ig, tiktok, fb, category1, category2, category3, buttons }
+                                                        query: { linkVideo, actionLinks, viewsElement, actions, dataVideos, socmedVertical, socmedCustom, liveRecord, title, name, subtitle, caption, category1, category2, category3, buttons }
                                                     }} className="font-semibold text-base md:text-lg text-red-600 mr-4">Edit</Link>
                                                     <DeleteButton id={item.id} />{/* <button onClick={() => submitDelete} className="font-semibold text-base md:text-lg text-red-600 mr-4">Delete</button> */}
                                                 </div>

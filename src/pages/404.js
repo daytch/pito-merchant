@@ -1,8 +1,10 @@
 import React from 'react'
 const NotFound404 = () => {
     return (
-        <div>
-            Pages Not Found
+        <div id="main">
+            <div class="fof">
+                <h1><b>Error 404!</b><br /> Pages Not Found</h1>
+            </div>
         </div>
     )
 }

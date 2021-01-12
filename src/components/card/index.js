@@ -2,11 +2,12 @@ import React from 'react'
 import moment from 'moment'
 import Avatar from 'react-avatar';
 
-const Card = ({ ListData }) => {
+const Card = ({ ListData, title }) => {
     return (
         <>
             <div className="w-2/3 mt-3 flex items-center mx-auto">
                 <div className="chat-content p-6 border rounded-t-lg bg-gray-100">
+                    <h4>{title}</h4><hr />
                     {
                         ListData && ListData.map((item, index) => {
                             return (<div key={index}>

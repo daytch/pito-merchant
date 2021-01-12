@@ -13,6 +13,7 @@ import { ReactComponent as UploadIcon } from 'assets/images/upload-icon.svg'
 import Dropdown from 'components/forms/dropdown'
 import Spinner from 'components/spinner'
 import moment from 'moment'
+import Converter from 'configs/moment/DatetimeConverter'
 
 const MySwal = withReactContent(Swal)
 const CreateDashboard = ({ state }) => {
@@ -32,7 +33,7 @@ const CreateDashboard = ({ state }) => {
     useEffect(() => {
 
         livestream.getCategory().then((res) => {
-            
+
             const ListCategory = res.data.map((i) => {
                 return { "id": i.id, "value": i.text }
             })
@@ -70,18 +71,10 @@ const CreateDashboard = ({ state }) => {
     }
     function changeCategoryid(e, idx) {
         
-        console.log(typeof categoryid)
-        let idCat = e ? e.id : ""
-        let arrCat = [...categoryid]
-        let idxCat = arrCat.map((el) => el[idx]).indexOf(idx);
-        if (idx !== -1 && !e) {
-            arrCat.splice(idxCat, 1)
-        }
-        if (e) {
-            setCategoryid([...categoryid, { [idx]: e.id }]);
-        } else {
-            setCategoryid(arrCat)
-        }
+        let arrCat = Object.keys(categoryid).length === 0 && categoryid.constructor === Object ? [] : [...categoryid]
+        arrCat.splice(idx, 1)
+        if (e) { arrCat.push(e.id) }
+        setCategoryid(arrCat)
     }
 
     //state error handler
@@ -90,10 +83,11 @@ const CreateDashboard = ({ state }) => {
         e.preventDefault();
         setLoading(true)
 
-        let ids = categoryid; // Object.values(categoryid);
+        let ids = Object.values(categoryid);
         let endDate = startDate + " " + endTime;
         let start = startDate + " " + startTime;
         
+
         let cat = []
         for (const [value] of Object.entries(categoryid)) {
             cat.push(value)
@@ -116,10 +110,10 @@ const CreateDashboard = ({ state }) => {
             MySwal.fire('Validation!', 'Start Date cannot be empty.', 'warning');
             return;
         }
-debugger;
+
         var date = new Date();
         date.setDate(date.getDate() + 7);
-        if(moment(startDate).isSameOrAfter(date, 'day')){
+        if (moment(startDate).isSameOrAfter(date, 'day')) {
             setLoading(false)
             MySwal.fire('Validation!', 'Start Date cannot more than a week.', 'warning');
             return;
@@ -130,9 +124,9 @@ debugger;
             MySwal.fire('Validation!', 'Start Time cannot be empty.', 'warning');
             return;
         }
-     
+
         if (endTime && startTime > endTime) {
-            closeLoading()
+            setLoading(false)()
             MySwal.fire('Validation!', 'End Time cannot less than Start Time.', 'warning');
             return;
         }
@@ -141,8 +135,6 @@ debugger;
             setLoading(false)
             MySwal.fire('Validation!', 'Category cannot be empty.', 'warning');
             return;
-        } else {
-            ids = ids.map((el, index) => el[index + 1])
         }
 
         if (!fb_url) {
@@ -160,16 +152,17 @@ debugger;
         const formData = new FormData();
         formData.append("videoId", "");
         formData.append("mypic", mypic);
-        formData.append("startDate", Converter.convertToUTC(start));
-        formData.append("endDate", Converter.convertToUTC(endDate));
+        formData.append("startDate", Converter.converToFormatBE(start));
+        formData.append("endDate", Converter.converToFormatBE(endDate));
         formData.append("title", titleNew);
         formData.append("desc", descNew);
         formData.append("fb_url", fb_url);
         formData.append("tiktok_url", tiktok_url);
         formData.append("ig_url", ig_url);
         formData.append("category", ids);
-
+        
         livestream.create(formData).then((res) => {
+
             setLoading(false)
             MySwal.fire({
                 icon: 'success',
@@ -215,13 +208,13 @@ debugger;
                                 <div className="flex space-x-3 flex-wrap w-full items-center mt-4">
                                     <label htmlFor="category" className="w-full md:w-1/6 text-sm text-gray-700">Categories</label>
                                     <div className="flex-2 md:flex-1 form-categories border border-gray-300 rounded-md px-2 py-2 mr-4 my-2 md:ml-4 w-full" role="button">
-                                        <Dropdown isNeedReset={true} title="Select..." placeholder="Category 1" items={category} onClick={changeCategoryid} idx={1} />
+                                        <Dropdown isNeedReset={true} title="Select..." placeholder="Category 1" items={category} onClick={changeCategoryid} idx={0} />
                                     </div>
                                     <div className="flex-2 md:flex-1 form-categories border border-gray-300 rounded-md px-2 py-2 mr-4 my-2 md:ml-4 w-full" role="button">
-                                        <Dropdown isNeedReset={true} title="Select..." placeholder="Category 2" items={category} onClick={changeCategoryid} idx={2} />
+                                        <Dropdown isNeedReset={true} title="Select..." placeholder="Category 2" items={category} onClick={changeCategoryid} idx={1} />
                                     </div>
                                     <div className="flex-2 md:flex-1 form-categories border border-gray-300 rounded-md px-2 py-2 mr-4 my-2 md:ml-4 w-full" role="button">
-                                        <Dropdown isNeedReset={true} title="Select..." placeholder="Category 3" items={category} onClick={changeCategoryid} idx={3} />
+                                        <Dropdown isNeedReset={true} title="Select..." placeholder="Category 3" items={category} onClick={changeCategoryid} idx={2} />
                                     </div>
                                 </div>
                                 <div className="form-dashboard flex flex-wrap w-full items-center mt-4">

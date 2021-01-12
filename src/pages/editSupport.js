@@ -7,9 +7,10 @@ import { Link } from 'react-router-dom'
 import Spinner from 'components/spinner'
 
 const EditSupport = (props) => {
-
+    
     const [isLoading, setLoading] = useState(false)
     const [id] = useState(props.match.params.id)
+    const [title] = useState(props.location.query.title)
     const [data, setData] = useState([])
     const [message, setmessage] = useState('')
     const [hideInput, setHideInput] = useState(false);
@@ -80,7 +81,7 @@ const EditSupport = (props) => {
             <section className="min-h-screen flex flex-col xl:flex-row ">
                 <Sidebar />
                 <div className="chat-history">
-                    <Card ListData={data} />
+                    <Card ListData={data} title={title}/>
                     {
                         hideInput ? (
                             <div className="ml-20 mt-5">

@@ -3,13 +3,10 @@ import { useParams, useHistory } from 'react-router-dom'
 import SideNavbarMerchant from 'components/SideNavbarMerchant'
 import { Link } from 'react-router-dom'
 import { withRouter } from "react-router"
-// import { ReactComponent as PlayIcon } from 'assets/images/icon-play.svg'
-// import { ReactComponent as FbIcon } from 'assets/images/fb-icon.svg'
-// import { ReactComponent as IgIcon } from 'assets/images/ig-icon.svg'
-// import { ReactComponent as TtIcon } from 'assets/images/tiktok-icon.svg'
+import moment from 'moment'
+import Converter from 'configs/moment/DatetimeConverter'
 import livestream from 'api/livestream'
 import Spinner from 'components/spinner'
-import moment from 'moment'
 import ReactHtmlParserfrom from 'react-html-parser'
 import Modal from 'react-modal'
 // import DefaultImg from 'assets/images/default.svg'
@@ -70,9 +67,10 @@ const LivestreamDetail = () => {
             setIframe(url_iframe);
             setTitle(data.title);
             setDesc(data.desc);
-            let stDate = moment(data.startDate).format('YYYY-MM-DD');
-            let stTime = moment(data.startDate).format('HH:mm');
-            let enTime = moment(data.endDate).format('HH:mm');
+            let stDate = moment(Converter.convertToLocal(data.startDate)).format('YYYY-MM-DD');
+            let stTime = moment(Converter.convertToLocal(data.startDate)).format("hh:mm")
+            let enTime = moment(Converter.convertToLocal(data.endDate)).format("hh:mm")
+
             setStartDate(stDate);
             setStartTime(stTime);
             setEndTime(enTime);
@@ -88,6 +86,7 @@ const LivestreamDetail = () => {
             setViews(data.views);
             setFav(data.favorites);
             setShared(data.shares);
+            
             setThumbnail(data.img_thumbnail);
             setLoading(false)
         })
@@ -102,7 +101,7 @@ const LivestreamDetail = () => {
                     <div className="flex flex-col-reverse md:flex-row w-full justify-between">
                         <h6 className="text-red-600 font-semibold text-sm text-center pt-8 md:pt-0">Livestreams Detail</h6>
                         <div className="flex items-center md:mb-0 justify-end">
-                            <button onClick={() => { history.goBack() }}><h6 className="text-red-600 font-semibold text-sm">Back</h6></button>
+                            <Link to={'/dashboard'}><h6 className="text-red-600 font-semibold text-sm">Back</h6></Link>
                             <Link to={{
                                 pathname: '/dashboard/copy/' + id,
                                 query: {
@@ -177,18 +176,7 @@ const LivestreamDetail = () => {
                                 <input type="time" value={starttime} name="start" className="text-sm px-2 w-full md:w-2/12 px-2 py-1 xl:ml-4 bg-gray-700 text-white my-2 rounded-md" readOnly />
                                 <label htmlFor="end" className="px-2 w-2/6 md:w-1/12 text-sm text-gray-700">End Time</label>
                                 <input type="time" value={endtime} name="end" className="text-sm px-2 w-full md:w-2/12 px-2 py-1 xl:ml-4 bg-gray-700 text-white my-2 rounded-md" readOnly />
-                                {/* <div className="xl:pr-4 flex flex-wrap xl:flex-no-wrap w-full xl:w-1/2">
-                                    <label htmlFor="date" className="px-2 w-2/6 text-sm text-gray-700">Date</label>
-                                    <input type="date" value={startdate} name="date" className="text-sm px-2 w-full xl:w-3/4 px-2 py-1 xl:ml-4 bg-gray-700 text-white my-2 rounded-md" readOnly />
-                                </div>
-                                <div className="xl:pr-4 flex flex-wrap xl:flex-no-wrap w-full xl:w-1/2">
-                                    <label htmlFor="start" className="px-2 md:w-2/6 text-sm text-gray-700">Start Time</label>
-                                    <input type="time" value={starttime} name="start" className="text-sm px-2 w-full xl:w-3/4 px-2 py-1 xl:ml-4 bg-gray-700 text-white my-2 rounded-md" readOnly />
-                                </div>
-                                <div className="xl:pr-4 flex flex-wrap xl:flex-no-wrap w-full xl:w-1/2">
-                                    <label htmlFor="end" className="px-2 w-2/6 text-sm text-gray-700">End Time</label>
-                                    <input type="time" value={endtime} name="end" className="text-sm px-2 w-full xl:w-3/4 px-2 py-1 xl:ml-4 bg-gray-700 text-white my-2 rounded-md" readOnly />
-                                </div> */}
+                          
                             </div>
                             <div className="form-dashboard flex flex-wrap w-full items-center">
                                 <label htmlFor="fbLink" className="xl:px-2 xl:w-1/6 xxl:w-1/6 text-sm text-gray-700">Category 1</label>

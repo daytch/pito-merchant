@@ -10,6 +10,7 @@ import ForgotPassword from 'pages/forgotPassword'
 import Dashboard from 'pages/dashboard'
 import CreateDashboard from 'pages/createDashboard'
 import EditDashboard from 'pages/editDashboard'
+import CopyDashboard from 'pages/copyDashboard'
 import Profile from 'pages/profile'
 import LivestreamDetail from 'pages/livestreamDetail'
 import Notif from 'pages/notif'
@@ -34,7 +35,7 @@ function App() {
               <PrivateRoute path={`${url}/`} component={Dashboard} exact />
               <PrivateRoute path={`${url}/create/`} component={CreateDashboard} />
               <PrivateRoute path={`${url}/edit/:id`} component={EditDashboard} exact/>
-              <PrivateRoute path={`${url}/copy/:id`} component={EditDashboard} exact />
+              <PrivateRoute path={`${url}/copy/:id`} component={CopyDashboard} exact />
             </>
           )} />
         <Route path="/profile"
