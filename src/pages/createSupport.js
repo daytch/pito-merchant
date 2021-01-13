@@ -100,14 +100,6 @@ const CreateSupport = () => {
                                 <label htmlFor="attachment" className="w-full md:w-1/5 text-sm text-gray-700">Attachment</label>
                                 <input type="file" onChange={changeAttachment1} className="text-xs w-4/5 xl:w-2/5 px-4 py-2 mx-2 md:mx-4 border border-gray-300 rounded-lg" />
                             </div>
-                            {/* <br /><div className="flex flex-wrap w-full items-start">
-                                <UploadIcon />
-                                <input type="file" onChange={changeAttachment2} className="w-4/5 xl:w-2/5 px-4 py-2 mx-2 md:mx-4 border border-gray-300 rounded-lg" />
-                            </div><br />
-                            <div className="flex flex-wrap w-full items-start">
-                                <UploadIcon />
-                                <input type="file" onChange={changeAttachment3} className="w-4/5 xl:w-2/5 px-4 py-2 mx-2 md:mx-4 border border-gray-300 rounded-lg" />
-                            </div> */}
                             <div className="flex mt-6">
                                 <Link to="/support"><button className="border border-gray-300 text-red-600 rounded-lg text-sm px-6 py-2 mr-4">Cancel</button></Link>
                                 <button onClick={submit} className="border lg:w-32 w-full text-white font-medium bg-red-600 rounded-lg text-sm px-10 py-2">Save</button>

@@ -5,5 +5,7 @@ export default {
     getCategory: () => axios.get("/user/category"),
     getLivestreamDetail: (id) => axios.get("/merchant/getVideosDetail?videoId=" + id),
     deleteLivestream: (data) => axios.post("/merchant/deleteLivestream", data),
+    
+    getVideos: (data) => axios.post("/user/listVideos", data),
 }
 

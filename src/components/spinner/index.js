@@ -1,6 +1,5 @@
 import React from 'react'
 import { css } from "@emotion/core";
-// import CircleLoader from "react-spinners/CircleLoader";
 import HashLoader from "react-spinners/HashLoader";
 import LoadingOverlay from 'react-loading-overlay';
 

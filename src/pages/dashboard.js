@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import SideNavbarMerchant from 'components/SideNavbarMerchant'
 import FullWidth from 'components/view-video/FullWidth'
-// import thumbnail from 'assets/images/thumbnail-one.jpg'
 import { Link } from 'react-router-dom'
 import dashboard from 'api/dashboard'
 import Spinner from 'components/spinner'
 import livestream from 'api/livestream'
+import ReactPaginate from 'react-paginate'
+import Pagination from 'components/forms/pagination'
 
 
 const Dashboard = () => {
@@ -13,8 +14,14 @@ const Dashboard = () => {
     const [isLoading, setLoading] = useState(true)
     // const [now, setNow] = useState(moment())
     const [liveVideos, setLiveVideos] = useState([])
-    const [previousVideos, setpreviousVideos] = useState([])
-    const [upcomingVideos, setupcomingVideos] = useState([])
+    const [previousVideos, setPreviousVideos] = useState([])
+    const [upcomingVideos, setUpcomingVideos] = useState([])
+    const [activeLivePage, setActiveLivePage] = useState(1)
+    const [activeNextPage, setActiveNextPage] = useState(1)
+    const [activePrevPage, setActivePrevPage] = useState(1)
+    const [totalLive, setTotalLive] = useState(1)
+    const [totalPrevious, setTotalPreviuos] = useState(1)
+    const [totalNext, setTotalNext] = useState(1)
     const [phoneTooltip, setPhoneTooltip] = useState({
         show: false,
         x: 0,
@@ -32,13 +39,48 @@ const Dashboard = () => {
     }
 
     useEffect(() => {
-        dashboard.get().then((res) => {
-            setLiveVideos(res.live_videos.data)
-            setpreviousVideos(res.previous_videos.data)
-            setupcomingVideos(res.upcoming_videos.data)
+        let page = 1
+        let live_vid = 'live_videos'
+        let next_vid = 'upcoming_videos'
+        let prev_vid = 'previous_videos'
+
+        livestream.getVideos({
+            'type': live_vid,
+            'page': page
+        }).then((res) => {
             setLoading(false)
+            setActiveLivePage(1)
+            setTotalLive(Math.ceil(res.total_video / 10))
+            setLiveVideos(res.data)
         })
-    }, []) //[liveVideos, previousVideos, upcomingVideos])
+
+        livestream.getVideos({
+            'type': next_vid,
+            'page': page
+        }).then((res) => {
+            setLoading(false)
+            setActiveNextPage(1)
+            setTotalNext(Math.ceil(res.total_video / 10))
+            setUpcomingVideos(res.data)
+        })
+
+        livestream.getVideos({
+            'type': prev_vid,
+            'page': page
+        }).then((res) => {
+            setPreviousVideos(res.data)
+            setLoading(false)
+            setActivePrevPage(1)
+            setTotalPreviuos(Math.ceil(res.total_video / 10))
+        })
+        // dashboard.get().then((res) => {
+
+        //     setLiveVideos(res.live_videos.data)
+        //     setPreviousVideos(res.previous_videos.data)
+        //     setUpcomingVideos(res.upcoming_videos.data)
+        //     setLoading(false)
+        // })
+    }, [])
 
     function submitDelete(id) {
 
@@ -46,11 +88,40 @@ const Dashboard = () => {
         livestream.deleteLivestream(id).then((res) => {
             dashboard.get().then((res) => {
                 setLiveVideos(res.live_videos.data)
-                setpreviousVideos(res.previous_videos.data)
-                setupcomingVideos(res.upcoming_videos.data)
+                setPreviousVideos(res.previous_videos.data)
+                setUpcomingVideos(res.upcoming_videos.data)
                 setLoading(false)
             })
         });
+    }
+
+    function getData(e, tipe) {
+        setLoading(true)
+        const page = tipe === 'live_videos' ? activeLivePage : tipe === 'upcoming_videos' ? activeNextPage : activePrevPage
+        livestream.getVideos({ 'type': tipe, 'page': e }).then((res) => {
+            if (res.isSuccess) {
+                switch (tipe) {
+                    case 'live_videos':
+                        setActiveLivePage(e)
+                        setTotalLive(Math.ceil(res.total_video / 10))
+                        setLiveVideos(res.data)
+                        break;
+                    case 'upcoming_videos':
+                        setActiveNextPage(e)
+                        setTotalNext(Math.ceil(res.total_video / 10))
+                        setUpcomingVideos(res.data)
+                        break;
+                    case 'previous_videos':
+                        setActivePrevPage(e)
+                        setTotalPreviuos(Math.ceil(res.total_video / 10))
+                        setPreviousVideos(res.data)
+                        break;
+                }
+            } else {
+                console.error(res)
+            }
+            setLoading(false)
+        })
     }
 
     const DeleteButton = (id) => {
@@ -64,7 +135,7 @@ const Dashboard = () => {
                 <div className="py-10 md:py-20 px-5 w-full">
                     <div className="flex">
                         <Link to="/dashboard/create" className="w-1/6">
-                            <button className="bg-red-600 focus:outline-none text-white font-medium text-sm w-full md:w-full px-2 py-2 rounded-3xl">Create Livestreams</button></Link>
+                            <button className="bg-red-600 focus:outline-none text-white font-medium text-sm w-full md:w-full px-2 py-2 ceiled-3xl">Create Livestreams</button></Link>
                     </div>
                     <div className="flex flex-col pt-10 overflow-x-auto">
                         {phoneTooltip.show && (
@@ -77,7 +148,7 @@ const Dashboard = () => {
                                     <div className="w-full mt-4">
                                         {
                                             liveVideos.map((item, index) => {
-                                                const videos = [{ iframe: item.iframe, id: item.id, thumbnail: item.img_thumbnail, live: true, views: item.views, likes: item.likes, date: item.start_time, title: item.title, end_time: item.end_time, share_url: item.share_url, redirect_fb: item.redirect_fb, redirect_ig: item.redirect_ig, redirect_tiktok: item.redirect_tiktok  }]
+                                                const videos = [{ iframe: item.iframe, id: item.id, thumbnail: item.img_thumbnail, live: true, views: item.views, likes: item.likes, date: item.start_time, title: item.title, end_time: item.end_time, share_url: item.share_url, redirect_fb: item.redirect_fb, redirect_ig: item.redirect_ig, redirect_tiktok: item.redirect_tiktok }]
                                                 return (
                                                     <div key={index} className="w-full xl:w-1/2 mt-4">
                                                         <FullWidth displayToolTip={displayToolTip} actionLinks={'/dashboard/edit/' + item.id} dataVideos={videos} title={item.title} caption={item.description} category={item.categories} ig={item.instagram_url} fb={item.facebook_url} tiktok={item.tiktok_url} socmedCustom={true} />
@@ -86,26 +157,28 @@ const Dashboard = () => {
                                             })
                                         }
                                     </div>
+                                    <Pagination pages={totalLive} getData={getData} tipe={'live_videos'} />
                                 </>) : null
                             }
-
                         </div>
                         <div className="overflow-hidden mb-4">
                             {
                                 upcomingVideos.length > 0 ? (<>
                                     <h6 className="text-red-600 font-bold text-base md:text-lg">Next Livestreams</h6>
-                                    <div className="flex flex-wrap">
+                                    <div className="flex flex-wrap mb-2">
                                         {
                                             upcomingVideos.map((item, index) => {
+
                                                 const videos = [{ iframe: item.iframe, id: item.id, thumbnail: item.img_thumbnail, live: false, views: item.views, likes: item.likes, date: item.start_time, title: item.title, end_time: item.end_time, share_url: item.share_url, redirect_fb: item.redirect_fb, redirect_ig: item.redirect_ig, redirect_tiktok: item.redirect_tiktok }]
                                                 return (
-                                                    <div key={index} className="flex flex-wrap w-full xl:w-1/2 mt-4">
+                                                    <div key={index} className="flex flex-wrap mb-2 w-full xl:w-1/2 mt-4">
                                                         <FullWidth displayToolTip={displayToolTip} DeleteButton={DeleteButton} actionLinks={'/dashboard/edit/' + item.id} dataVideos={videos} title={item.title} actions={true} caption={item.description} category={item.categories} ig={item.instagram_url} fb={item.facebook_url} tiktok={item.tiktok_url} socmedCustom={true} />
                                                     </div>
                                                 )
                                             })
                                         }
                                     </div>
+                                    <Pagination pages={totalNext} getData={getData} tipe={'upcoming_videos'} />
                                 </>) : null
                             }
                         </div>
@@ -113,20 +186,21 @@ const Dashboard = () => {
                             {
                                 previousVideos.length > 0 ? (<>
                                     <h6 className="text-red-600 font-bold text-base md:text-lg">Previous Livestreams</h6>
-                                    <div className="flex flex-wrap">
+                                    <div className="flex flex-wrap mb-2">
                                         {
                                             previousVideos.map((item, index) => {
 
-                                                const videos = [{ iframe: item.iframe, id: item.id, thumbnail: item.img_thumbnail, live: false, views: item.views, likes: item.likes, date: item.start_time, title: item.title, end_time: item.end_time, share_url: item.share_url, redirect_fb: item.redirect_fb, redirect_ig: item.redirect_ig, redirect_tiktok: item.redirect_tiktok  }]
+                                                const videos = [{ iframe: item.iframe, id: item.id, thumbnail: item.img_thumbnail, live: false, views: item.views, likes: item.likes, date: item.start_time, title: item.title, end_time: item.end_time, share_url: item.share_url, redirect_fb: item.redirect_fb, redirect_ig: item.redirect_ig, redirect_tiktok: item.redirect_tiktok }]
 
                                                 return (
-                                                    <div key={index} className="flex flex-wrap w-full xl:w-1/2 mt-4">
+                                                    <div key={index} className="flex flex-wrap mb-2 w-full xl:w-1/2 mt-4">
                                                         <FullWidth displayToolTip={displayToolTip} actionLinks={'/dashboard/edit/' + item.id} dataVideos={videos} title={item.title} viewsElement={true} actions={false} ig={item.instagram_url} fb={item.facebook_url} tiktok={item.tiktok_url} caption={item.description} category={item.categories} socmedCustom={true} />
                                                     </div>
                                                 )
                                             })
                                         }
                                     </div>
+                                    <Pagination pages={totalPrevious} getData={getData} tipe={'previous_videos'} />
                                 </>) : null
                             }
                         </div>

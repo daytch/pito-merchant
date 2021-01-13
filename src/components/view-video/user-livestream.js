@@ -79,17 +79,12 @@ const UserLivestreamVideos = ({ displayToolTip, ListVideo }) => {
                                         <LikeIcon className="icon-at-user" />
                                         <h4 className="ml-2 text-gray-900 text-xs md:text-sm  font-medium">{item.likes} Likes</h4>
                                     </div>
-                                    {/* <div className="flex mr-4 items-center">
-                                        <CalendarIcon className="icon-at-user" />
-                                        <h4 className="ml-2 text-gray-900 text-xs md:text-sm  font-medium">283 Likes</h4>
-                                    </div> */}
                                 </div>
                                 {
                                     item.categories && <div className="flex flex-wrap text-sm font-medium text-gray-700 items-center mt-2">
                                         {
                                             item.categories.map((item, index) => {
                                                 return (<span key={index}><div className="rounded-full inline-block w-2 h-2 bg-gray-700 mx-2"></div><h6 className="inline-block">{item}</h6></span>)
-                                                // : (<span key={index}><div className="rounded-full w-2 h-2 bg-gray-700 mx-2"></div><h6>{item}</h6></span>)
                                             })
                                         }
                                     </div>
@@ -130,7 +125,6 @@ const UserLivestreamVideos = ({ displayToolTip, ListVideo }) => {
                                             <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">×</span>
                                         </button>
                                     </div>
-                                    {/*body*/}
                                     <div className="relative p-6 flex-auto">
                                         {ReactHtmlParserfrom(dataModal)}
                                     </div>

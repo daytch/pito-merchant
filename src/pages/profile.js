@@ -11,8 +11,11 @@ import { Link } from 'react-router-dom'
 import User from 'api/users'
 import Spinner from 'components/spinner'
 import moment from 'moment'
+import Avatar from 'react-avatar'
 
 const Profile = () => {
+    
+    // const [name] = useState(localStorage.getItem('PITO:merchant-name'))
     const [avatar, setAvatar] = useState();
     const [category, setCategory] = useState([]);
     const [videos, setVideos] = useState([]);
@@ -122,8 +125,11 @@ const Profile = () => {
                 <div className="py-10 md:pt-10 flex flex-col md:flex-row w-full">
                     <div className="w-full md:w-3/5 xxl:w-1/2 px-4">
                         <div className="flex flex-col xl:flex-row xl:items-center">
-                            <img src={avatar} draggable={false} className="rounded-full w-4/5 xl:w-1/3 border-8 mb-4 xl:mb-0 xl:mr-4 border-red-600 mx-auto" alt="" />
-
+                            {/* <img src={avatar} draggable={false} className="rounded-full w-4/5 xl:w-1/3 border-8 mb-4 xl:mb-0 xl:mr-4 border-red-600 mx-auto" alt="" /> */}
+                            {
+                                !avatar ? (<Avatar name={name} className="mx-auto" round={true} size="125px" />) :
+                                    (<img src={data.img_avatar ? data.img_avatar : ava} draggable={false} style={{ width: '150px', height: '150px' }} className="rounded-full border-8 mb-4 xl:mb-0 xl:mr-4 border-red-600 mx-auto" alt={data.name} />)
+                            }
                             <div className="md:px-8 w-auto">
                                 <h4 className="text-red-600 text-2xl font-bold">{name}</h4>
                                 <p className="text-sm mt-1 font-light text-justify">
@@ -154,9 +160,6 @@ const Profile = () => {
                                     </div>
                                 </div>
                             </div>
-                            {/* )
-                                })
-                            } */}
                             <div className="w-1/5 hidden xl:flex flex-col">
                                 {fb && <Link to={{ pathname: fb }} target="_blank"><FbIcon className="mb-4" /></Link>}
                                 {ig && <Link to={{ pathname: ig }} target="_blank"><IgIcon className="mb-4" /></Link>}

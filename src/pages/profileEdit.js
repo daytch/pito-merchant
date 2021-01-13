@@ -23,6 +23,7 @@ const ProfileEdit = () => {
     const [isLoading, setLoading] = useState(true)
     const [newPass, setnewPass] = useState('')
     const [rePass, setrePass] = useState('')
+    const [delAva, setDelAva] = useState('')
     const [currentPass, setcurrentPass] = useState('')
     const [loginBy] = useState(localStorage.getItem('PITO:login'));
     const [cat1, setCat1] = useState('Select...')
@@ -52,13 +53,14 @@ const ProfileEdit = () => {
 
     const getData = () => {
         users.getProfile().then(e => {
+            debugger;
             setAva(e.data.img_avatar)
             setData(e.data);
             let categories = e.data.categories;
             let c1 = categories[0] && categories[0].name ? categories[0].name : 'Category'
             let c2 = categories[1] && categories[1].name ? categories[1].name : 'Category'
             let c3 = categories[2] && categories[2].name ? categories[2].name : 'Category'
-
+            console.log(data)
             setCat1(c1)
             setCat2(c2)
             setCat3(c3)
@@ -74,7 +76,7 @@ const ProfileEdit = () => {
                 result = [...result, { [idx]: c[i].value }];
                 idx = idx + i
             }
-            
+
             setCategoryid(result)
             setLoading(false);
             // useForceUpdate(c1, c2, c3)
@@ -92,6 +94,7 @@ const ProfileEdit = () => {
         getData()
         // eslint-disable-next-line
     }, [])
+
     function mypicChange(e) {
         setMypic(e.target.files[0])
         data.img_avatar = URL.createObjectURL(e.target.files[0])
@@ -105,13 +108,18 @@ const ProfileEdit = () => {
         setCategoryid(arrCat)
     }
 
+    function deleteAvatar() {
+        setDelAva('X')
+        MySwal.fire("Success", 'Your image has been successfully deleted, but the changes will be visible after you re-login', 'success')
+    }
+
     function handleEdit() {
         setLoading(true);
         let cat = []
-        for (const [key, value] of Object.entries(categoryid)) {
+        for (const [value] of Object.entries(categoryid)) {
             cat.push(value)
         }
-        
+
         if (new Set(cat).size !== cat.length) {
             setLoading(false)
             MySwal.fire('Validation!', 'Cannot pick same categories.', 'warning');
@@ -122,7 +130,7 @@ const ProfileEdit = () => {
         // for (const [key, value] of Object.entries(data)) {
         //     formData.append(key, value)
         // }
-        formData.append('mypic', data.mypic)
+        formData.append('mypic', mypic)
         formData.append('company_name', data.company_name)
         formData.append('about', data.about)
         formData.append('company_website', data.company_website)
@@ -130,6 +138,7 @@ const ProfileEdit = () => {
         formData.append('ig_url', data.ig_url)
         formData.append('tiktok_url', data.tiktok_url)
         formData.append('categories', cat)
+        formData.append('delAvatar', delAva)
 
         if (currentPass && rePass && newPass) {
             if (newPass !== rePass) {
@@ -175,8 +184,9 @@ const ProfileEdit = () => {
                         <div className="flex flex-col xl:flex-row md:pl-24 items-center">
                             <div className=" w-4/5 xl:w-1/3 ">
                                 {
-                                    data.img_avatar ? (<img src={data.img_avatar ? data.img_avatar : ava} draggable={false} className="rounded-full border-8 mb-4 xl:mb-0 xl:mr-4 border-red-600 mx-auto" alt={data.name} />) :
-                                        (<Avatar name={data.name} className="mx-auto" round={true} size="125px" />)
+                                    data.img_avatar === '' && ava === '' ? (<Avatar name={data.name} className="mx-auto" round={true} size="125px" />) :
+                                        (<img src={data.img_avatar ? data.img_avatar : ava} draggable={false} style={{ width: '150px', height: '150px' }} className="rounded-full border-8 mb-4 xl:mb-0 xl:mr-4 border-red-600 mx-auto" alt={data.name} />)
+
                                 }
                                 <br />
                                 <h3 className="mr-8 text-sm font-light flex flex-row-reverse">{data && data.email}</h3>
@@ -185,7 +195,7 @@ const ProfileEdit = () => {
                                 <div className="flex flex-wrap w-full pt-2">
                                     <input hidden type="file" onChange={(e) => mypicChange(e)} id="uploadAva" />
                                     <button onClick={UploadNewAva} className="px-4 py-1 w-full bg-red-600 shadow-md my-2 text-white text-sm rounded-xl">Upload New Avatar</button>
-                                    <button className="px-6 py-1 w-full border border-red-600 shadow-md my-2 text-red-600 text-sm rounded-xl">Delete Avatar</button>
+                                    <button onClick={deleteAvatar} className="px-6 py-1 w-full border border-red-600 shadow-md my-2 text-red-600 text-sm rounded-xl">Delete Avatar</button>
                                     <div className="user-detail w-full justify-center pt-2">
                                         {
                                             loginBy === "facebook" ? (<span className="text-sm flex justify-center text-sm md:text-base shadow-md px-2 mt-2 py-1 border border-gray-50 rounded-xl bg white text-gray-700">

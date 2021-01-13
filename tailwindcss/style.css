@@ -283,7 +283,8 @@ item:hover figure.item-image-live-detail svg.icon {
 }
 
 .img-phone img {
-    height: 80vh;
+    height: 80vh !important;
+    margin-right: 6vw !important;
 }
 
 .form-login {
@@ -348,5 +349,113 @@ item:hover figure.item-image-live-detail svg.icon {
     .item-image-user img {
         width: 400px;
         height: 200px;
+    }
+}
+
+.img-livestream {
+    height: 100px;
+    width: 100px;
+}
+
+.chat-history {
+    width: 189vh;
+}
+
+.chat-content {
+    margin-left: -7vw;
+    width: 46vw;
+}
+
+.play-icon-lvdetail {
+    transition: all 0.15s ease 0s;
+    margin-top: -15%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999999;
+}
+
+.thumbnail-lvdetail {
+    position: inherit !important;
+    margin-top: 17% !important;
+    margin-bottom: -13% !important;
+    margin-left: auto;
+    margin-right: auto;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+}
+
+.coolclass {
+    max-height: 0%;
+    transition: 0.5s;
+    overflow: hidden;
+}
+
+@media only screen and (max-width: 600px) {
+    .icon-upload {
+        display: none;
+    }
+    .livestream-detail-vid {
+        margin-bottom: -115px;
+    }
+}
+
+/**Desktop Query*/
+
+@media only screen and (min-width: 768px) {
+    /* img, video {
+        max-width: 348px;
+        max-height: 222px;
+    } */
+    .category2-livestream {
+        margin-left: 3px;
+        margin-right: 3px;
+        width: fit-content;
+    }
+    .history-vid-profile {
+        height: 48rem;
+    }
+}
+
+@media only screen and (min-width: 1920px) {
+    .clipper {
+        width: 40vw !important;
+    }
+}
+
+.max-lines {
+    display: block;
+    /* or inline-block */
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    overflow: hidden;
+    max-height: 3.6em;
+    line-height: 1.3em;
+}
+
+#main {
+    display: table;
+    width: 100%;
+    height: 100vh;
+    text-align: center;
+}
+
+.fof {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.fof h1 {
+    font-size: 50px;
+    display: inline-block;
+    padding-right: 12px;
+    animation: type .5s alternate infinite;
+}
+
+@keyframes type {
+    from {
+        box-shadow: inset -3px 0px 0px #888;
+    }
+    to {
+        box-shadow: inset -3px 0px 0px transparent;
     }
 }

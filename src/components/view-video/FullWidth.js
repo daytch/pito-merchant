@@ -9,13 +9,12 @@ import { ReactComponent as ShareIcon } from 'assets/images/share-icon.svg'
 import { ReactComponent as ShareIconMobile } from 'assets/images/share-icon-mobile.svg'
 import { ReactComponent as EyeIcon } from 'assets/images/eye-icon.svg'
 import { ReactComponent as LikeIcon } from 'assets/images/thumbs-like-icon.svg'
-// import { ReactComponent as CalendarIcon } from 'assets/images/calendar-icon.svg'
 import iconLive from 'assets/images/live-icon.png'
 import ReactHtmlParserfrom from 'react-html-parser';
 import Modal from 'react-modal'
 import DefaultImg from 'assets/images/default.svg'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
-Modal.setAppElement('*'); // suppresses modal-related test warnings.
+Modal.setAppElement('*');
 
 const FullWidth = ({ displayToolTip, DeleteButton, linkVideo, actionLinks, viewsElement, actions, dataVideos, socmedVertical, socmedCustom, liveRecord, title, name, subtitle, caption, ig, tiktok, fb, category, buttons }) => {
 
@@ -46,7 +45,7 @@ const FullWidth = ({ displayToolTip, DeleteButton, linkVideo, actionLinks, views
             setCategory2(cat2)
             setCategory3(cat3)
         }
-    })
+    }, [])
 
     const customStyles = {
         content: {
@@ -58,16 +57,19 @@ const FullWidth = ({ displayToolTip, DeleteButton, linkVideo, actionLinks, views
             transform: 'translate(-50%, -50%)'
         }
     };
-    console.log(dataVideos)
     return (
         <>
             {
                 dataVideos.map((item, index) => {
+                    let iframe = item.iframe
                     return (
                         <div className="inline-flex" key={index}>
                             <div className="flex-1">
                                 <div className="item relative w-auto">
-                                    <Link to={`/livestream/${item.id}`} className="link-wrapped">
+                                    <Link to={{
+                                        pathname: `/livestream/${item.id}`,
+                                        query: { iframe }
+                                    }} className="link-wrapped">
                                         <figure className="item-image-live">
                                             {
                                                 item?.live ? (
@@ -84,7 +86,7 @@ const FullWidth = ({ displayToolTip, DeleteButton, linkVideo, actionLinks, views
                                             }
                                             <PlayIcon style={{ transition: "all .15s ease" }}
                                                 onClick={() => openModal(item.iframe)} className="icon" />
-                                            <img src={item.thumbnail} onError={(e) => { e.target.onerror = null; e.target.src = DefaultImg }} alt={title} className="thumbnail-live" />
+                                            <img style={{ maxWidth: '348px', maxHeight: '222px' }} src={item.thumbnail} onError={(e) => { e.target.onerror = null; e.target.src = DefaultImg }} alt={title} className="thumbnail-live" />
                                         </figure>
                                     </Link>
                                 </div>
@@ -159,8 +161,7 @@ const FullWidth = ({ displayToolTip, DeleteButton, linkVideo, actionLinks, views
                                             category && <div className="flex flex-wrap text-xs font-medium text-gray-700 items-center mt-2">
                                                 {
                                                     category.map((item, index) => {
-                                                        return (<span key={index}><div className="rounded-full inline-block w-2 h-2 bg-gray-700 mx-2"></div><h6 className="inline-block text-sm">{item}</h6></span>)
-                                                        // : (<span key={index}><div className="rounded-full w-2 h-2 bg-gray-700 mx-2"></div><h6>{item}</h6></span>)
+                                                        return (<span key={index}><div className="rounded-full inline-block w-2 h-2 bg-gray-700 mx-2"></div><h6 className="inline-block text-xs">{item}</h6></span>)
                                                     })
                                                 }
                                             </div>
@@ -204,7 +205,6 @@ const FullWidth = ({ displayToolTip, DeleteButton, linkVideo, actionLinks, views
                                                     <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">×</span>
                                                 </button>
                                             </div>
-                                            {/*body*/}
                                             <div className="relative p-6 flex-auto">
                                                 {ReactHtmlParserfrom(dataModal)}
                                             </div>
@@ -217,7 +217,7 @@ const FullWidth = ({ displayToolTip, DeleteButton, linkVideo, actionLinks, views
                                                         pathname: actionLinks,
                                                         query: { linkVideo, actionLinks, viewsElement, actions, dataVideos, socmedVertical, socmedCustom, liveRecord, title, name, subtitle, caption, category1, category2, category3, buttons }
                                                     }} className="font-semibold text-base md:text-lg text-red-600 mr-4">Edit</Link>
-                                                    <DeleteButton id={item.id} />{/* <button onClick={() => submitDelete} className="font-semibold text-base md:text-lg text-red-600 mr-4">Delete</button> */}
+                                                    <DeleteButton id={item.id} />
                                                 </div>
                                             )
                                         }

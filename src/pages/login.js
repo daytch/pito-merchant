@@ -139,8 +139,6 @@ const Login = ({ history }) => {
                                 )}
                             />
 
-                            {/* <FbIcon className="mr-4" /> 
-                        <GoogleIcon /> */}
                         </span>
                     </div>
 

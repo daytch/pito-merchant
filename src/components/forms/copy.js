@@ -234,8 +234,6 @@ const Copy = ({ data, openLoading, closeLoading }) => {
                         <TtIcon />
                     </div>
                     <div className="form-dashboard flex flex-wrap w-full items-center mt-4">
-                        {/* <label htmlFor="ttLink" className="flex-3 md:flex-5 text-sm text-gray-700">Thumbnail</label>
-                        <input type="file" onChange={mypicChange} className="w-auto flex-2 md:flex-1 px-4 py-2 mr-2 md:mx-4 border border-gray-300 rounded-md" /> */}
                         <label htmlFor="ttLink" className="w-full md:w-1/6 text-sm text-gray-700">Thumbnail</label>
                         <label className="md:flex-1 md:px-4 md:py-2 md:mr-2 md:mx-4 md:border md:border-gray-300 md:rounded-md">
                             <input type="file" onChange={mypicChange} aria-label="File browser thumbnail" />

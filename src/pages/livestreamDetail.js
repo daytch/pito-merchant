@@ -3,7 +3,7 @@ import { useParams, useHistory } from 'react-router-dom'
 import SideNavbarMerchant from 'components/SideNavbarMerchant'
 import { Link } from 'react-router-dom'
 import { withRouter } from "react-router"
-import moment from 'moment'
+import Moment from 'moment'
 import Converter from 'configs/moment/DatetimeConverter'
 import livestream from 'api/livestream'
 import Spinner from 'components/spinner'
@@ -12,8 +12,8 @@ import Modal from 'react-modal'
 // import DefaultImg from 'assets/images/default.svg'
 Modal.setAppElement('*'); // suppresses modal-related test warnings.
 
-const LivestreamDetail = () => {
-
+const LivestreamDetail = ({ location }) => {
+    const [query] = useState(location.query)
     const [isLoading, setLoading] = useState(true)
     const [title, setTitle] = useState("")
     const [desc, setDesc] = useState("")
@@ -32,7 +32,7 @@ const LivestreamDetail = () => {
     const [thumbnail, setThumbnail] = useState("")
     const { id } = useParams();
     const [dataModal, setDataModal] = useState('');
-    const [iframe, setIframe] = useState('');
+    const [iframe, setIframe] = useState();
     const [modalIsOpen, setIsOpen] = useState(false)
     let subtitle;
     const history = useHistory()
@@ -61,15 +61,16 @@ const LivestreamDetail = () => {
 
     useEffect(() => {
         livestream.getLivestreamDetail(id).then((res) => {
+
             let data = res.data;
             let url_iframe = data.fb_url !== "" ? data.fb_url : data.ig !== null ? data.ig_url : data.tiktok_url;
-
+            url_iframe = url_iframe.indexOf('iframe') === -1 ? iframe : url_iframe;
             setIframe(url_iframe);
             setTitle(data.title);
             setDesc(data.desc);
-            let stDate = moment(Converter.convertToLocal(data.startDate)).format('YYYY-MM-DD');
-            let stTime = moment(Converter.convertToLocal(data.startDate)).format("hh:mm")
-            let enTime = moment(Converter.convertToLocal(data.endDate)).format("hh:mm")
+            let stDate = Moment(Converter.convertToLocal(data.startDate)).format('YYYY-MM-DD');
+            let stTime = Moment(Converter.convertToLocal(data.startDate)).format("hh:mm")
+            let enTime = Moment(Converter.convertToLocal(data.endDate)).format("hh:mm")
 
             setStartDate(stDate);
             setStartTime(stTime);
@@ -80,13 +81,15 @@ const LivestreamDetail = () => {
             setCategory1(cat1);
             setCategory2(cat2);
             setCategory3(cat3);
+            var testUrl = data.fb_url.match(/'(http:[^\s]+)'/),
+                onlyUrl = testUrl && testUrl[1];
             setFb(data.fb_url);
-            setIg(data.ig_url);
-            setTiktok(data.tiktok_url);
+            setIg(data.ig_url.indexOf('undefined') !== -1 ? '' : data.ig_url);
+            setTiktok(data.tiktok_url.indexOf('undefined') !== -1 ? '' : data.tiktok_url);
             setViews(data.views);
             setFav(data.favorites);
             setShared(data.shares);
-            
+
             setThumbnail(data.img_thumbnail);
             setLoading(false)
         })
@@ -132,15 +135,14 @@ const LivestreamDetail = () => {
                                 <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">×</span>
                             </button>
                         </div>
-                        {/*body*/}
                         <div className="relative p-6 flex-auto">
                             {ReactHtmlParserfrom(dataModal)}
                         </div>
                     </Modal>
 
                     <div className="mt-0 md:mt-10">
-                        <div className="livestream-detail-vid flex flex-wrap mt-4 md:mt-2 mx-auto justify-center w-full md:w-1/2">
-                            {ReactHtmlParserfrom(iframe)}
+                        <div style={{ marginBottom: '-14rem' }} className="livestream-detail-vid flex flex-wrap mt-4 md:mt-2 mx-auto justify-center w-full md:w-1/2">
+                            {ReactHtmlParserfrom(iframe ? iframe : query.iframe)}
                         </div>
                         <div className="flex flex-wrap mt-4 md:mt-2 mx-auto justify-center w-full md:w-1/2">
                             <div className="flex flex-col mr-8 text-center">
@@ -176,7 +178,7 @@ const LivestreamDetail = () => {
                                 <input type="time" value={starttime} name="start" className="text-sm px-2 w-full md:w-2/12 px-2 py-1 xl:ml-4 bg-gray-700 text-white my-2 rounded-md" readOnly />
                                 <label htmlFor="end" className="px-2 w-2/6 md:w-1/12 text-sm text-gray-700">End Time</label>
                                 <input type="time" value={endtime} name="end" className="text-sm px-2 w-full md:w-2/12 px-2 py-1 xl:ml-4 bg-gray-700 text-white my-2 rounded-md" readOnly />
-                          
+
                             </div>
                             <div className="form-dashboard flex flex-wrap w-full items-center">
                                 <label htmlFor="fbLink" className="xl:px-2 xl:w-1/6 xxl:w-1/6 text-sm text-gray-700">Category 1</label>
@@ -206,7 +208,7 @@ const LivestreamDetail = () => {
                     </div>
                 </div>
             </section>
-        </Spinner>
+        </Spinner >
     )
 }
 
