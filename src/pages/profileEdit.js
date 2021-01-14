@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useReducer } from 'react'
+import React, { useEffect, useState } from 'react'
 import SideNavbarMerchant from 'components/SideNavbarMerchant'
-
+import { useHistory } from "react-router-dom";
 import { ReactComponent as FbIcon } from 'assets/images/fb-icon-blue.svg'
 import { ReactComponent as EmailIcon } from 'assets/images/email-icon.svg'
 import { ReactComponent as GoogleIcon } from 'assets/images/google-icon-colorful.svg'
@@ -16,6 +16,7 @@ import Spinner from 'components/spinner'
 const MySwal = withReactContent(Swal)
 const ProfileEdit = () => {
 
+    let history = useHistory();
     const [data, setData] = useState('');
     const [mypic, setMypic] = useState('')
     const [category, setCategory] = useState(data.category)
@@ -53,7 +54,7 @@ const ProfileEdit = () => {
 
     const getData = () => {
         users.getProfile().then(e => {
-            debugger;
+
             setAva(e.data.img_avatar)
             setData(e.data);
             let categories = e.data.categories;
@@ -61,9 +62,10 @@ const ProfileEdit = () => {
             let c2 = categories[1] && categories[1].name ? categories[1].name : 'Category'
             let c3 = categories[2] && categories[2].name ? categories[2].name : 'Category'
             console.log(data)
-            setCat1(c1)
-            setCat2(c2)
-            setCat3(c3)
+            useForceUpdate(c1, c2, c3)
+            // setCat1(c1)
+            // setCat2(c2)
+            // setCat3(c3)
             let c = e.data.categories.map((item, index) => {
                 return {
                     key: index + 1,
@@ -101,7 +103,6 @@ const ProfileEdit = () => {
     }
 
     function changeCategoryid(e, idx) {
-
         let arrCat = Object.keys(categoryid).length === 0 && categoryid.constructor === Object ? [] : [...categoryid]
         arrCat.splice(idx, 1)
         if (e) { arrCat.push(e.id) }
@@ -111,6 +112,10 @@ const ProfileEdit = () => {
     function deleteAvatar() {
         setDelAva('X')
         MySwal.fire("Success", 'Your image has been successfully deleted, but the changes will be visible after you re-login', 'success')
+    }
+
+    function handleCancel(){
+        history.goBack()
     }
 
     function handleEdit() {
@@ -265,18 +270,18 @@ const ProfileEdit = () => {
                             <h6 className="text-red-600 font-semibold text-lg">Edit Password</h6>
                             <div className="flex flex-wrap w-full items-start my-2">
                                 <label htmlFor="currentPassword" className="w-full md:w-1/4 text-sm text-gray-700">Current Password</label>
-                                <input type="text" value={currentPass} onChange={(e) => handleCurrent(e.target.value)} placeholder="Your Current Password" className="w-full text-sm md:w-4/6 px-2 py-1 my-2 md:my-0 md:ml-4 border border-gray-300 rounded-md" />
+                                <input type="password" value={currentPass} onChange={(e) => handleCurrent(e.target.value)} placeholder="Your Current Password" className="w-full text-sm md:w-4/6 px-2 py-1 my-2 md:my-0 md:ml-4 border border-gray-300 rounded-md" />
                             </div>
                             <div className="flex flex-wrap w-full items-start my-2">
                                 <label htmlFor="name" className="w-full md:w-1/4 text-sm text-gray-700">New Password</label>
-                                <input type="text" value={newPass} onChange={(e) => handleNew(e.target.value)} placeholder="Your New Passoword" className="w-full text-sm md:w-4/6 px-2 py-1 my-2 md:my-0 md:ml-4 border border-gray-300 rounded-md" />
+                                <input type="password" value={newPass} onChange={(e) => handleNew(e.target.value)} placeholder="Your New Passoword" className="w-full text-sm md:w-4/6 px-2 py-1 my-2 md:my-0 md:ml-4 border border-gray-300 rounded-md" />
                             </div>
                             <div className="flex flex-wrap w-full items-start my-2">
                                 <label htmlFor="name" className="w-full md:w-1/4 text-sm text-gray-700">Retype Password</label>
-                                <input type="text" value={rePass} onChange={(e) => handleRe(e.target.value)} placeholder="Retype Your new Passoword" className="w-full text-sm md:w-4/6 px-2 py-1 my-2 md:my-0 md:ml-4 border border-gray-300 rounded-md" />
+                                <input type="password" value={rePass} onChange={(e) => handleRe(e.target.value)} placeholder="Retype Your new Passoword" className="w-full text-sm md:w-4/6 px-2 py-1 my-2 md:my-0 md:ml-4 border border-gray-300 rounded-md" />
                             </div>
                             <div className="flex justify-end md:px-8 mt-4">
-                                <button className="w-1/3 px-4 py-1 rounded-3xl border border-red-600 text-red-600 mx-5 font-medium">Cancel</button>
+                                <button onClick={handleCancel} className="w-1/3 px-4 py-1 rounded-3xl border border-red-600 text-red-600 mx-5 font-medium">Cancel</button>
                                 <button onClick={handleEdit} className="w-1/3 px-4 py-1 rounded-3xl bg-red-600 text-white font-medium">Save</button>
                             </div>
                         </div>

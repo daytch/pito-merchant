@@ -5,14 +5,16 @@ import { Link } from 'react-router-dom'
 import dashboard from 'api/dashboard'
 import Spinner from 'components/spinner'
 import livestream from 'api/livestream'
-import ReactPaginate from 'react-paginate'
+import Moment from 'moment'
+import Converter from 'configs/moment/DatetimeConverter'
 import Pagination from 'components/forms/pagination'
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 
-
+const MySwal = withReactContent(Swal)
 const Dashboard = () => {
 
     const [isLoading, setLoading] = useState(true)
-    // const [now, setNow] = useState(moment())
     const [liveVideos, setLiveVideos] = useState([])
     const [previousVideos, setPreviousVideos] = useState([])
     const [upcomingVideos, setUpcomingVideos] = useState([])
@@ -48,10 +50,12 @@ const Dashboard = () => {
             'type': live_vid,
             'page': page
         }).then((res) => {
-            setLoading(false)
+            let listvidLive = res.data.filter(item => Moment(Converter.convertToLocal(new Date())).isSameOrBefore(Converter.convertToLocal(item.starDate)))
+
             setActiveLivePage(1)
             setTotalLive(Math.ceil(res.total_video / 10))
-            setLiveVideos(res.data)
+            setLiveVideos(listvidLive)
+            setLoading(false)
         })
 
         livestream.getVideos({
@@ -83,16 +87,32 @@ const Dashboard = () => {
     }, [])
 
     function submitDelete(id) {
-
-        setLoading(true)
-        livestream.deleteLivestream(id).then((res) => {
-            dashboard.get().then((res) => {
-                setLiveVideos(res.live_videos.data)
-                setPreviousVideos(res.previous_videos.data)
-                setUpcomingVideos(res.upcoming_videos.data)
-                setLoading(false)
-            })
-        });
+        MySwal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                livestream.deleteLivestream(id).then((res) => {
+                    dashboard.get().then((res) => {
+                        setLiveVideos(res.live_videos.data)
+                        setPreviousVideos(res.previous_videos.data)
+                        setUpcomingVideos(res.upcoming_videos.data)
+                        MySwal.fire(
+                            'Deleted!',
+                            'Your data has been deleted.',
+                            'success'
+                        ).then(() => {
+                            getData(activeNextPage, 'upcoming_videos')
+                        })
+                    })
+                })
+            }
+        })
     }
 
     function getData(e, tipe) {
@@ -102,9 +122,12 @@ const Dashboard = () => {
             if (res.isSuccess) {
                 switch (tipe) {
                     case 'live_videos':
+                        let listvidLive = res.data.map((item) => {
+                            return Moment(Converter.convertToLocal(new Date())).isSameOrBefore(Converter.convertToLocal(item.starDate))
+                        })
                         setActiveLivePage(e)
                         setTotalLive(Math.ceil(res.total_video / 10))
-                        setLiveVideos(res.data)
+                        setLiveVideos(listvidLive)
                         break;
                     case 'upcoming_videos':
                         setActiveNextPage(e)
@@ -134,8 +157,8 @@ const Dashboard = () => {
                 <SideNavbarMerchant />
                 <div className="py-10 md:py-20 px-5 w-full">
                     <div className="flex">
-                        <Link to="/dashboard/create" className="w-1/6">
-                            <button className="bg-red-600 focus:outline-none text-white font-medium text-sm w-full md:w-full px-2 py-2 ceiled-3xl">Create Livestreams</button></Link>
+                        <Link to="/dashboard/create" className="w-full md:w-1/6">
+                            <button className="text-xs rounded-xl bg-red-600 focus:outline-none text-white font-medium md:text-sm w-full md:w-full px-2 py-2 ceiled-3xl">Create Livestreams</button></Link>
                     </div>
                     <div className="flex flex-col pt-10 overflow-x-auto">
                         {phoneTooltip.show && (

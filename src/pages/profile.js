@@ -14,7 +14,7 @@ import moment from 'moment'
 import Avatar from 'react-avatar'
 
 const Profile = () => {
-    
+
     // const [name] = useState(localStorage.getItem('PITO:merchant-name'))
     const [avatar, setAvatar] = useState();
     const [category, setCategory] = useState([]);
@@ -71,9 +71,12 @@ const Profile = () => {
             setAbout(data.about);
             setName(data.name);
             setVideos(data.history_videos);
-            setFav(data.total_fav);
-            setShare(data.total_shared);
-            setView(data.total_view);
+            let arrFav = data.fav_month.map(item => item.total)
+            setFav(arrFav);
+            let arrShare = data.shared_month.map(item => item.total)
+            setShare(arrShare);
+            let arrView = data.view_month.map(item => item.total)
+            setView(arrView);
             setLoading(false);
         });
     }, [])

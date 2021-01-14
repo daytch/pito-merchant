@@ -68,9 +68,10 @@ const LivestreamDetail = ({ location }) => {
             setIframe(url_iframe);
             setTitle(data.title);
             setDesc(data.desc);
-            let stDate = Moment(Converter.convertToLocal(data.startDate)).format('YYYY-MM-DD');
-            let stTime = Moment(Converter.convertToLocal(data.startDate)).format("hh:mm")
-            let enTime = Moment(Converter.convertToLocal(data.endDate)).format("hh:mm")
+
+            let stDate = Moment(data.startDate).utc().format('YYYY-MM-DD');
+            let stTime = Moment(data.startDate).utc().format("HH:mm")
+            let enTime = Moment(data.endDate).utc().format("HH:mm")
 
             setStartDate(stDate);
             setStartTime(stTime);
@@ -100,7 +101,7 @@ const LivestreamDetail = ({ location }) => {
         <Spinner isLoading={isLoading}>
             <section className="min-h-screen flex flex-col xl:flex-row">
                 <SideNavbarMerchant />
-                <div className="py-10 md:py-10 px-5 w-full">
+                <div className="pt-10 md:pt-10 px-5 w-full">
                     <div className="flex flex-col-reverse md:flex-row w-full justify-between">
                         <h6 className="text-red-600 font-semibold text-sm text-center pt-8 md:pt-0">Livestreams Detail</h6>
                         <div className="flex items-center md:mb-0 justify-end">
@@ -140,23 +141,23 @@ const LivestreamDetail = ({ location }) => {
                         </div>
                     </Modal>
 
-                    <div className="mt-0 md:mt-10">
+                    <div className="overflow-auto mt-0 md:mt-10">
                         <div style={{ marginBottom: '-14rem' }} className="livestream-detail-vid flex flex-wrap mt-4 md:mt-2 mx-auto justify-center w-full md:w-1/2">
                             {ReactHtmlParserfrom(iframe ? iframe : query.iframe)}
                         </div>
-                        <div className="flex flex-wrap mt-4 md:mt-2 mx-auto justify-center w-full md:w-1/2">
-                            <div className="flex flex-col mr-8 text-center">
-                                <h4 className="font-bold text-2xl text-red-600">{views}</h4>
-                                <p className="font-light text-sm text-gray-300">Views</p>
-                            </div>
-                            <div className="flex flex-col mr-8 text-center">
-                                <h4 className="font-bold text-2xl text-red-600">{fav}</h4>
-                                <p className="font-light text-sm text-gray-300">Subscriber</p>
-                            </div>
-                            <div className="flex flex-col text-center">
-                                <h4 className="font-bold text-2xl text-red-600">{share}</h4>
-                                <p className="font-light text-sm text-gray-300">Shared</p>
-                            </div>
+                    </div>
+                    <div className="flex flex-wrap mt-4 md:mt-2 mx-auto justify-center w-full md:w-1/2">
+                        <div className="flex flex-col mr-8 text-center">
+                            <h4 className="font-bold text-2xl text-red-600">{views}</h4>
+                            <p className="font-light text-sm text-gray-300">Views</p>
+                        </div>
+                        <div className="flex flex-col mr-8 text-center">
+                            <h4 className="font-bold text-2xl text-red-600">{fav}</h4>
+                            <p className="font-light text-sm text-gray-300">Subscriber</p>
+                        </div>
+                        <div className="flex flex-col text-center">
+                            <h4 className="font-bold text-2xl text-red-600">{share}</h4>
+                            <p className="font-light text-sm text-gray-300">Shared</p>
                         </div>
                     </div>
                     <div className="flex flex-col xl:flex-row pt-10">

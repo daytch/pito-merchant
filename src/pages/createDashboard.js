@@ -70,7 +70,7 @@ const CreateDashboard = ({ state }) => {
         setIgurl(e.target.value)
     }
     function changeCategoryid(e, idx) {
-        
+
         let arrCat = Object.keys(categoryid).length === 0 && categoryid.constructor === Object ? [] : [...categoryid]
         arrCat.splice(idx, 1)
         if (e) { arrCat.push(e.id) }
@@ -86,7 +86,7 @@ const CreateDashboard = ({ state }) => {
         let ids = Object.values(categoryid);
         let endDate = startDate + " " + endTime;
         let start = startDate + " " + startTime;
-        
+
 
         let cat = []
         for (const [value] of Object.entries(categoryid)) {
@@ -160,7 +160,7 @@ const CreateDashboard = ({ state }) => {
         formData.append("tiktok_url", tiktok_url);
         formData.append("ig_url", ig_url);
         formData.append("category", ids);
-        
+
         livestream.create(formData).then((res) => {
 
             setLoading(false)
@@ -168,6 +168,9 @@ const CreateDashboard = ({ state }) => {
                 icon: 'success',
                 title: 'Success',
                 text: res.message
+            }).then(result => {
+                console.log(result)
+                window.location.href = '/dashboard'
             })
         }).catch(err => {
             seterrors(err?.response?.data?.message)

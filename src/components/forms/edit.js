@@ -10,18 +10,18 @@ import livestream from 'api/livestream';
 import 'react-toastify/dist/ReactToastify.css';
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
-import moment from 'moment'
+import Moment from 'moment'
 import Converter from 'configs/moment/DatetimeConverter'
 
 const MySwal = withReactContent(Swal)
 
 const Edit = ({ data, openLoading, closeLoading }) => {
-
+console.log(data)
     const { id } = useParams()
     const [mypic, setMypic] = useState('')
-    const [startDate, setStartDate] = useState(moment(Converter.convertToLocal(data.dataVideos[0].date)).format("yyyy-MM-DD"))
-    const [startTime, setStartTime] = useState(moment(Converter.convertToLocal(data.dataVideos[0].date)).format("hh:mm"))
-    const [endTime, setEndTime] = useState(moment(Converter.convertToLocal(data.dataVideos[0].end_time)).format("hh:mm"))
+    const [startDate, setStartDate] = useState(Moment(data.dataVideos[0].date).utc().format("YYYY-MM-DD"))
+    const [startTime, setStartTime] = useState(Moment(data.dataVideos[0].date).utc().format("HH:mm"))
+    const [endTime, setEndTime] = useState(Moment(data.dataVideos[0].end_time).utc().format("HH:mm"))
     const [title, setTitle] = useState(data.title)
     const [desc, setDesc] = data.desc ? useState(data.desc) : useState(data.caption)
     const [category1] = useState(data.category1)
@@ -93,7 +93,7 @@ const Edit = ({ data, openLoading, closeLoading }) => {
         let ids = Object.values(categoryid);
         let endDate = startDate + " " + endTime;
         let start = startDate + " " + startTime;
-        debugger
+        
         let cat = []
         for (const [value] of Object.entries(categoryid)) {
             cat.push(value)
@@ -119,7 +119,7 @@ const Edit = ({ data, openLoading, closeLoading }) => {
 
         var date = new Date();
         date.setDate(date.getDate() + 7);
-        if (moment(startDate).isSameOrAfter(date, 'day')) {
+        if (Moment(startDate).isSameOrAfter(date, 'day')) {
             closeLoading()
             MySwal.fire('Validation!', 'Start Date cannot more than a week.', 'warning');
             return;
@@ -158,8 +158,8 @@ const Edit = ({ data, openLoading, closeLoading }) => {
         const formData = new FormData();
         formData.append("videoId", id);
         formData.append("mypic", mypic);
-        formData.append("startDate", Converter.converToFormatBE(Converter.convertToUTC(start)));
-        formData.append("endDate", Converter.converToFormatBE(Converter.convertToUTC(endDate)));
+        formData.append("startDate", Converter.converToFormatBE(start));
+        formData.append("endDate", Converter.converToFormatBE(endDate));
         formData.append("title", title);
         formData.append("desc", desc);
         formData.append("fb_url", fb_url ? fb_url : '');

@@ -2,10 +2,7 @@ import React, { useState } from 'react'
 import { Line } from 'react-chartjs-2'
 
 const LineCustom = ({ favData, shareData, viewData }) => {
-    const [favouriteData] = useState(favData)
-    const [sharedData] = useState(shareData)
-    const [viewsData] = useState(viewData)
-
+    
     const state = {
         labels: ['Jan', 'Feb', 'March', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Des'],
         datasets: [
@@ -15,7 +12,7 @@ const LineCustom = ({ favData, shareData, viewData }) => {
                 backgroundColor: '#009245',
                 borderColor: '#009245',
                 borderWidth: 2,
-                data: favouriteData//[320, 1100, 1000, 500]
+                data: favData//[320, 1100, 1000, 500]
             },
             {
                 label: 'Shares per Month',
@@ -23,7 +20,7 @@ const LineCustom = ({ favData, shareData, viewData }) => {
                 borderColor: '#00A68C',
                 backgroundColor: '#00A68C',
                 borderWidth: 2,
-                data: sharedData// [120, 320, 250, 520, 390]
+                data: shareData// [120, 320, 250, 520, 390]
 
             },
             {
@@ -32,7 +29,7 @@ const LineCustom = ({ favData, shareData, viewData }) => {
                 backgroundColor: '#E0472D',
                 borderColor: '#E0472D',
                 borderWidth: 2,
-                data: viewsData// [290, 450, 350, 0, 520, 390]
+                data: viewData// [290, 450, 350, 0, 520, 390]
 
             }
         ]
