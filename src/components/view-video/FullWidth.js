@@ -29,6 +29,11 @@ const FullWidth = ({ displayToolTip, DeleteButton, linkVideo, actionLinks, views
         setIsOpen(true)
         setDataModal(data)
     }
+
+    function redirectToUrl(url) {
+        window.location.href = url
+    }
+
     const closeModal = () => { setIsOpen(false) }
 
     function afterOpenModal() {
@@ -168,7 +173,7 @@ const FullWidth = ({ displayToolTip, DeleteButton, linkVideo, actionLinks, views
                                         }
                                         {
                                             <div className="merchant-dashboard my-2 flex flex-wrap">
-                                                {
+                                                {/* {
                                                     fb && (
                                                         <button style={{ transition: "all .15s ease" }}
                                                             onClick={() => openModal(fb)}><FbIcon className="mr-4" />
@@ -182,6 +187,17 @@ const FullWidth = ({ displayToolTip, DeleteButton, linkVideo, actionLinks, views
                                                 {
                                                     tiktok && (<button style={{ transition: "all .15s ease" }}
                                                         onClick={() => openModal(tiktok)}><TtIcon className="mr-4" /></button>)
+                                                } */}
+                                                {
+                                                    fb && (
+                                                        <Link target="_blank" to={{ pathname: fb }} style={{ transition: "all .15s ease" }} ><FbIcon className="mr-4" /></Link>)
+                                                }
+                                                {
+                                                    ig && (<Link target="_blank" to={{ pathname: ig }} style={{ transition: "all .15s ease" }}><IgIcon className="mr-4" /></Link>)
+
+                                                }
+                                                {
+                                                    tiktok && (<Link target="_blank" to={{ pathname: tiktok }} style={{ transition: "all .15s ease" }}><TtIcon className="mr-4" /></Link>)
                                                 }
                                                 <CopyToClipboard text={item.share_url}>
                                                     <button onClick={displayToolTip}><ShareIconMobile className="mr-4" /></button>

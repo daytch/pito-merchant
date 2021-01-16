@@ -17,7 +17,7 @@ export const RenderTBodySupport = ({ itemBodySupport }) => {
                                 }}>{item.ticketNumber}</Link>
                             </td>
                             <td className="text-center py-3 px-4 text-gray-400 font-light">{item.title}</td>
-                            <td className="text-center py-3 px-4 text-gray-400 font-light">{item.status === 0 ? "Close" : "Open"}</td>
+                            <td className="text-center py-3 px-4 text-gray-400 font-light">{item.status === 1 ? "Close" : "Open"}</td>
                             <td className="text-center py-3 px-4 text-gray-400 font-light">{item.lastUpdated ? moment(item.lastUpdated).format('DD/MM/YYYY') : "-"}</td>
                         </tr>
                     )

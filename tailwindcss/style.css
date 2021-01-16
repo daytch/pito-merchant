@@ -357,15 +357,6 @@ item:hover figure.item-image-live-detail svg.icon {
     width: 100px;
 }
 
-.chat-history {
-    width: 189vh;
-}
-
-.chat-content {
-    margin-left: -7vw;
-    width: 46vw;
-}
-
 .play-icon-lvdetail {
     transition: all 0.15s ease 0s;
     margin-top: -15%;
@@ -394,6 +385,13 @@ item:hover figure.item-image-live-detail svg.icon {
     .icon-upload {
         display: none;
     }
+    .sb-avatar {
+        display: none !important;
+    }
+    .ck .ck-reset .ck-editor .ck-rounded-corners {
+        width: 100% !important;
+        margin-bottom: 2vh;
+    }
     .livestream-detail-vid {
         margin-bottom: -115px;
     }
@@ -402,6 +400,13 @@ item:hover figure.item-image-live-detail svg.icon {
 /**Desktop Query*/
 
 @media only screen and (min-width: 768px) {
+    .chat-history {
+        width: 189vh;
+    }
+    .chat-content {
+        margin-left: -11.5vw;
+        width: 46vw;
+    }
     /* img, video {
         max-width: 348px;
         max-height: 222px;

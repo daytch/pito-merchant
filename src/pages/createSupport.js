@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import Sidebar from 'components/SideNavbarMerchant'
-// import { ReactComponent as UploadIcon } from 'assets/images/upload-icon.svg'
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import support from 'api/support';
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
@@ -24,7 +25,7 @@ const CreateSupport = () => {
         setSubject(e.target.value);
     }
     function changeMessage(e) {
-        setMessage(e.target.value);
+        setMessage(e);
     }
 
     function changeAttachment1(e) {
@@ -72,6 +73,9 @@ const CreateSupport = () => {
                 icon: 'success',
                 title: 'Success',
                 text: res.message
+            }).then(result => {
+                console.log(result)
+                window.location.href = '/support'
             })
         }).catch(err => {
             seterrors(err?.response?.data?.message)
@@ -86,7 +90,7 @@ const CreateSupport = () => {
                 <Sidebar />
                 <div className="py-10 md:py-20 px-5 w-full">
                     <h6 className="text-red-600 font-bold text-lg">Create Ticket Support</h6><br />
-                    <div className="flex lg:pt-10 overflow-x-auto">
+                    <div className="flex md:pl-10 lg:pt-10 overflow-x-auto">
                         <form className="lg:w-2/5">
                             <div className="flex flex-wrap w-full items-start mt-4">
                                 <label htmlFor="title" className="w-full md:w-1/5 text-sm text-gray-700">Subject <span className="text-red-700">*</span></label>
@@ -94,7 +98,26 @@ const CreateSupport = () => {
                             </div>
                             <div className="flex flex-wrap w-full items-start mt-4">
                                 <label htmlFor="desc" className="w-full md:w-1/5 text-sm text-gray-700">Message <span className="text-red-700">*</span></label>
-                                <textarea placeholder="Message" value={message} onChange={changeMessage} className="text-sm w-full md:w-4/5 h-32 px-4 py-2 border border-gray-300 rounded-lg" />
+                                {/* <textarea placeholder="Message" value={message} onChange={changeMessage} className="text-sm w-full md:w-4/5 h-32 px-4 py-2 border border-gray-300 rounded-lg" /> */}
+                                <CKEditor
+                                    editor={ClassicEditor}
+                                    data="<p>Hello from CKEditor 5!</p>"
+                                    onReady={editor => {
+                                        // You can store the "editor" and use when it is needed.
+                                        console.log('Editor is ready to use!', editor);
+                                    }}
+                                    onChange={(event, editor) => {
+                                        const data = editor.getData();
+                                        changeMessage(data);
+                                        console.log({ event, editor, data });
+                                    }}
+                                    onBlur={(event, editor) => {
+                                        console.log('Blur.', editor);
+                                    }}
+                                    onFocus={(event, editor) => {
+                                        console.log('Focus.', editor);
+                                    }}
+                                />
                             </div><br />
                             <div className="flex flex-wrap w-full items-start">
                                 <label htmlFor="attachment" className="w-full md:w-1/5 text-sm text-gray-700">Attachment</label>

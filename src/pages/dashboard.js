@@ -41,42 +41,37 @@ const Dashboard = () => {
     }
 
     useEffect(() => {
+        
         let page = 1
         let live_vid = 'live_videos'
         let next_vid = 'upcoming_videos'
         let prev_vid = 'previous_videos'
 
-        livestream.getVideos({
-            'type': live_vid,
-            'page': page
-        }).then((res) => {
-            let listvidLive = res.data.filter(item => Moment(Converter.convertToLocal(new Date())).isSameOrBefore(Converter.convertToLocal(item.starDate)))
+        livestream.getVideos(page, live_vid)
+            .then((res) => {
+                let listvidLive = res.data.filter(item => Moment(Converter.convertToLocal(new Date())).isSameOrBefore(Converter.convertToLocal(item.starDate)))
 
-            setActiveLivePage(1)
-            setTotalLive(Math.ceil(res.total_video / 10))
-            setLiveVideos(listvidLive)
-            setLoading(false)
-        })
+                setActiveLivePage(1)
+                setTotalLive(Math.ceil(res.total_video / 10))
+                setLiveVideos(listvidLive)
+                setLoading(false)
+            })
 
-        livestream.getVideos({
-            'type': next_vid,
-            'page': page
-        }).then((res) => {
-            setLoading(false)
-            setActiveNextPage(1)
-            setTotalNext(Math.ceil(res.total_video / 10))
-            setUpcomingVideos(res.data)
-        })
+        livestream.getVideos(page, next_vid)
+            .then((res) => {
+                setLoading(false)
+                setActiveNextPage(1)
+                setTotalNext(Math.ceil(res.total_video / 10))
+                setUpcomingVideos(res.data)
+            })
 
-        livestream.getVideos({
-            'type': prev_vid,
-            'page': page
-        }).then((res) => {
-            setPreviousVideos(res.data)
-            setLoading(false)
-            setActivePrevPage(1)
-            setTotalPreviuos(Math.ceil(res.total_video / 10))
-        })
+        livestream.getVideos(page, prev_vid)
+            .then((res) => {
+                setPreviousVideos(res.data)
+                setLoading(false)
+                setActivePrevPage(1)
+                setTotalPreviuos(Math.ceil(res.total_video / 10))
+            })
         // dashboard.get().then((res) => {
 
         //     setLiveVideos(res.live_videos.data)
@@ -174,7 +169,7 @@ const Dashboard = () => {
                                                 const videos = [{ iframe: item.iframe, id: item.id, thumbnail: item.img_thumbnail, live: true, views: item.views, likes: item.likes, date: item.start_time, title: item.title, end_time: item.end_time, share_url: item.share_url, redirect_fb: item.redirect_fb, redirect_ig: item.redirect_ig, redirect_tiktok: item.redirect_tiktok }]
                                                 return (
                                                     <div key={index} className="w-full xl:w-1/2 mt-4">
-                                                        <FullWidth displayToolTip={displayToolTip} actionLinks={'/dashboard/edit/' + item.id} dataVideos={videos} title={item.title} caption={item.description} category={item.categories} ig={item.instagram_url} fb={item.facebook_url} tiktok={item.tiktok_url} socmedCustom={true} />
+                                                        <FullWidth displayToolTip={displayToolTip} actionLinks={'/dashboard/edit/' + item.id} dataVideos={videos} title={item.title} caption={item.description} category={item.categories} ig={item.redirect_ig} fb={item.redirect_fb} tiktok={item.redirect_tiktok} socmedCustom={true} />
                                                     </div>
                                                 )
                                             })
@@ -195,7 +190,7 @@ const Dashboard = () => {
                                                 const videos = [{ iframe: item.iframe, id: item.id, thumbnail: item.img_thumbnail, live: false, views: item.views, likes: item.likes, date: item.start_time, title: item.title, end_time: item.end_time, share_url: item.share_url, redirect_fb: item.redirect_fb, redirect_ig: item.redirect_ig, redirect_tiktok: item.redirect_tiktok }]
                                                 return (
                                                     <div key={index} className="flex flex-wrap mb-2 w-full xl:w-1/2 mt-4">
-                                                        <FullWidth displayToolTip={displayToolTip} DeleteButton={DeleteButton} actionLinks={'/dashboard/edit/' + item.id} dataVideos={videos} title={item.title} actions={true} caption={item.description} category={item.categories} ig={item.instagram_url} fb={item.facebook_url} tiktok={item.tiktok_url} socmedCustom={true} />
+                                                        <FullWidth displayToolTip={displayToolTip} DeleteButton={DeleteButton} actionLinks={'/dashboard/edit/' + item.id} dataVideos={videos} title={item.title} actions={true} caption={item.description} category={item.categories} ig={item.redirect_ig} fb={item.redirect_fb} tiktok={item.redirect_tiktok} socmedCustom={true} />
                                                     </div>
                                                 )
                                             })
@@ -217,7 +212,7 @@ const Dashboard = () => {
 
                                                 return (
                                                     <div key={index} className="flex flex-wrap mb-2 w-full xl:w-1/2 mt-4">
-                                                        <FullWidth displayToolTip={displayToolTip} actionLinks={'/dashboard/edit/' + item.id} dataVideos={videos} title={item.title} viewsElement={true} actions={false} ig={item.instagram_url} fb={item.facebook_url} tiktok={item.tiktok_url} caption={item.description} category={item.categories} socmedCustom={true} />
+                                                        <FullWidth displayToolTip={displayToolTip} actionLinks={'/dashboard/edit/' + item.id} dataVideos={videos} title={item.title} viewsElement={true} actions={false} ig={item.redirect_ig} fb={item.redirect_fb} tiktok={item.redirect_tiktok} caption={item.description} category={item.categories} socmedCustom={true} />
                                                     </div>
                                                 )
                                             })

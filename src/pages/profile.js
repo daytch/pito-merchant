@@ -133,17 +133,16 @@ const Profile = () => {
                                 !avatar ? (<Avatar name={name} className="mx-auto" round={true} size="125px" />) :
                                     (<img src={data.img_avatar ? data.img_avatar : ava} draggable={false} style={{ width: '150px', height: '150px' }} className="rounded-full border-8 mb-4 xl:mb-0 xl:mr-4 border-red-600 mx-auto" alt={data.name} />)
                             }
-                            <div className="md:px-8 w-auto">
+                            <div className="w-auto md:px-8 md:w-4/6">
                                 <h4 className="text-red-600 text-2xl font-bold">{name}</h4>
-                                <p className="text-sm mt-1 font-light text-justify">
+                                <p className="text-xs mt-1 font-light text-justify">
                                     {about}
                                 </p>
                                 {
                                     category && <div className="flex flex-wrap text-sm font-medium text-gray-700 items-center mt-2">
                                         {
                                             category.map((item, index) => {
-                                                return (<span key={index}><div className="rounded-full inline-block w-2 h-2 bg-gray-700 mx-2"></div><h6 className="inline-block">{item.name}</h6></span>)
-                                                // : (<span key={index}><div className="rounded-full w-2 h-2 bg-gray-700 mx-2"></div><h6>{item}</h6></span>)
+                                                return (<span key={index}><div className="rounded-full inline-block w-2 h-2 bg-gray-700 mx-2"></div><h6 className="text-xs inline-block">{item.name}</h6></span>)
                                             })
                                         }
                                     </div>
@@ -163,7 +162,7 @@ const Profile = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="w-1/5 hidden xl:flex flex-col">
+                            <div className="w-10 hidden xl:flex flex-col">
                                 {fb && <Link to={{ pathname: fb }} target="_blank"><FbIcon className="mb-4" /></Link>}
                                 {ig && <Link to={{ pathname: ig }} target="_blank"><IgIcon className="mb-4" /></Link>}
                                 {tiktok && <Link to={{ pathname: tiktok }} target="_blank"><TtIcon className="mb-4" /></Link>}
