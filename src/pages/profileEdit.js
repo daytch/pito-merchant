@@ -31,7 +31,7 @@ const ProfileEdit = () => {
     const [cat2, setCat2] = useState('Select...')
     const [cat3, setCat3] = useState('Select...')
     const [ava, setAva] = useState('')
-    const [value, setValue] = useState(0);
+    const [value, setValue] = useState(0)
 
     function handleCurrent(data) {
         setcurrentPass(data)
@@ -44,12 +44,12 @@ const ProfileEdit = () => {
     }
 
     function useForceUpdate(c1, c2, c3) {// integer state
-        return () => {
-            setValue(value => value + 1)
-            setCat1(c1)
-            setCat2(c2)
-            setCat3(c3)
-        }; // update the state to force render
+
+        setValue(value => value + 1)
+        setCat1(c1)
+        setCat2(c2)
+        setCat3(c3)
+        // update the state to force render
     }
 
     const getData = () => {
@@ -61,8 +61,8 @@ const ProfileEdit = () => {
             let c1 = categories[0] && categories[0].name ? categories[0].name : 'Category'
             let c2 = categories[1] && categories[1].name ? categories[1].name : 'Category'
             let c3 = categories[2] && categories[2].name ? categories[2].name : 'Category'
-            console.log(data)
-            useForceUpdate(c1, c2, c3)
+            
+            // useForceUpdate(c1, c2, c3)
             // setCat1(c1)
             // setCat2(c2)
             // setCat3(c3)
@@ -81,7 +81,9 @@ const ProfileEdit = () => {
 
             setCategoryid(result)
             setLoading(false);
-            // useForceUpdate(c1, c2, c3)
+            return () => {
+                useForceUpdate(c1, c2, c3)
+            }
         })
     }
 
@@ -93,10 +95,40 @@ const ProfileEdit = () => {
             setCategory(ListCategory);
             setLoading(false)
         })
-        getData()
+        // getData()
         // eslint-disable-next-line
     }, [])
 
+    useEffect(() => {
+        users.getProfile().then(e => {
+
+            setAva(e.data.img_avatar)
+            setData(e.data);
+            let categories = e.data.categories;
+            let c1 = categories[0] && categories[0].name ? categories[0].name : 'Category'
+            let c2 = categories[1] && categories[1].name ? categories[1].name : 'Category'
+            let c3 = categories[2] && categories[2].name ? categories[2].name : 'Category'
+
+            let c = e.data.categories.map((item, index) => {
+                return {
+                    key: index + 1,
+                    value: item.category_id
+                }
+            })
+            var result = [];
+            let idx = 1;
+            for (var i = 0; i < c.length; i++) {
+                result = [...result, { [idx]: c[i].value }];
+                idx = idx + i
+            }
+
+            setCategoryid(result)
+            setLoading(false);
+
+            useForceUpdate(c1, c2, c3)
+
+        })
+    }, [])
     function mypicChange(e) {
         setMypic(e.target.files[0])
         data.img_avatar = URL.createObjectURL(e.target.files[0])
@@ -114,7 +146,7 @@ const ProfileEdit = () => {
         MySwal.fire("Success", 'Your image has been successfully deleted, but the changes will be visible after you re-login', 'success')
     }
 
-    function handleCancel(){
+    function handleCancel() {
         history.goBack()
     }
 
@@ -203,10 +235,10 @@ const ProfileEdit = () => {
                                     <button onClick={deleteAvatar} className="px-6 py-1 w-full border border-red-600 shadow-md my-2 text-red-600 text-sm rounded-xl">Delete Avatar</button>
                                     <div className="user-detail w-full justify-center pt-2">
                                         {
-                                            loginBy === "facebook" ? (<span className="text-sm flex justify-center text-sm md:text-base shadow-md px-2 mt-2 py-1 border border-gray-50 rounded-xl bg white text-gray-700">
+                                            loginBy === "facebook" ? (<span className="text-sm flex justify-center md:text-base shadow-md px-2 mt-2 py-1 border border-gray-50 rounded-xl bg white text-gray-700">
                                                 <FbIcon className="mr-3" /> Facebook </span>) :   // if(a) then `b`
-                                                loginBy === "facebook" ? (<span className="text-sm flex justify-center text-sm md:text-base shadow-md px-2 mt-2 py-1 border border-gray-50 rounded-xl bg white text-gray-700">
-                                                    <GoogleIcon className="mr-3" /> Google </span>) : (<span className="text-sm flex justify-center text-sm md:text-base shadow-md px-2 mt-2 py-1 border border-gray-50 rounded-xl bg white text-gray-700">
+                                                loginBy === "facebook" ? (<span className="text-sm flex justify-center md:text-base shadow-md px-2 mt-2 py-1 border border-gray-50 rounded-xl bg white text-gray-700">
+                                                    <GoogleIcon className="mr-3" /> Google </span>) : (<span className="text-sm flex justify-center md:text-base shadow-md px-2 mt-2 py-1 border border-gray-50 rounded-xl bg white text-gray-700">
                                                         <EmailIcon className="mr-3" /> Connected by Email </span>)
                                         }
                                     </div>
@@ -232,19 +264,19 @@ const ProfileEdit = () => {
                             <div className="flex flex-wrap w-full items-start my-2">
                                 <label htmlFor="name" className="w-full md:w-1/4 text-sm text-gray-700">Category 1</label>
                                 <div className="w-full text-sm md:w-4/6 px-2 py-1 my-2 md:my-0 md:ml-4 border border-gray-300 rounded-md" >
-                                    <Dropdown isNeedReset={true} title={cat1} placeholder="Category 1" items={category} onClick={changeCategoryid} idx={1} />
+                                    <Dropdown isNeedReset={true} title={cat1} placeholder="Category 1" items={category} onClick={changeCategoryid} idx={0} />
                                 </div>
                             </div>
                             <div className="flex flex-wrap w-full items-start my-2">
                                 <label htmlFor="name" className="w-full md:w-1/4 text-sm text-gray-700">Category 2</label>
                                 <div className="w-full text-sm md:w-4/6 px-2 py-1 my-2 md:my-0 md:ml-4 border border-gray-300 rounded-md" >
-                                    <Dropdown isNeedReset={true} title={cat2} placeholder="Category 2" items={category} onClick={changeCategoryid} idx={2} />
+                                    <Dropdown isNeedReset={true} title={cat2} placeholder="Category 2" items={category} onClick={changeCategoryid} idx={1} />
                                 </div>
                             </div>
                             <div className="flex flex-wrap w-full items-start my-2">
                                 <label htmlFor="name" className="w-full md:w-1/4 text-sm text-gray-700">Category 3</label>
                                 <div className="w-full text-sm md:w-4/6 px-2 py-1 my-2 md:my-0 md:ml-4 border border-gray-300 rounded-md" >
-                                    <Dropdown isNeedReset={true} title={cat3} placeholder="Category 3" items={category} onClick={changeCategoryid} idx={3} />
+                                    <Dropdown isNeedReset={true} title={cat3} placeholder="Category 3" items={category} onClick={changeCategoryid} idx={2} />
                                 </div>
                             </div>
                             <div className="flex flex-wrap w-full items-start my-2">

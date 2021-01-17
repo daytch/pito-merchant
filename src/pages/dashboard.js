@@ -101,9 +101,7 @@ const Dashboard = () => {
                             'Deleted!',
                             'Your data has been deleted.',
                             'success'
-                        ).then(() => {
-                            getData(activeNextPage, 'upcoming_videos')
-                        })
+                        )
                     })
                 })
             }

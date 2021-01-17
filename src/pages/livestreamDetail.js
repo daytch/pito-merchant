@@ -141,10 +141,8 @@ const LivestreamDetail = ({ location }) => {
                         </div>
                     </Modal>
 
-                    <div className="overflow-auto mt-0 md:mt-10">
-                        <div style={{ marginBottom: '-14rem' }} className="livestream-detail-vid flex flex-wrap mt-4 md:mt-2 mx-auto justify-center w-full md:w-1/2">
-                            {ReactHtmlParserfrom(iframe ? iframe : query.iframe)}
-                        </div>
+                    <div className="flex flex-wrap mt-4 md:mt-2 mx-auto justify-center w-full md:w-1/2">
+                        {ReactHtmlParserfrom(iframe ? iframe : query.iframe)}
                     </div>
                     <div className="flex flex-wrap mt-4 md:mt-2 mx-auto justify-center w-full md:w-1/2">
                         <div className="flex flex-col mr-8 text-center">

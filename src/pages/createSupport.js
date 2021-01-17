@@ -91,18 +91,27 @@ const CreateSupport = () => {
                 <div className="py-10 md:py-20 px-5 w-full">
                     <h6 className="text-red-600 font-bold text-lg">Create Ticket Support</h6><br />
                     <div className="flex md:pl-10 lg:pt-10 overflow-x-auto">
-                        <form className="lg:w-2/5">
+                        <form className="md:w-3/5">
                             <div className="flex flex-wrap w-full items-start mt-4">
-                                <label htmlFor="title" className="w-full md:w-1/5 text-sm text-gray-700">Subject <span className="text-red-700">*</span></label>
-                                <input type="text" placeholder="Subject" value={subject} onChange={changeSubject} className="text-sm w-full md:w-4/5 px-4 py-2 border border-gray-300 rounded-lg" />
+                                <label htmlFor="title" className="w-full text-sm text-gray-700">Subject <span className="text-red-700">*</span></label><br></br>
+                                <input type="text" placeholder="Subject" value={subject} onChange={changeSubject} className="text-sm w-full px-4 py-2 border border-gray-300 rounded-lg" />
                             </div>
                             <div className="flex flex-wrap w-full items-start mt-4">
-                                <label htmlFor="desc" className="w-full md:w-1/5 text-sm text-gray-700">Message <span className="text-red-700">*</span></label>
+                                <label htmlFor="desc" className="w-full text-sm text-gray-700">Message <span className="text-red-700">*</span></label>
                                 {/* <textarea placeholder="Message" value={message} onChange={changeMessage} className="text-sm w-full md:w-4/5 h-32 px-4 py-2 border border-gray-300 rounded-lg" /> */}
-                                <CKEditor
+                                <CKEditor style={{ width: '100%' }}
                                     editor={ClassicEditor}
-                                    data="<p>Hello from CKEditor 5!</p>"
+                                    // data="<p>Hello from CKEditor 5!</p>"
+                                    config={{ placeholder: "Please type a message..." }}
                                     onReady={editor => {
+                                        editor.editing.view.change(writer => {
+                                            writer.setStyle(
+                                                "height",
+                                                "200px",
+                                                editor.editing.view.document.getRoot()
+                                            );
+                                        });
+                                        const data = editor.getData();
                                         // You can store the "editor" and use when it is needed.
                                         console.log('Editor is ready to use!', editor);
                                     }}

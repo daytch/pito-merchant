@@ -169,7 +169,6 @@ const CreateDashboard = ({ state }) => {
                 title: 'Success',
                 text: res.message
             }).then(result => {
-                console.log(result)
                 window.location.href = '/dashboard'
             })
         }).catch(err => {

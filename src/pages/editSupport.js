@@ -149,7 +149,8 @@ const EditSupport = (props) => {
                                         {/* <textarea onChange={e => handleChange(e.target.value)} placeholder="Message" className="w-full md:w-4/5 h-32 px-4 py-2 border border-gray-300 rounded-lg" /> */}
                                         <CKEditor
                                             editor={ClassicEditor}
-                                            data="<p>Hello from CKEditor 5!</p>"
+                                            // data="<p>Hello from CKEditor 5!</p>"
+                                            config={{ placeholder: "Please type a message..." }}
                                             onReady={editor => {
                                                 editor.editing.view.change(writer => {
                                                     writer.setStyle(
