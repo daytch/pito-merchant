@@ -68,7 +68,7 @@ const FullWidth = ({ displayToolTip, DeleteButton, linkVideo, actionLinks, views
                 dataVideos.map((item, index) => {
                     let iframe = item.iframe
                     return (
-                        <div className="inline-flex" key={index}>
+                        <div className="md:inline-flex" key={index}>
                             <div className="flex-1">
                                 <div className="item relative w-auto">
                                     <Link to={{
@@ -141,7 +141,7 @@ const FullWidth = ({ displayToolTip, DeleteButton, linkVideo, actionLinks, views
                                     {
                                         title && <h4 className="font-bold text-md text-gray-700 break-all">{title}</h4>
                                     }
-                                    <div className="mt-4">
+                                    <div className="md:mt-4">
                                         {
                                             subtitle && <h5 className="text-gray-700 font-semibold mb-2 break-all">Title Lorem Ipsum...</h5>
                                         }
@@ -163,7 +163,7 @@ const FullWidth = ({ displayToolTip, DeleteButton, linkVideo, actionLinks, views
                                             </div>
                                         }
                                         {
-                                            category && <div className="flex flex-wrap text-xs font-medium text-gray-700 items-center mt-2">
+                                            category && <div className="flex flex-wrap text-xs font-medium text-gray-700 items-center md:mt-2">
                                                 {
                                                     category.map((item, index) => {
                                                         return (<span key={index}><div className="rounded-full inline-block w-2 h-2 bg-gray-700 mx-2"></div><h6 className="inline-block text-xs">{item}</h6></span>)
@@ -173,34 +173,19 @@ const FullWidth = ({ displayToolTip, DeleteButton, linkVideo, actionLinks, views
                                         }
                                         {
                                             <div className="merchant-dashboard my-2 flex flex-wrap">
-                                                {/* {
+                                                {
                                                     fb && (
-                                                        <button style={{ transition: "all .15s ease" }}
-                                                            onClick={() => openModal(fb)}><FbIcon className="mr-4" />
-                                                        </button>)
+                                                        <Link target="_blank" to={{ pathname: fb }} style={{ transition: "all .15s ease" }} ><FbIcon className="icon-sosmed mr-2 md:mr-4" /></Link>)
                                                 }
                                                 {
-                                                    ig && (<button style={{ transition: "all .15s ease" }}
-                                                        onClick={() => openModal(ig)}><IgIcon className="mr-4" /></button>)
+                                                    ig && (<Link target="_blank" to={{ pathname: ig }} style={{ transition: "all .15s ease" }}><IgIcon className="icon-sosmed mr-2 md:mr-4" /></Link>)
 
                                                 }
                                                 {
-                                                    tiktok && (<button style={{ transition: "all .15s ease" }}
-                                                        onClick={() => openModal(tiktok)}><TtIcon className="mr-4" /></button>)
-                                                } */}
-                                                {
-                                                    fb && (
-                                                        <Link target="_blank" to={{ pathname: fb }} style={{ transition: "all .15s ease" }} ><FbIcon className="mr-4" /></Link>)
-                                                }
-                                                {
-                                                    ig && (<Link target="_blank" to={{ pathname: ig }} style={{ transition: "all .15s ease" }}><IgIcon className="mr-4" /></Link>)
-
-                                                }
-                                                {
-                                                    tiktok && (<Link target="_blank" to={{ pathname: tiktok }} style={{ transition: "all .15s ease" }}><TtIcon className="mr-4" /></Link>)
+                                                    tiktok && (<Link target="_blank" to={{ pathname: tiktok }} style={{ transition: "all .15s ease" }}><TtIcon className="icon-sosmed mr-2 md:mr-4" /></Link>)
                                                 }
                                                 <CopyToClipboard text={item.share_url}>
-                                                    <button onClick={displayToolTip}><ShareIconMobile className="mr-4" /></button>
+                                                    <button onClick={displayToolTip}><ShareIconMobile className="icon-sosmed mr-2 md:mr-4" /></button>
                                                 </CopyToClipboard>
                                             </div>
                                         }
@@ -228,7 +213,7 @@ const FullWidth = ({ displayToolTip, DeleteButton, linkVideo, actionLinks, views
 
                                         {
                                             actions && (
-                                                <div className="mt-4 flex items-center">
+                                                <div className="md:mt-4 flex items-center">
                                                     <Link to={{
                                                         pathname: actionLinks,
                                                         query: { linkVideo, actionLinks, viewsElement, actions, dataVideos, socmedVertical, socmedCustom, liveRecord, title, name, subtitle, caption, category1, category2, category3, buttons }

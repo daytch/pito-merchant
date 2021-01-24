@@ -1,7 +1,7 @@
 const Pagination = ({ pages, getData, tipe }) => {
     return (
         <nav className="relative z-0 inline-flex shadow-sm -space-x-px" aria-label="Pagination">
-            <a href="#" className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+            <a href="#" className="relative inline-flex items-center px-1 py-1 md:px-2 md:py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
                 <span className="sr-only">Previous</span>
 
                 <svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -10,13 +10,13 @@ const Pagination = ({ pages, getData, tipe }) => {
             </a>
             {
                 pages && Array(pages).fill().map((x, i) => {
-                    return (<button key={i} onClick={() => getData(i + 1, tipe)} className="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                    return (<button key={i} onClick={() => getData(i + 1, tipe)} className="relative inline-flex items-center px-3 py-1 md:px-4 md:py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
                         {i + 1}
                     </button>
                     )
                 })
             }
-            <a href="#" className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+            <a href="#" className="relative inline-flex items-center px-1 py-1 md:px-2 md:py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
                 <span className="sr-only">Next</span>
 
                 <svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">

@@ -297,6 +297,9 @@ item:hover figure.item-image-live-detail svg.icon {
 }
 
 @media all and (min-width: 480px) and (max-width: 768px) {
+    .icon-sosmed {
+        width: 25px;        
+    }
     .item-image img {
         width: 700px;
     }
@@ -315,6 +318,9 @@ item:hover figure.item-image-live-detail svg.icon {
 }
 
 @media all and (max-width: 480px) {
+    .icon-sosmed {
+        width: 25px;        
+    }
     .item-image-live .thumbnail-live {
         width: 350px;
     }

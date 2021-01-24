@@ -18,7 +18,7 @@ const Card = ({ ListData, title }) => {
                                             <div className="my-2 text-gray-800 text-xs">
                                                 <span className="mr-4">{moment(item.lastUpdated).format('YYYY-MM-DD HH:mm:ss')}</span>
                                             </div>
-                                            <p className="font-light text-gray-900">{item.text}</p>
+                                            <div dangerouslySetInnerHTML={{ __html: item.text }} className="font-light text-gray-900" />
                                         </div>
                                         <div className="w-1/6">
                                             {
@@ -40,7 +40,7 @@ const Card = ({ ListData, title }) => {
                                             <div className="my-2 text-gray-800 text-xs">
                                                 <span className="mr-4">{moment(item.lastUpdated).format('YYYY-MM-DD HH:mm:ss')}</span>
                                             </div>
-                                            
+
                                             <div dangerouslySetInnerHTML={{ __html: item.text }} className="font-light text-gray-900" />
                                         </div>
                                     </div>

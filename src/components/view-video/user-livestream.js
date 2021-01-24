@@ -50,7 +50,7 @@ const UserLivestreamVideos = ({ displayToolTip, ListVideo }) => {
                 ListVideo.map((item, index) => {
                     var duration = moment.utc(moment(item.end_time).diff(moment(item.start_time))).format("HH:mm:ss")
                     return (
-                        <div key={index} className="mt-8 flex flex-wrap xl:flex-no-wrap">
+                        <div key={index} className="mt-4 md:mt-8 flex flex-wrap xl:flex-no-wrap">
                             <div className="flex">
                                 <div className="item relative">
                                     <Link to={`/livestream/${item.id}`} className="link-wrapped">
@@ -67,10 +67,10 @@ const UserLivestreamVideos = ({ displayToolTip, ListVideo }) => {
                             </div>
                             <div className="item-meta xl:px-4 w-full xl:w-2/3">
                                 <h4 className="font-semibold text-lg md:text-xl text-gray-700 break-all">{item.title}</h4>
-                                <p className="overflow-ellipsis overflow-hidden h-10 break-all font-light mt-2 text-xs md:text-sm text-justify text-gray-700">
+                                <p className="overflow-ellipsis overflow-hidden md:h-10 break-all font-light md:mt-2 text-xs md:text-sm text-justify text-gray-700">
                                     {item.description}
                                 </p>
-                                <div className="icon-controller-user flex flex-wrap items-center py-2">
+                                <div className="icon-controller-user flex flex-wrap items-center md:py-2">
                                     <div className="flex mr-4 items-center">
                                         <EyeIcon className="icon-at-user" />
                                         <h4 className="ml-2 text-gray-900 text-xs md:text-sm font-medium">{item.views} Views</h4>
@@ -81,7 +81,7 @@ const UserLivestreamVideos = ({ displayToolTip, ListVideo }) => {
                                     </div>
                                 </div>
                                 {
-                                    item.categories && <div className="flex flex-wrap text-sm font-medium text-gray-700 items-center mt-2">
+                                    item.categories && <div className="flex flex-wrap text-xs md:text-sm font-medium text-gray-700 items-center md:mt-2">
                                         {
                                             item.categories.map((item, index) => {
                                                 return (<span key={index}><div className="rounded-full inline-block w-2 h-2 bg-gray-700 mx-2"></div><h6 className="inline-block">{item}</h6></span>)
@@ -93,19 +93,19 @@ const UserLivestreamVideos = ({ displayToolTip, ListVideo }) => {
                                     {
                                         item.facebook_url && (
                                             <button style={{ transition: "all .15s ease" }}
-                                                onClick={() => openModal(item.facebook_url)}><FbIcon className="mr-4" />
+                                                onClick={() => openModal(item.facebook_url)}><FbIcon className="icon-sosmed mr-2 md:mr-4" />
                                             </button>)
                                     }
                                     {
                                         item.instagram_url && (<button style={{ transition: "all .15s ease" }}
-                                            onClick={() => openModal(item.instagram_url)}><IgIcon className="mr-4" /></button>)
+                                            onClick={() => openModal(item.instagram_url)}><IgIcon className="icon-sosmed mr-2 md:mr-4" /></button>)
                                     }
                                     {
                                         item.tiktok_url && (<button style={{ transition: "all .15s ease" }}
-                                            onClick={() => openModal(item.tiktok_url)}><TtIcon className="mr-4" /></button>)
+                                            onClick={() => openModal(item.tiktok_url)}><TtIcon className="icon-sosmed mr-2 md:mr-4" /></button>)
                                     }
                                     <CopyToClipboard text={item.share_url}>
-                                        <button onClick={displayToolTip} href=""><ShareIconMobile className="mr-4" /></button>
+                                        <button onClick={displayToolTip} href=""><ShareIconMobile className="icon-sosmed mr-2 md:mr-4" /></button>
                                     </CopyToClipboard>
                                 </div>
 
