@@ -113,7 +113,7 @@ const FullWidth = ({ displayToolTip, DeleteButton, linkVideo, actionLinks, views
                                             <span className="text-sm text-gray-300 font-light">Views</span>
                                         </div>
                                         <div className="mr-8 md:mb-3 md:mr-0 leading-tight text-center">
-                                            <h4 className="font-bold text-xl text-red-600">{item.shared}</h4>
+                                            <h4 className="font-bold text-xl text-red-600">{item.share}</h4>
                                             <span className="text-sm text-gray-300 font-light">Shared</span>
                                         </div>
                                         <div className="mr-2 md:mb-3 md:mr-0 leading-tight text-center">
@@ -154,11 +154,11 @@ const FullWidth = ({ displayToolTip, DeleteButton, linkVideo, actionLinks, views
                                             viewsElement && <div className="icon-controller-user flex flex-wrap items-center leading-relaxed">
                                                 <div className="flex mr-2 md:mr-4 items-center">
                                                     <EyeIcon className="icon-at-user" />
-                                                    <h4 className="ml-2 text-gray-900 text-sm md:text-sm font-medium">{item.views && 0} Views</h4>
+                                                    <h4 className="ml-2 text-gray-900 text-sm md:text-sm font-medium">{item.views ? item.views : 0} Views</h4>
                                                 </div>
                                                 <div className="flex mr-2 md:mr-4 items-center">
                                                     <LikeIcon className="icon-at-user" />
-                                                    <h4 className="ml-2 text-gray-900 text-sm md:text-sm  font-medium">{item.likes && 0} Likes</h4>
+                                                    <h4 className="ml-2 text-gray-900 text-sm md:text-sm  font-medium">{item.likes ? item.likes : 0} Likes</h4>
                                                 </div>
                                             </div>
                                         }

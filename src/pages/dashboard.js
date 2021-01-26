@@ -41,7 +41,7 @@ const Dashboard = () => {
     }
 
     useEffect(() => {
-        
+
         let page = 1
         let live_vid = 'live_videos'
         let next_vid = 'upcoming_videos'
@@ -206,7 +206,7 @@ const Dashboard = () => {
                                         {
                                             previousVideos.map((item, index) => {
 
-                                                const videos = [{ iframe: item.iframe, id: item.id, thumbnail: item.img_thumbnail, live: false, views: item.views, likes: item.likes, date: item.start_time, title: item.title, end_time: item.end_time, share_url: item.share_url, redirect_fb: item.redirect_fb, redirect_ig: item.redirect_ig, redirect_tiktok: item.redirect_tiktok }]
+                                                const videos = [{ iframe: item.iframe, id: item.id, thumbnail: item.img_thumbnail, live: false, share: item.share, views: item.views, likes: item.likes, date: item.start_time, title: item.title, end_time: item.end_time, share_url: item.share_url, redirect_fb: item.redirect_fb, redirect_ig: item.redirect_ig, redirect_tiktok: item.redirect_tiktok }]
 
                                                 return (
                                                     <div key={index} className="flex flex-wrap mb-2 w-full xl:w-1/2 mt-4">
