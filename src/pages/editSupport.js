@@ -17,7 +17,7 @@ const EditSupport = (props) => {
 
     const [isLoading, setLoading] = useState(false)
     const [id] = useState(props.match.params.id)
-    const [title] = useState(props.location.query.title)
+    const [title, setTitle] = useState('')
     const [data, setData] = useState([])
     const [message, setMessage] = useState('')
     const [status, setStatus] = useState('')
@@ -47,7 +47,8 @@ const EditSupport = (props) => {
         setLoading(true)
         Support.getTicketHistory(id).then((res) => {
             const isClosed = res.data.map((el) => el.status).indexOf(1);
-            setHideInput(isClosed === -1 ? false : true)
+            setHideInput(isClosed === -1 ? false : true);
+            setTitle(res.data[0].subject);
             const a = res.data.map(a => {
                 return {
                     name: a.name,
@@ -135,7 +136,7 @@ const EditSupport = (props) => {
                                 </div>
                             )
                     }
-                    <Card ListData={data} title={title} />
+                    <Card ListData={data} title={title} key={1} />
                     {
                         hideInput ? (
                             <div className="ml-20 mt-5">
@@ -161,11 +162,11 @@ const EditSupport = (props) => {
                                                 });
                                                 const data = editor.getData();
                                                 // You can store the "editor" and use when it is needed.
-                                                console.log('Editor is ready to use!', editor);
+                                                // console.log('Editor is ready to use!', editor);
                                             }}
                                             onChange={(event, editor) => {
                                                 changeMessage(editor);
-                                                console.log({ event, editor, data });
+                                                // console.log({ event, editor, data });
                                             }}
                                         // onBlur={(event, editor) => {
                                         //     // console.log('Blur.', editor);

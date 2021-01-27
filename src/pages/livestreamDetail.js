@@ -4,7 +4,7 @@ import SideNavbarMerchant from 'components/SideNavbarMerchant'
 import { Link } from 'react-router-dom'
 import { withRouter } from "react-router"
 import Moment from 'moment'
-import Converter from 'configs/moment/DatetimeConverter'
+// import Converter from 'configs/moment/DatetimeConverter'
 import livestream from 'api/livestream'
 import Spinner from 'components/spinner'
 import ReactHtmlParserfrom from 'react-html-parser'
@@ -32,10 +32,11 @@ const LivestreamDetail = ({ location }) => {
     const [thumbnail, setThumbnail] = useState("")
     const { id } = useParams();
     const [dataModal, setDataModal] = useState('');
-    const [iframe, setIframe] = useState();
+    const [iframe, setIframe] = useState(null);
     const [modalIsOpen, setIsOpen] = useState(false)
     let subtitle;
     const history = useHistory()
+    console.log(iframe)
 
     const openModal = (data) => {
         setIsOpen(true)
@@ -142,7 +143,10 @@ const LivestreamDetail = ({ location }) => {
                     </Modal>
 
                     <div className="flex flex-wrap mt-4 md:mt-2 mx-auto justify-center w-full md:w-1/2">
-                        {ReactHtmlParserfrom(iframe ? iframe : query.iframe)}
+                        {
+                            !iframe ? '<div>Loading...</div>' :
+                                ReactHtmlParserfrom(iframe)
+                        }
                     </div>
                     <div className="flex flex-wrap mt-4 md:mt-2 mx-auto justify-center w-full md:w-1/2">
                         <div className="flex flex-col mr-8 text-center">

@@ -8,12 +8,16 @@ import { ReactComponent as EyeIconWhite } from 'assets/images/eye-icon-white.svg
 import { ReactComponent as ShareIcon } from 'assets/images/share-icon.svg'
 import { ReactComponent as ShareIconMobile } from 'assets/images/share-icon-mobile.svg'
 import { ReactComponent as EyeIcon } from 'assets/images/eye-icon.svg'
+import { ReactComponent as CalendarIcon } from 'assets/images/calendar-icon.svg'
 import { ReactComponent as LikeIcon } from 'assets/images/thumbs-like-icon.svg'
 import iconLive from 'assets/images/live-icon.png'
+import BgUpcoming from 'assets/images/bg-upcoming.png'
 import ReactHtmlParserfrom from 'react-html-parser';
 import Modal from 'react-modal'
 import DefaultImg from 'assets/images/default.svg'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
+import Countdown from 'components/forms/countdown'
+import Moment from 'moment'
 Modal.setAppElement('*');
 
 const FullWidth = ({ displayToolTip, DeleteButton, linkVideo, actionLinks, viewsElement, actions, dataVideos, socmedVertical, socmedCustom, liveRecord, title, name, subtitle, caption, ig, tiktok, fb, category, buttons }) => {
@@ -89,9 +93,22 @@ const FullWidth = ({ displayToolTip, DeleteButton, linkVideo, actionLinks, views
                                                     </>
                                                 ) : null
                                             }
-                                            <PlayIcon style={{ transition: "all .15s ease" }}
-                                                onClick={() => openModal(item.iframe)} className="icon" />
-                                            <img style={{ maxWidth: '348px', maxHeight: '222px' }} src={item.thumbnail} onError={(e) => { e.target.onerror = null; e.target.src = DefaultImg }} alt={title} className="thumbnail-live" />
+                                            {
+                                                item?.upcoming ? (
+                                                    <>
+                                                        <div className="upcoming rounded-lg border-2 border-red-600 w-11/12 md:w-full">
+                                                            <Countdown StartTime={item.date} />
+                                                        </div>
+                                                        <img style={{ maxWidth: '348px', maxHeight: '222px' }} src={BgUpcoming} onError={(e) => { e.target.onerror = null; e.target.src = DefaultImg }} alt={title} className="thumbnail-live" />
+                                                    </>
+                                                ) : (
+                                                        <>
+                                                            <PlayIcon style={{ transition: "all .15s ease" }}
+                                                                onClick={() => openModal(item.iframe)} className="icon" />
+                                                            <img style={{ maxWidth: '348px', maxHeight: '222px' }} src={item.thumbnail} onError={(e) => { e.target.onerror = null; e.target.src = DefaultImg }} alt={title} className="thumbnail-live" />
+                                                        </>
+                                                    )
+                                            }
                                         </figure>
                                     </Link>
                                 </div>
@@ -107,7 +124,7 @@ const FullWidth = ({ displayToolTip, DeleteButton, linkVideo, actionLinks, views
                             <div className="flex-1">
                                 {
                                     liveRecord &&
-                                    <div className="flex md:flex-col px-2 xxl:px-8 items-center">
+                                    <div className="flex md:flex-col px-2 xxl:px-8 items-center text-sm">
                                         <div className="mr-8 md:mb-3 md:mr-0 leading-tight text-center">
                                             <h4 className="font-bold text-xl text-red-600">{item.views}</h4>
                                             <span className="text-sm text-gray-300 font-light">Views</span>
@@ -160,6 +177,13 @@ const FullWidth = ({ displayToolTip, DeleteButton, linkVideo, actionLinks, views
                                                     <LikeIcon className="icon-at-user" />
                                                     <h4 className="ml-2 text-gray-900 text-sm md:text-sm  font-medium">{item.likes ? item.likes : 0} Likes</h4>
                                                 </div>
+                                                {
+                                                    item.isPrevious && item.isPrevious ? (
+                                                        <div className="flex mr-2 md:mr-4 items-center">
+                                                            <CalendarIcon className="icon-at-user" />
+                                                            <h4 className="ml-2 text-gray-900 text-sm md:text-sm  font-medium">{Moment(item.date).fromNow()}</h4>
+                                                        </div>) : null
+                                                }
                                             </div>
                                         }
                                         {

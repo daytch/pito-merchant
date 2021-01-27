@@ -152,8 +152,8 @@ const CreateDashboard = ({ state }) => {
         const formData = new FormData();
         formData.append("videoId", "");
         formData.append("mypic", mypic);
-        formData.append("startDate", Converter.converToFormatBE(start));
-        formData.append("endDate", Converter.converToFormatBE(endDate));
+        formData.append("startDate", Converter.convertToUTC(start));
+        formData.append("endDate", Converter.convertToUTC(endDate));
         formData.append("title", titleNew);
         formData.append("desc", descNew);
         formData.append("fb_url", fb_url);

@@ -158,8 +158,8 @@ console.log(data)
         const formData = new FormData();
         formData.append("videoId", id);
         formData.append("mypic", mypic);
-        formData.append("startDate", Converter.converToFormatBE(start));
-        formData.append("endDate", Converter.converToFormatBE(endDate));
+        formData.append("startDate", Converter.convertToUTC(start));
+        formData.append("endDate", Converter.convertToUTC(endDate));
         formData.append("title", title);
         formData.append("desc", desc);
         formData.append("fb_url", fb_url ? fb_url : '');

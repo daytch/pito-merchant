@@ -86,16 +86,16 @@ const Profile = () => {
         let arrVideos = []
         switch (e.value) {
             case "Date":
-                arrVideos = videos.sort((a, b) => (moment(a.start_time).isAfter(b.start_time)) ? 1 : -1);
+                arrVideos = videos.sort((a, b) => (moment(a.start_time).isAfter(b.start_time)) ? -1 : 1);
                 break;
             case "Views":
-                arrVideos = videos.sort((a, b) => (a.views > b.views) ? 1 : -1);
+                arrVideos = videos.sort((a, b) => (a.views > b.views) ? -1 : 1);
                 break;
             case "Favourites":
-                arrVideos = videos.sort((a, b) => (a.likes > b.likes) ? 1 : -1);
+                arrVideos = videos.sort((a, b) => (a.likes > b.likes) ? -1 : 1);
                 break;
             default:
-                arrVideos = videos.sort((a, b) => (a.id > b.id) ? 1 : -1);
+                arrVideos = videos.sort((a, b) => (a.id > b.id) ? -1 : 1);
                 break;
         }
         setVideos(arrVideos)

@@ -298,7 +298,7 @@ item:hover figure.item-image-live-detail svg.icon {
 
 @media all and (min-width: 480px) and (max-width: 768px) {
     .icon-sosmed {
-        width: 25px;        
+        width: 25px;
     }
     .item-image img {
         width: 700px;
@@ -319,7 +319,7 @@ item:hover figure.item-image-live-detail svg.icon {
 
 @media all and (max-width: 480px) {
     .icon-sosmed {
-        width: 25px;        
+        width: 25px;
     }
     .item-image-live .thumbnail-live {
         width: 350px;
@@ -388,6 +388,33 @@ item:hover figure.item-image-live-detail svg.icon {
 }
 
 @media only screen and (max-width: 600px) {
+    .container-countdown {
+      padding: 0.2rem;
+    }
+    .text-starting {
+      font-size: 1.1rem;
+      font-weight: bold;
+      vertical-align: top;
+      position: relative;
+      margin-top: 1rem;
+    }
+    .font-starting-in {
+      font-size: small;
+      word-spacing: 0.2rem;
+      margin-top: -13px;
+    }
+    .starting-in {
+      font-size: x-small;
+    }
+    .upcoming {
+      position: absolute;
+      top: 30%;
+      left: 2.3%;
+    }
+    .timer {
+      font-size: 2rem;
+      font-weight: bold;
+    }
     .icon-upload {
         display: none;
     }
@@ -406,10 +433,38 @@ item:hover figure.item-image-live-detail svg.icon {
 /**Desktop Query*/
 
 @media only screen and (min-width: 768px) {
+    .container-countdown {
+      padding: 0.1rem;
+    }
+    .text-starting {
+      font-size: 1.1rem;
+      font-weight: bold;
+      vertical-align: top;
+      position: relative;
+      margin-top: 1rem;
+    }
+    .font-starting-in {
+      font-size: small;
+      word-spacing: 0.5rem;
+      margin-top: -13px;
+    }
+    .starting-in {
+      font-size: x-small;
+    }
+    .upcoming {
+      position: absolute;
+      top: 26%;
+    }
+    .timer {
+      font-size: 2.5rem;
+      font-weight: bold;
+    }
     .chat-history {
         width: 189vh;
     }
-    
+    .chat-history {
+        width: 189vh;
+    }
     .chat-content {
         margin-left: -11.5vw;
         width: 46vw;
