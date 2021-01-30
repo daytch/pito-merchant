@@ -6,24 +6,11 @@ import { setAuthorizationHeader } from 'configs/axios'
 
 class FacebookLoginButton extends Component {
     componentDidMount() {
-        (function (d, s, id) {
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) {
-                return;
-            }
-            js = d.createElement(s);
-            js.id = id;
-            js.src = "https://connect.facebook.net/en_US/sdk.js";
-            fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));
-
-
         window.fbAsyncInit = () => {
             window.FB.init({
-                appId: '199209148505469', //Change with your Facebook app id
-                autoLogAppEvents: true,
-                xfbml: true,
-                version: 'v3.0'
+                appId      : '199209148505469',
+                xfbml      : true,
+                version    : 'v9.0'
             });
 
             window.FB.Event.subscribe('auth.statusChange', response => {
@@ -34,6 +21,17 @@ class FacebookLoginButton extends Component {
                 }
             });
         };
+        
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {
+                return;
+            }
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "https://connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
     }
 
     checkLoginState() {

@@ -389,31 +389,31 @@ item:hover figure.item-image-live-detail svg.icon {
 
 @media only screen and (max-width: 600px) {
     .container-countdown {
-      padding: 0.2rem;
+        padding: 0.1rem;
     }
     .text-starting {
-      font-size: 1.1rem;
-      font-weight: bold;
-      vertical-align: top;
-      position: relative;
-      margin-top: 1rem;
+        font-size: 1.1rem;
+        font-weight: bold;
+        vertical-align: top;
+        position: relative;
+        margin-top: 0.5rem;
     }
     .font-starting-in {
-      font-size: small;
-      word-spacing: 0.2rem;
-      margin-top: -13px;
+        font-size: small;
+        word-spacing: 0.2rem;
+        margin-top: -13px;
     }
     .starting-in {
-      font-size: x-small;
+        font-size: x-small;
     }
     .upcoming {
-      position: absolute;
-      top: 30%;
-      left: 2.3%;
+        position: absolute;
+        top: 33%;
+        left: 4%;
     }
     .timer {
-      font-size: 2rem;
-      font-weight: bold;
+        font-size: 2rem;
+        font-weight: bold;
     }
     .icon-upload {
         display: none;
@@ -422,42 +422,68 @@ item:hover figure.item-image-live-detail svg.icon {
         display: none !important;
     }
     .ck .ck-reset .ck-editor .ck-rounded-corners {
-        width: 100% !important;
-        margin-bottom: 2vh;
+        width: 99% !important;
+        margin-bottom: 2vh !important;
     }
     .livestream-detail-vid {
         margin-bottom: -115px;
     }
 }
 
+table {
+    width: 100%;
+    border-collapse: collapse !important;
+}
+
+tbody td {
+    padding: 0.5em;
+    border-bottom: 1px solid #ccc;
+}
+
+tbody tr:hover {
+    background-color: #eee;
+}
+
+thead tr th.ascending::after {
+    content: '▼';
+    display: inline-block;
+    margin-left: 1em;
+}
+
+thead tr th.descending::after {
+    content: '▲';
+    display: inline-block;
+    margin-left: 1em;
+}
+
 /**Desktop Query*/
 
 @media only screen and (min-width: 768px) {
     .container-countdown {
-      padding: 0.1rem;
+        padding: 0.1rem;
     }
     .text-starting {
-      font-size: 1.1rem;
-      font-weight: bold;
-      vertical-align: top;
-      position: relative;
-      margin-top: 1rem;
+        font-size: 1.1rem;
+        font-weight: bold;
+        vertical-align: top;
+        position: relative;
+        margin-top: 1rem;
     }
     .font-starting-in {
-      font-size: small;
-      word-spacing: 0.5rem;
-      margin-top: -13px;
+        font-size: small;
+        word-spacing: 0.3rem;
+        margin-top: -13px;
     }
     .starting-in {
-      font-size: x-small;
+        font-size: x-small;
     }
     .upcoming {
-      position: absolute;
-      top: 26%;
+        position: absolute;
+        top: 33%;
     }
     .timer {
-      font-size: 2.5rem;
-      font-weight: bold;
+        font-size: 2.3rem;
+        font-weight: bold;
     }
     .chat-history {
         width: 189vh;

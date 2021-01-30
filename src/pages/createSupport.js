@@ -99,7 +99,7 @@ const CreateSupport = () => {
                             <div className="flex flex-wrap w-full items-start mt-4">
                                 <label htmlFor="desc" className="w-full text-sm text-gray-700">Message <span className="text-red-700">*</span></label>
                                 {/* <textarea placeholder="Message" value={message} onChange={changeMessage} className="text-sm w-full md:w-4/5 h-32 px-4 py-2 border border-gray-300 rounded-lg" /> */}
-                                <CKEditor style={{ width: '100%' }}
+                                <CKEditor style={{ width: '99%' }}
                                     editor={ClassicEditor}
                                     // data="<p>Hello from CKEditor 5!</p>"
                                     config={{ placeholder: "Please type a message..." }}

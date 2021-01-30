@@ -36,7 +36,6 @@ const LivestreamDetail = ({ location }) => {
     const [modalIsOpen, setIsOpen] = useState(false)
     let subtitle;
     const history = useHistory()
-    console.log(iframe)
 
     const openModal = (data) => {
         setIsOpen(true)
@@ -64,9 +63,7 @@ const LivestreamDetail = ({ location }) => {
         livestream.getLivestreamDetail(id).then((res) => {
 
             let data = res.data;
-            let url_iframe = data.fb_url !== "" ? data.fb_url : data.ig !== null ? data.ig_url : data.tiktok_url;
-            url_iframe = url_iframe.indexOf('iframe') === -1 ? iframe : url_iframe;
-            setIframe(url_iframe);
+            setIframe(data.iframe);
             setTitle(data.title);
             setDesc(data.desc);
 

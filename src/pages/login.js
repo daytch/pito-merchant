@@ -1,30 +1,23 @@
 import React, { useState, useEffect } from 'react'
 import { Link, withRouter } from 'react-router-dom'
 
-//import image 
 import PHONE from 'assets/images/handphone.png'
 import { ReactComponent as PitoLogo } from 'assets/images/pito.svg'
 import { ReactComponent as LoginIcon } from 'assets/images/login-icon.svg'
 import { ReactComponent as PasswordIcon } from 'assets/images/password-icon.svg'
-// import { ReactComponent as FbIcon } from 'assets/images/fb-icon-square.svg'
 import { ReactComponent as GoogleIcon } from 'assets/images/google-icon-colorful.svg'
 import { ReactComponent as GoogleplaySign } from 'assets/images/googleplay-sign.svg'
 import { ReactComponent as AppstoreSign } from 'assets/images/appstore-sign.svg'
-
-import FacebookLoginButton from 'components/fb-button'
-
-import GoogleLogin from 'react-google-login';
-
-
-//import API function
-import users from 'api/users'
-
-//import setAuthorizationHeader
 import { setAuthorizationHeader } from 'configs/axios'
-
-//Import toastify notify
 import { ToastContainer, toast } from 'react-toastify';
+import FacebookLoginButton from 'components/fb-button'
+import users from 'api/users'
 import 'react-toastify/dist/ReactToastify.css';
+
+import firebase from 'firebase'
+import firebaseConfig from 'configs/firebase.config'
+firebase.initializeApp(firebaseConfig);
+
 
 const Login = ({ history }) => {
     const [email, setEmail] = useState('')
@@ -32,7 +25,32 @@ const Login = ({ history }) => {
     const [token] = useState(localStorage.getItem('PITO:merchant-token'));
 
     //state error handler
-    const [errors, seterrors] = useState(null)
+    const [errors, setErrors] = useState(null)
+
+    const signInWithGoogle = () => {
+        const provider = new firebase.auth.GoogleAuthProvider();
+        firebase
+            .auth()
+            .setPersistence(firebase.auth.Auth.Persistence.SESSION)
+            .then(() => {
+                firebase
+                    .auth()
+                    .signInWithPopup(provider)
+                    .then(result => {
+                        let emails = result.user.email;
+                        users.loginSosmed({ emails }).then((res) => {
+                            setAuthorizationHeader(res.token);
+                            localStorage.setItem('PITO:merchant-token', res.token)
+                            localStorage.setItem('PITO:login', 'google')
+                            toast.success("you have successfully logged in !")
+                            history.push("/dashboard")
+                        }).catch(err => {
+                            setErrors(err?.response?.data?.message)
+                        })
+                    })
+                    .catch(e => setErrors(e.message))
+            })
+    }
 
     //email on Change text
     function emailChange(e) {
@@ -45,7 +63,7 @@ const Login = ({ history }) => {
 
     //Check tokens if ready
     useEffect(() => {
-        
+
         if (token) {
             history.push("/dashboard")
         }
@@ -73,27 +91,8 @@ const Login = ({ history }) => {
             //     history.push("/dashboard")
             // }, 2000);
         }).catch(err => {
-            seterrors(err?.response?.data?.message)
+            setErrors(err?.response?.data?.message)
         })
-    }
-
-    const responseGoogle = (response) => {
-        
-        if (!response.error) {
-            let emails = response.profileObj.email;
-            users.loginSosmed({ emails }).then((res) => {
-                setAuthorizationHeader(res.token);
-                localStorage.setItem('PITO:merchant-token', res.token)
-                localStorage.setItem('PITO:login', 'google')
-                toast.success("you have successfully logged in !")
-                history.push("/dashboard")
-                // setTimeout(() => {
-                //     history.push("/dashboard")
-                // }, 500);
-            }).catch(err => {
-                seterrors(err?.response?.data?.message)
-            })
-        }
     }
 
     return (
@@ -129,16 +128,7 @@ const Login = ({ history }) => {
                         <span className="flex">
                             <FacebookLoginButton className="mr-4" />
                             <br />
-                            <GoogleLogin
-                                clientId="801278591226-h4ec6fqjqrpouqhhsqna81du1piakkhi.apps.googleusercontent.com" //CLIENTID NOT CREATED YET
-                                buttonText=""
-                                onSuccess={responseGoogle}
-                                onFailure={responseGoogle}
-                                render={renderProps => (
-                                    <button onClick={() => renderProps.onClick}><GoogleIcon /></button>
-                                )}
-                            />
-
+                            <button onClick={() => signInWithGoogle()}><GoogleIcon /></button>
                         </span>
                     </div>
 

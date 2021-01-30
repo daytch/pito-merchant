@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Sidebar from 'components/SideNavbarMerchant'
-import Table from 'components/table/index'
+import TableTicket from 'components/table/TableTicket'
 import { Link } from 'react-router-dom'
 import Support from 'api/support'
 import Spinner from 'components/spinner'
@@ -10,17 +10,21 @@ const Supports = () => {
 
     const tableHeadTickets = [
         {
-            title: "Ticket Number"
+            title: "Ticket Number",
+            value: 'ticketNumber'
         },
         {
-            title: "Title"
+            title: "Title",
+            value: 'title'
         },
         {
-            title: "Status"
+            title: "Status",
+            value: 'status'
         },
         {
-            title: "Last Updated"
-        },
+            title: "Last Session",
+            value: 'lastUpdated'
+        }
     ];
 
 
@@ -54,7 +58,7 @@ const Supports = () => {
                         </Link>
                     </div>
                     <div className="flex pt-10 text-sm overflow-x-auto">
-                        <Table itemHead={tableHeadTickets} itemBodySupport={ticket} />
+                        <TableTicket itemHead={tableHeadTickets} itemBody={ticket} />
                     </div>
                 </div>
 
