@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import Moment from 'moment'
-
+import Converter from 'configs/moment/DatetimeConverter'
 
 const Countdown = ({ StartTime, isMini }) => {
-    // const [minutes, setMinutes] = useState(5);
-    // const [seconds, setSeconds] = useState(60);
 
     Moment.locale('en-sg');
     const [days, setDays] = useState(0);
@@ -15,18 +13,27 @@ const Countdown = ({ StartTime, isMini }) => {
     useEffect(() => {
         let myInterval = setInterval(() => {
 
-            const then = Moment(StartTime);
-            const now = Moment();
-            const countdown = Moment(then - now);
-            let day = countdown.format('DD');
-            const hour = countdown.format('HH');
-            const minute = countdown.format('mm');
-            const second = countdown.format('ss');
-            day = day - 1 < 1 ? '00' : '0' + (day - 1);
-            setDays(day);
-            setHours(hour);
-            setMinutes(minute);
-            setSeconds(second);
+            // Get today's date and time
+            var now = new Date().getTime();
+
+            // Find the distance between now and the count down date
+            var distance = new Date(Converter.convertToLocal(StartTime)).getTime() - now;
+
+            // Time calculations for days, hours, minutes and seconds
+            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            days = days < 10 ? '0' + days : days;
+            hours = hours < 10 ? '0' + hours : hours;
+            minutes = minutes < 10 ? '0' + minutes : minutes;
+            seconds = seconds < 10 ? '0' + seconds : seconds;
+
+            setDays(days);
+            setHours(hours);
+            setMinutes(minutes);
+            setSeconds(seconds);
         }, 1000)
         return () => {
             clearInterval(myInterval);

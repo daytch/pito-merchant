@@ -5,19 +5,14 @@ import PHONE from 'assets/images/handphone.png'
 import { ReactComponent as PitoLogo } from 'assets/images/pito.svg'
 import { ReactComponent as LoginIcon } from 'assets/images/login-icon.svg'
 import { ReactComponent as PasswordIcon } from 'assets/images/password-icon.svg'
-import { ReactComponent as GoogleIcon } from 'assets/images/google-icon-colorful.svg'
 import { ReactComponent as GoogleplaySign } from 'assets/images/googleplay-sign.svg'
 import { ReactComponent as AppstoreSign } from 'assets/images/appstore-sign.svg'
 import { setAuthorizationHeader } from 'configs/axios'
 import { ToastContainer, toast } from 'react-toastify';
 import FacebookLoginButton from 'components/fb-button'
+import GoogleLoginButton from 'components/google-button'
 import users from 'api/users'
 import 'react-toastify/dist/ReactToastify.css';
-
-import firebase from 'firebase'
-import firebaseConfig from 'configs/firebase.config'
-firebase.initializeApp(firebaseConfig);
-
 
 const Login = ({ history }) => {
     const [email, setEmail] = useState('')
@@ -26,31 +21,6 @@ const Login = ({ history }) => {
 
     //state error handler
     const [errors, setErrors] = useState(null)
-
-    const signInWithGoogle = () => {
-        const provider = new firebase.auth.GoogleAuthProvider();
-        firebase
-            .auth()
-            .setPersistence(firebase.auth.Auth.Persistence.SESSION)
-            .then(() => {
-                firebase
-                    .auth()
-                    .signInWithPopup(provider)
-                    .then(result => {
-                        let emails = result.user.email;
-                        users.loginSosmed({ emails }).then((res) => {
-                            setAuthorizationHeader(res.token);
-                            localStorage.setItem('PITO:merchant-token', res.token)
-                            localStorage.setItem('PITO:login', 'google')
-                            toast.success("you have successfully logged in !")
-                            history.push("/dashboard")
-                        }).catch(err => {
-                            setErrors(err?.response?.data?.message)
-                        })
-                    })
-                    .catch(e => setErrors(e.message))
-            })
-    }
 
     //email on Change text
     function emailChange(e) {
@@ -128,7 +98,8 @@ const Login = ({ history }) => {
                         <span className="flex">
                             <FacebookLoginButton className="mr-4" />
                             <br />
-                            <button onClick={() => signInWithGoogle()}><GoogleIcon /></button>
+                            {/* <button onClick={() => signInWithGoogle()}><GoogleIcon /></button> */}
+                            <GoogleLoginButton />
                         </span>
                     </div>
 
