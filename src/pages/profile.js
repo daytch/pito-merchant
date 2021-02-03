@@ -176,7 +176,7 @@ const Profile = () => {
                                 <button className="rounded-3xl text-sm md:text-base font-medium mr-2 md:mr-6 text-white bg-red-600 px-6 py-2 md:px-10 md:py-2">Edit Account</button>
                             </Link>
                         </div>
-                        <div className="pt-8">
+                        <div className="md:pt-8">
                             <LineCustom favData={fav} shareData={share} viewData={view} />
                         </div>
                     </div>

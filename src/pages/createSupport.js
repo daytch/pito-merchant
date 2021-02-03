@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Sidebar from 'components/SideNavbarMerchant'
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
@@ -11,13 +11,12 @@ import { Link } from 'react-router-dom'
 const MySwal = withReactContent(Swal)
 
 const CreateSupport = () => {
-
     const [isLoading, setLoading] = useState(false)
     const [subject, setSubject] = useState();
     const [message, setMessage] = useState();
     const [image1, setImage1] = useState();
     const [image2, setImage2] = useState();
-    const [image3, setImage3] = useState();
+    const [image3, setImage3] = useState();  
     //state error handler
     const [errors, seterrors] = useState(null)
 
@@ -27,7 +26,6 @@ const CreateSupport = () => {
     function changeMessage(e) {
         setMessage(e);
     }
-
     function changeAttachment1(e) {
         setImage1(e.target.files[0])
     }
@@ -74,7 +72,6 @@ const CreateSupport = () => {
                 title: 'Success',
                 text: res.message
             }).then(result => {
-                console.log(result)
                 window.location.href = '/support'
             })
         }).catch(err => {
@@ -82,7 +79,6 @@ const CreateSupport = () => {
             console.error(errors)
         })
     }
-
 
     return (
         <Spinner isLoading={isLoading}>
@@ -94,43 +90,27 @@ const CreateSupport = () => {
                         <form className="md:w-3/5">
                             <div className="flex flex-wrap w-full items-start mt-4">
                                 <label htmlFor="title" className="w-full text-sm text-gray-700">Subject <span className="text-red-700">*</span></label><br></br>
-                                <input type="text" placeholder="Subject" value={subject} onChange={changeSubject} className="text-sm w-full px-4 py-2 border border-gray-300 rounded-lg" />
+                                <input type="text" placeholder="Subject" value={subject} onChange={changeSubject} className="text-sm w-full md:w-10/12 px-4 py-2 border border-gray-300 rounded-lg" />
                             </div>
                             <div className="flex flex-wrap w-full items-start mt-4">
                                 <label htmlFor="desc" className="w-full text-sm text-gray-700">Message <span className="text-red-700">*</span></label>
-                                {/* <textarea placeholder="Message" value={message} onChange={changeMessage} className="text-sm w-full md:w-4/5 h-32 px-4 py-2 border border-gray-300 rounded-lg" /> */}
                                 <CKEditor style={{ width: '99%' }}
                                     editor={ClassicEditor}
-                                    // data="<p>Hello from CKEditor 5!</p>"
-                                    config={{ placeholder: "Please type a message..." }}
-                                    onReady={editor => {
-                                        editor.editing.view.change(writer => {
-                                            writer.setStyle(
-                                                "height",
-                                                "200px",
-                                                editor.editing.view.document.getRoot()
-                                            );
-                                        });
-                                        const data = editor.getData();
-                                        // You can store the "editor" and use when it is needed.
-                                        console.log('Editor is ready to use!', editor);
+                                    config={{
+                                        toolbar: ['heading', '|', 'bold', 'italic', 'blockQuote', 'link', 'numberedList', 'bulletedList', '|', 'undo', 'redo']
+                                        ,
+                                        placeholder: "Please type a message..."
                                     }}
+                                   
                                     onChange={(event, editor) => {
                                         const data = editor.getData();
                                         changeMessage(data);
-                                        console.log({ event, editor, data });
-                                    }}
-                                    onBlur={(event, editor) => {
-                                        console.log('Blur.', editor);
-                                    }}
-                                    onFocus={(event, editor) => {
-                                        console.log('Focus.', editor);
                                     }}
                                 />
                             </div><br />
                             <div className="flex flex-wrap w-full items-start">
                                 <label htmlFor="attachment" className="w-full md:w-1/5 text-sm text-gray-700">Attachment</label>
-                                <input type="file" onChange={changeAttachment1} className="text-xs w-4/5 xl:w-2/5 px-4 py-2 mx-2 md:mx-4 border border-gray-300 rounded-lg" />
+                                <input type="file" onChange={changeAttachment1} className="text-xs w-full md:w-4/5 xl:w-2/5 px-4 py-2 mx-2 md:mx-4 border border-gray-300 rounded-lg" />
                             </div>
                             <div className="flex mt-6">
                                 <Link to="/support"><button className="border border-gray-300 text-red-600 rounded-lg text-sm px-6 py-2 mr-4">Cancel</button></Link>

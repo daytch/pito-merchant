@@ -35,7 +35,7 @@ const LineCustom = ({ favData, shareData, viewData }) => {
         ]
     }
     return (
-        <div className="flex-col pt-4 xl:pt-10 px-0 xl:px-4 xxl:px-8 justify-end">
+        <div className="flex-col md:pt-4 xl:pt-10 px-0 xl:px-4 xxl:px-8 justify-end">
             <div className="mt-10 w-full" style={{ height: "50vh" }}>
                 <Line data={state}
                     options={{

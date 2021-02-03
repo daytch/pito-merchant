@@ -147,10 +147,8 @@ const EditSupport = (props) => {
                             (
                                 <div className="md:ml-16">
                                     <div className="flex mb-3 flex-wrap items-start mt-4">
-                                        {/* <textarea onChange={e => handleChange(e.target.value)} placeholder="Message" className="w-full md:w-4/5 h-32 px-4 py-2 border border-gray-300 rounded-lg" /> */}
                                         <CKEditor
                                             editor={ClassicEditor}
-                                            // data="<p>Hello from CKEditor 5!</p>"
                                             config={{ placeholder: "Please type a message..." }}
                                             onReady={editor => {
                                                 editor.editing.view.change(writer => {
@@ -161,24 +159,12 @@ const EditSupport = (props) => {
                                                     );
                                                 });
                                                 const data = editor.getData();
-                                                // You can store the "editor" and use when it is needed.
-                                                // console.log('Editor is ready to use!', editor);
                                             }}
                                             onChange={(event, editor) => {
                                                 changeMessage(editor);
-                                                // console.log({ event, editor, data });
                                             }}
-                                        // onBlur={(event, editor) => {
-                                        //     // console.log('Blur.', editor);
-                                        // }}
-                                        // onFocus={(event, editor) => {
-                                        //     // console.log('Focus.', editor);
-                                        // }}
                                         />
                                     </div>
-                                    {/* <div className="w-40 form-categories border border-gray-300 rounded-md px-2 py-2 mr-4 my-2" role="button">
-                                        <Dropdown title="Open" onClick={changeStatus} items={items} />
-                                    </div> */}
                                     <div className="flex">
                                         <Link to={"/support"} className="border border-gray-300 text-red-600 rounded-md text-lg px-6 py-2 mr-4">Back</Link>
                                         <button onClick={handleSubmit} className="border lg:w-32 w-full text-white font-medium bg-red-600 rounded-lg text-lg px-10 py-2">Reply</button>

@@ -16,7 +16,6 @@ import Converter from 'configs/moment/DatetimeConverter'
 const MySwal = withReactContent(Swal)
 
 const Edit = ({ data, openLoading, closeLoading }) => {
-console.log(data)
     const { id } = useParams()
     const [mypic, setMypic] = useState('')
     const [startDate, setStartDate] = useState(Moment(data.dataVideos[0].date).utc().format("YYYY-MM-DD"))
@@ -174,7 +173,6 @@ console.log(data)
                 title: 'Success',
                 text: res.message
             }).then(result => {
-                console.log(result)
                 window.location.href = '/dashboard'
             })
         }).catch(err => {

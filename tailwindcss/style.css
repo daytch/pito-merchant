@@ -353,8 +353,8 @@ item:hover figure.item-image-live-detail svg.icon {
         width: 400px;
     }
     .item-image-user img {
-        width: 400px;
-        height: 200px;
+        width: 400px !important;
+        height: 200px !important;
     }
 }
 
@@ -387,7 +387,46 @@ item:hover figure.item-image-live-detail svg.icon {
     overflow: hidden;
 }
 
+.active svg.icon {
+    @apply .fill-red-600;
+}
+
 @media only screen and (max-width: 600px) {
+    .ck-editor__editable {
+        width: 23.3rem;
+        height: 10rem;
+    }
+    div.ck.ck-editor__top.ck-reset_all {
+        width: 23.3rem;
+    }
+    .container-countdown-mn {
+        padding: 0.1rem;
+    }
+    .text-starting-mn {
+        font-size: 1.3rem;
+        font-weight: bold;
+        vertical-align: top;
+        position: relative;
+        margin-top: 0.5rem;
+    }
+    .font-starting-in-mn {
+        font-size: small;
+        word-spacing: 0.4rem;
+        margin-top: -13px;
+    }
+    .starting-in-mn {
+        font-size: 0.8rem;
+    }
+    .upcoming-mn {
+        position: absolute;
+        top: 31%;
+        width: 100%;
+        text-align: center;
+    }
+    .timer-mn {
+        font-size: 2rem;
+        font-weight: bold;
+    }
     .container-countdown {
         padding: 0.1rem;
     }
@@ -459,6 +498,39 @@ thead tr th.descending::after {
 /**Desktop Query*/
 
 @media only screen and (min-width: 768px) {
+    .ck-editor__editable {
+        width: 55.3rem;
+        height: 15rem;
+    }
+    div.ck.ck-editor__top.ck-reset_all {
+        width: 55.3rem;
+    }
+    .container-countdown-mn {
+        padding: 0.1rem;
+    }
+    .text-starting-mn {
+        font-size: 12px;
+        font-weight: bold;
+        vertical-align: top;
+        position: relative;
+        margin-top: 0.5rem;
+    }
+    .font-starting-in-mn {
+        font-size: small;
+        word-spacing: 0.1rem;
+        margin-top: -13px;
+    }
+    .starting-in-mn {
+        font-size: 12px;
+    }
+    .upcoming-mn {
+        position: absolute;
+        top: 31%;
+    }
+    .timer-mn {
+        font-size: 1.6rem;
+        font-weight: bold;
+    }
     .container-countdown {
         padding: 0.1rem;
     }

@@ -1,6 +1,7 @@
 import React from 'react'
 import { ReactComponent as CloseNotif } from 'assets/images/close-icon.svg'
-import moment from 'moment'
+import Converter from 'configs/moment/DatetimeConverter'
+import Moment from 'moment'
 
 const index = React.forwardRef((props, ref) => {
     return (
@@ -22,7 +23,7 @@ const index = React.forwardRef((props, ref) => {
                 </div>
             </div>
             <div className="notif-minute">
-                <p className="font-light text-sm">{moment(props.data.createdAt).fromNow()}</p>
+                <p className="font-light text-sm">{Moment(Converter.convertToLocal(props.data.createdAt)).fromNow()}</p>
             </div>
         </div >
     )

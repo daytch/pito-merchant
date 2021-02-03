@@ -10,11 +10,14 @@ import { ReactComponent as LikeIcon } from 'assets/images/thumbs-like-icon.svg'
 import { ReactComponent as FbIcon } from 'assets/images/fb-icon.svg'
 import { ReactComponent as IgIcon } from 'assets/images/ig-icon.svg'
 import { ReactComponent as TtIcon } from 'assets/images/tiktok-icon.svg'
+import BgUpcoming from 'assets/images/bg-upcoming.png'
 import Modal from 'react-modal'
 import DefaultImg from 'assets/images/default.svg'
 Modal.setAppElement('*'); // suppresses modal-related test warnings.
 import { CopyToClipboard } from 'react-copy-to-clipboard'
-import moment from 'moment'
+import Countdown from 'components/forms/countdown'
+import Converter from 'configs/moment/DatetimeConverter'
+import Moment from 'moment'
 
 const UserLivestreamVideos = ({ displayToolTip, ListVideo }) => {
 
@@ -48,19 +51,35 @@ const UserLivestreamVideos = ({ displayToolTip, ListVideo }) => {
         <div>
             {
                 ListVideo.map((item, index) => {
-                    var duration = moment.utc(moment(item.end_time).diff(moment(item.start_time))).format("HH:mm:ss")
+                    var duration = Moment((Moment(Converter.convertToLocal(item.end_time))).diff(Moment(Converter.convertToLocal(item.start_time)))).format("HH:mm:ss")
+                    
                     return (
                         <div key={index} className="mt-4 md:mt-8 flex flex-wrap xl:flex-no-wrap">
                             <div className="flex">
                                 <div className="item relative">
                                     <Link to={`/livestream/${item.id}`} className="link-wrapped">
                                         <figure className="item-image-user">
-                                            <div className="minute-user py-2 px-2">
-                                                <p className="font-medium text-sm text-white float-right">{duration}</p>
-                                            </div>
-                                            <PlayIcon style={{ transition: "all .15s ease" }}
-                                                onClick={() => openModal(item.iframe)} className="icon" />
-                                            <img src={item.img_thumbnail} onError={(e) => { e.target.onerror = null; e.target.src = DefaultImg }} alt={item.title} />
+                                            {
+                                                Moment(new Date()).isBefore(Converter.convertToLocal(item.start_time)) ?
+                                                    (
+                                                        <>
+                                                            <div className="upcoming-mn rounded-lg border-2 border-red-600 w-11/12 md:w-full">
+                                                                <Countdown StartTime={Converter.convertToLocal(item.start_time)} isMini={true} />
+                                                            </div>
+                                                            <img style={{ width: '291px', height: '159px' }} src={BgUpcoming} onError={(e) => { e.target.onerror = null; e.target.src = DefaultImg }} alt={item.title} className="thumbnail-live" />
+                                                        </>
+                                                    ) :
+                                                    (
+                                                        <>
+                                                            <div className="minute-user py-2 px-2">
+                                                                <p className="font-medium text-sm text-white float-right">{duration}</p>
+                                                            </div>
+                                                            <PlayIcon style={{ transition: "all .15s ease" }} onClick={() => openModal(item.iframe)} className="icon" />
+                                                            <img src={item.img_thumbnail} onError={(e) => { e.target.onerror = null; e.target.src = DefaultImg }} alt={item.title} />
+                                                        </>
+                                                    )
+                                            }
+
                                         </figure>
                                     </Link>
                                 </div>
@@ -135,7 +154,7 @@ const UserLivestreamVideos = ({ displayToolTip, ListVideo }) => {
                     )
                 })
             }
-        </div>)
+        </div >)
 }
 
 export default UserLivestreamVideos;
