@@ -16,6 +16,7 @@ instance.interceptors.request.use(function (config) {
 })
 instance.interceptors.response.use((response) => response.data, error => {
     const { status } = error.response;
+    
     if (status === UNAUTHORIZED) {
         if (localStorage.getItem('PITO:merchant-token')) {
             localStorage.removeItem('PITO:merchant-token')

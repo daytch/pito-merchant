@@ -18,9 +18,9 @@ const MySwal = withReactContent(Swal)
 const Edit = ({ data, openLoading, closeLoading }) => {
     const { id } = useParams()
     const [mypic, setMypic] = useState('')
-    const [startDate, setStartDate] = useState(Moment(data.dataVideos[0].date).utc().format("YYYY-MM-DD"))
-    const [startTime, setStartTime] = useState(Moment(data.dataVideos[0].date).utc().format("HH:mm"))
-    const [endTime, setEndTime] = useState(Moment(data.dataVideos[0].end_time).utc().format("HH:mm"))
+    const [startDate, setStartDate] = useState(Moment(Converter.convertToLocal(data.dataVideos[0].date)).format("YYYY-MM-DD"))
+    const [startTime, setStartTime] = useState(Moment(Converter.convertToLocal(data.dataVideos[0].date)).format("HH:mm"))
+    const [endTime, setEndTime] = useState(Moment(Converter.convertToLocal(data.dataVideos[0].end_time)).format("HH:mm"))
     const [title, setTitle] = useState(data.title)
     const [desc, setDesc] = data.desc ? useState(data.desc) : useState(data.caption)
     const [category1] = useState(data.category1)
@@ -92,7 +92,7 @@ const Edit = ({ data, openLoading, closeLoading }) => {
         let ids = Object.values(categoryid);
         let endDate = startDate + " " + endTime;
         let start = startDate + " " + startTime;
-        
+
         let cat = []
         for (const [value] of Object.entries(categoryid)) {
             cat.push(value)
@@ -142,11 +142,11 @@ const Edit = ({ data, openLoading, closeLoading }) => {
             return;
         }
 
-        if (!fb_url) {
-            setLoading(false)
-            MySwal.fire('Validation!', 'Facebook link video cannot be empty.', 'warning');
-            return;
-        }
+        // if (!fb_url) {
+        //     setLoading(false)
+        //     MySwal.fire('Validation!', 'Facebook link video cannot be empty.', 'warning');
+        //     return;
+        // }
 
         if (!fb_url && !tiktok_url && !ig_url) {
             closeLoading()

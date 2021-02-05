@@ -137,11 +137,11 @@ const CreateDashboard = ({ state }) => {
             return;
         }
 
-        if (!fb_url) {
-            setLoading(false)
-            MySwal.fire('Validation!', 'Facebook link video cannot be empty.', 'warning');
-            return;
-        }
+        // if (!fb_url) {
+        //     setLoading(false)
+        //     MySwal.fire('Validation!', 'Facebook link video cannot be empty.', 'warning');
+        //     return;
+        // }
 
         if (!fb_url && !tiktok_url && !ig_url) {
             setLoading(false)
@@ -219,6 +219,7 @@ const CreateDashboard = ({ state }) => {
                                         <Dropdown isNeedReset={true} title="Select..." placeholder="Category 3" items={category} onClick={changeCategoryid} idx={2} />
                                     </div>
                                 </div>
+                                <span className="text-red-700">*</span><i className="text-xs">Please enter your Livestream URL from Facebook, TikTok or Instagram</i>
                                 <div className="form-dashboard flex flex-wrap w-full items-center mt-4">
                                     <label htmlFor="fbLink" className="w-full md:w-1/6 text-sm text-gray-700">Facebook Livestreams Link <span className="text-red-700">*</span></label>
                                     <input type="text" value={fb_url} onChange={fburlChange} placeholder="https://facebook.com/live/url" className="w-auto flex-2 md:flex-1 px-4 py-2 mr-2 md:mx-4 border border-gray-300 rounded-md" />

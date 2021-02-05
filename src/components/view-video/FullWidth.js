@@ -4,7 +4,7 @@ import { ReactComponent as PlayIcon } from 'assets/images/icon-play.svg'
 import { ReactComponent as FbIcon } from 'assets/images/fb-icon.svg'
 import { ReactComponent as IgIcon } from 'assets/images/ig-icon.svg'
 import { ReactComponent as TtIcon } from 'assets/images/tiktok-icon.svg'
-import { ReactComponent as EyeIconWhite } from 'assets/images/eye-icon-white.svg'
+// import { ReactComponent as EyeIconWhite } from 'assets/images/eye-icon-white.svg'
 import { ReactComponent as ShareIcon } from 'assets/images/share-icon.svg'
 import { ReactComponent as ShareIconMobile } from 'assets/images/share-icon-mobile.svg'
 import { ReactComponent as EyeIcon } from 'assets/images/eye-icon.svg'
@@ -18,6 +18,7 @@ import DefaultImg from 'assets/images/default.svg'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import Countdown from 'components/forms/countdown'
 import Moment from 'moment'
+import Converter from 'configs/moment/DatetimeConverter'
 Modal.setAppElement('*');
 
 const FullWidth = ({ displayToolTip, DeleteButton, linkVideo, actionLinks, viewsElement, actions, dataVideos, socmedVertical, socmedCustom, liveRecord, title, name, subtitle, caption, ig, tiktok, fb, category, buttons }) => {
@@ -84,12 +85,12 @@ const FullWidth = ({ displayToolTip, DeleteButton, linkVideo, actionLinks, views
                                                 item?.live ? (
                                                     <>
                                                         <img className="live-icon px-2 py-2" src={iconLive} alt="live icon" />
-                                                        <div className="live-viewers bg-blue-900 opacity-50 text-sm rounded-lg mt-2" style={{ width: 66, height: 26 }}>
+                                                        {/* <div className="live-viewers bg-blue-900 opacity-50 text-sm rounded-lg mt-2" style={{ width: 66, height: 26 }}>
                                                         </div>
                                                         <div className="live-viewers-wrap flex px-2 items-center py-1 text-sm font-light text-white rounded-lg mt-2" style={{ width: 66, height: 26 }}>
                                                             <EyeIconWhite className="mx-auto" />
                                                             <h6 className="mx-auto opacity-100">5.2K</h6>
-                                                        </div>
+                                                        </div> */}
                                                     </>
                                                 ) : null
                                             }
@@ -97,7 +98,7 @@ const FullWidth = ({ displayToolTip, DeleteButton, linkVideo, actionLinks, views
                                                 item?.upcoming ? (
                                                     <>
                                                         <div className="upcoming rounded-lg border-2 border-red-600 w-11/12 md:w-full">
-                                                            <Countdown StartTime={item.date} />
+                                                            <Countdown StartTime={Converter.convertToLocal(item.date)} />
                                                         </div>
                                                         <img style={{ maxWidth: '348px', maxHeight: '222px' }} src={BgUpcoming} onError={(e) => { e.target.onerror = null; e.target.src = DefaultImg }} alt={title} className="thumbnail-live" />
                                                     </>
@@ -139,7 +140,7 @@ const FullWidth = ({ displayToolTip, DeleteButton, linkVideo, actionLinks, views
                                                     <h4 className="font-bold text-xl text-red-600">Live Now</h4>
                                                 ) : (
                                                         <>
-                                                            <h4 className="font-bold text-xl text-red-600">{item.date}</h4>
+                                                            <h4 className="font-bold text-xl text-red-600">{Converter.convertToLocal(item.date)}</h4>
                                                             <span className="text-sm text-gray-300 font-light whitespace-no-wrap">Day(s) ago</span>
                                                         </>
                                                     )
@@ -181,7 +182,7 @@ const FullWidth = ({ displayToolTip, DeleteButton, linkVideo, actionLinks, views
                                                     item.isPrevious && item.isPrevious ? (
                                                         <div className="flex mr-2 md:mr-4 items-center">
                                                             <CalendarIcon className="icon-at-user" />
-                                                            <h4 className="ml-2 text-gray-900 text-sm md:text-sm  font-medium">{Moment(item.date).fromNow()}</h4>
+                                                            <h4 className="ml-2 text-gray-900 text-sm md:text-sm  font-medium">{Moment(Converter.convertToLocal(item.date)).fromNow()}</h4>
                                                         </div>) : null
                                                 }
                                             </div>

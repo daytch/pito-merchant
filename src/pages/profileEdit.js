@@ -231,8 +231,8 @@ const ProfileEdit = () => {
                             <div className="xl:px-8 w-3/6">
                                 <div className="flex flex-wrap w-full pt-2">
                                     <input hidden type="file" onChange={(e) => mypicChange(e)} id="uploadAva" />
-                                    <button onClick={UploadNewAva} className="px-4 py-1 w-full bg-red-600 shadow-md my-2 text-white text-sm rounded-xl">Upload New Avatar</button>
-                                    <button onClick={deleteAvatar} className="px-6 py-1 w-full border border-red-600 shadow-md my-2 text-red-600 text-sm rounded-xl">Delete Avatar</button>
+                                    <button onClick={UploadNewAva} className="px-4 py-1 w-full bg-red-600 shadow-md my-2 text-white text-sm rounded-xl">Upload New Photo</button>
+                                    <button onClick={deleteAvatar} className="px-6 py-1 w-full border border-red-600 shadow-md my-2 text-red-600 text-sm rounded-xl">Delete Photo</button>
                                     <div className="user-detail w-full justify-center pt-2">
                                         {
                                             loginBy === "facebook" ? (<span className="text-sm flex justify-center md:text-base shadow-md px-2 mt-2 py-1 border border-gray-50 rounded-xl bg white text-gray-700">

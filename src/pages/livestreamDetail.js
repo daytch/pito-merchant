@@ -152,7 +152,7 @@ const LivestreamDetail = ({ location }) => {
                         </div>
                         <div className="flex flex-col mr-8 text-center">
                             <h4 className="font-bold text-2xl text-red-600">{fav}</h4>
-                            <p className="font-light text-sm text-gray-300">Subscriber</p>
+                            <p className="font-light text-sm text-gray-300">Likes</p>
                         </div>
                         <div className="flex flex-col text-center">
                             <h4 className="font-bold text-2xl text-red-600">{share}</h4>

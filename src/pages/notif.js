@@ -24,6 +24,7 @@ const Notif = () => {
     }
     useEffect(() => {
         setLoading(true)
+        
         NotifAPI.getList().then(e => {
             setData(e.data)
             setLoading(false)

@@ -29,6 +29,9 @@ const Profile = () => {
     const [fav, setFav] = useState();
     const [share, setShare] = useState();
     const [view, setView] = useState();
+    const [Totalfav, setTotalFav] = useState(0);
+    const [Totalshare, setTotalShare] = useState(0);
+    const [Totalview, setTotalView] = useState(0);
     const [tipe, setTipe] = useState('')
     const [value, setValue] = useState(0);
     const [phoneTooltip, setPhoneTooltip] = useState({
@@ -75,6 +78,9 @@ const Profile = () => {
             setFav(arrFav);
             let arrShare = data.shared_month.map(item => item.total)
             setShare(arrShare);
+            setTotalFav(data.total_fav);
+            setTotalShare(data.total_shared);
+            setTotalView(data.total_view);
             let arrView = data.view_month.map(item => item.total)
             setView(arrView);
             setLoading(false);
@@ -149,15 +155,15 @@ const Profile = () => {
                                 }
                                 <div className="flex flex-wrap mt-4 md:mt-2">
                                     <div className="flex flex-col mr-8 text-center">
-                                        <h4 className="font-bold text-2xl text-red-600">{view}</h4>
+                                        <h4 className="font-bold text-2xl text-red-600">{Totalview}</h4>
                                         <p className="font-light text-sm text-gray-300">Views</p>
                                     </div>
                                     <div className="flex flex-col mr-8 text-center">
-                                        <h4 className="font-bold text-2xl text-red-600">{fav}</h4>
-                                        <p className="font-light text-sm text-gray-300">Subscriber</p>
+                                        <h4 className="font-bold text-2xl text-red-600">{Totalfav}</h4>
+                                        <p className="font-light text-sm text-gray-300">Likes</p>
                                     </div>
                                     <div className="flex flex-col text-center">
-                                        <h4 className="font-bold text-2xl text-red-600">{share}</h4>
+                                        <h4 className="font-bold text-2xl text-red-600">{Totalshare}</h4>
                                         <p className="font-light text-sm text-gray-300">Shared</p>
                                     </div>
                                 </div>

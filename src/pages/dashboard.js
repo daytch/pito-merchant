@@ -110,8 +110,9 @@ const Dashboard = () => {
 
     function getData(e, tipe) {
         setLoading(true)
-        const page = tipe === 'live_videos' ? activeLivePage : tipe === 'upcoming_videos' ? activeNextPage : activePrevPage
-        livestream.getVideos({ 'type': tipe, 'page': e }).then((res) => {
+        
+        const page = e;//tipe === 'live_videos' ? activeLivePage : tipe === 'upcoming_videos' ? activeNextPage : activePrevPage
+        livestream.getVideos(page, tipe).then((res) => {
             if (res.isSuccess) {
                 switch (tipe) {
                     case 'live_videos':

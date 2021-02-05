@@ -25,6 +25,10 @@ const Countdown = ({ StartTime, isMini }) => {
             var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
+            if (seconds < 0) {
+                window.location.reload();
+            }
+
             days = days < 10 ? '0' + days : days;
             hours = hours < 10 ? '0' + hours : hours;
             minutes = minutes < 10 ? '0' + minutes : minutes;
