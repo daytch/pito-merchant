@@ -4,7 +4,7 @@ import SideNavbarMerchant from 'components/SideNavbarMerchant'
 import { Link } from 'react-router-dom'
 import { withRouter } from "react-router"
 import Moment from 'moment'
-// import Converter from 'configs/moment/DatetimeConverter'
+import Converter from 'configs/moment/DatetimeConverter'
 import livestream from 'api/livestream'
 import Spinner from 'components/spinner'
 import ReactHtmlParserfrom from 'react-html-parser'
@@ -67,9 +67,9 @@ const LivestreamDetail = ({ location }) => {
             setTitle(data.title);
             setDesc(data.desc);
 
-            let stDate = Moment(data.startDate).utc().format('YYYY-MM-DD');
-            let stTime = Moment(data.startDate).utc().format("HH:mm")
-            let enTime = Moment(data.endDate).utc().format("HH:mm")
+            let stDate = Moment(Converter.convertToLocal(data.startDate)).format('YYYY-MM-DD');
+            let stTime = Moment(Converter.convertToLocal(data.startDate)).format("HH:mm")
+            let enTime = Moment(Converter.convertToLocal(data.endDate)).format("HH:mm")
 
             setStartDate(stDate);
             setStartTime(stTime);

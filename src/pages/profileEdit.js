@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import SideNavbarMerchant from 'components/SideNavbarMerchant'
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { ReactComponent as FbIcon } from 'assets/images/fb-icon-blue.svg'
 import { ReactComponent as EmailIcon } from 'assets/images/email-icon.svg'
 import { ReactComponent as GoogleIcon } from 'assets/images/google-icon-colorful.svg'
@@ -17,9 +17,10 @@ const MySwal = withReactContent(Swal)
 const ProfileEdit = () => {
 
     let history = useHistory();
-    const [data, setData] = useState('');
+    let data = useLocation();
+    const [datas, setDatas] = useState('');
     const [mypic, setMypic] = useState('')
-    const [category, setCategory] = useState(data.category)
+    const [category, setCategory] = useState([])
     const [categoryid, setCategoryid] = useState([])
     const [isLoading, setLoading] = useState(true)
     const [newPass, setnewPass] = useState('')
@@ -27,9 +28,10 @@ const ProfileEdit = () => {
     const [delAva, setDelAva] = useState('')
     const [currentPass, setcurrentPass] = useState('')
     const [loginBy] = useState(localStorage.getItem('PITO:login'));
-    const [cat1, setCat1] = useState('Select...')
-    const [cat2, setCat2] = useState('Select...')
-    const [cat3, setCat3] = useState('Select...')
+    const [cat1] = useState(data.state.category1)
+    const [cat2] = useState(data.state.category2)
+    const [cat3] = useState(data.state.category3)
+
     const [ava, setAva] = useState('')
     const [value, setValue] = useState(0)
 
@@ -43,30 +45,14 @@ const ProfileEdit = () => {
         setrePass(data)
     }
 
-    function useForceUpdate(c1, c2, c3) {// integer state
-
-        setValue(value => value + 1)
-        setCat1(c1)
-        setCat2(c2)
-        setCat3(c3)
-        // update the state to force render
-    }
-
     const getData = () => {
         users.getProfile().then(e => {
 
             setAva(e.data.img_avatar)
-            setData(e.data);
+            setDatas(e.data);
             let categories = e.data.categories;
-            let c1 = categories[0] && categories[0].name ? categories[0].name : 'Category'
-            let c2 = categories[1] && categories[1].name ? categories[1].name : 'Category'
-            let c3 = categories[2] && categories[2].name ? categories[2].name : 'Category'
-            
-            // useForceUpdate(c1, c2, c3)
-            // setCat1(c1)
-            // setCat2(c2)
-            // setCat3(c3)
-            let c = e.data.categories.map((item, index) => {
+
+            let c = categories.map((item, index) => {
                 return {
                     key: index + 1,
                     value: item.category_id
@@ -79,54 +65,65 @@ const ProfileEdit = () => {
                 idx = idx + i
             }
 
-            setCategoryid(result)
+            let listId = categoryid;
+            let catsId = categories.map((item, index) => {
+                if (item.name === data.state.category1 ||
+                    item.name === data.state.category2 ||
+                    item.name === data.state.category3) {
+                    listId.push(item.category_id)
+                }
+            })
+            setCategoryid(listId);
+            // setCategoryid(result)
             setLoading(false);
-            return () => {
-                useForceUpdate(c1, c2, c3)
-            }
         })
     }
 
+
     useEffect(() => {
+
         livestream.getCategory().then((res) => {
             const ListCategory = res.data.map((i) => {
                 return { "id": i.id, "value": i.text }
             })
             setCategory(ListCategory);
             setLoading(false)
-        })
-        // getData()
-        // eslint-disable-next-line
-    }, [])
 
-    useEffect(() => {
-        users.getProfile().then(e => {
+            users.getProfile().then(e => {
 
-            setAva(e.data.img_avatar)
-            setData(e.data);
-            let categories = e.data.categories;
-            let c1 = categories[0] && categories[0].name ? categories[0].name : 'Category'
-            let c2 = categories[1] && categories[1].name ? categories[1].name : 'Category'
-            let c3 = categories[2] && categories[2].name ? categories[2].name : 'Category'
+                setAva(e.data.img_avatar)
+                setDatas(e.data);
 
-            let c = e.data.categories.map((item, index) => {
-                return {
-                    key: index + 1,
-                    value: item.category_id
+                let categories = e.data.categories;
+                let c1 = categories[0] && categories[0].name ? categories[0].name : 'Category'
+                let c2 = categories[1] && categories[1].name ? categories[1].name : 'Category'
+                let c3 = categories[2] && categories[2].name ? categories[2].name : 'Category'
+
+                let c = e.data.categories.map((item, index) => {
+                    return {
+                        key: index + 1,
+                        value: item.category_id
+                    }
+                })
+                let listId = categoryid;
+                let catsId = categories.map((item, index) => {
+                    if (item.name === data.state.category1 ||
+                        item.name === data.state.category2 ||
+                        item.name === data.state.category3) {
+                        listId.push(item.category_id)
+                    }
+                })
+                setCategoryid(listId);
+                var result = [];
+                let idx = 1;
+                for (var i = 0; i < c.length; i++) {
+                    result = [...result, { [idx]: c[i].value }];
+                    idx = idx + i
                 }
+                console.log(categoryid)
+                // setCategoryid(result)
+                setLoading(false);
             })
-            var result = [];
-            let idx = 1;
-            for (var i = 0; i < c.length; i++) {
-                result = [...result, { [idx]: c[i].value }];
-                idx = idx + i
-            }
-
-            setCategoryid(result)
-            setLoading(false);
-
-            useForceUpdate(c1, c2, c3)
-
         })
     }, [])
     function mypicChange(e) {
@@ -149,14 +146,24 @@ const ProfileEdit = () => {
     function handleCancel() {
         history.goBack()
     }
-
+    function uniq_fast(a) {
+        var seen = {};
+        var out = [];
+        var len = a.length;
+        var j = 0;
+        for(var i = 0; i < len; i++) {
+             var item = a[i];
+             if(seen[item] !== 1) {
+                   seen[item] = 1;
+                   out[j++] = item;
+             }
+        }
+        return out;
+    }
     function handleEdit() {
         setLoading(true);
-        let cat = []
-        for (const [value] of Object.entries(categoryid)) {
-            cat.push(value)
-        }
-
+        let cat = uniq_fast(categoryid);
+        
         if (new Set(cat).size !== cat.length) {
             setLoading(false)
             MySwal.fire('Validation!', 'Cannot pick same categories.', 'warning');
@@ -164,16 +171,14 @@ const ProfileEdit = () => {
         }
 
         const formData = new FormData();
-        // for (const [key, value] of Object.entries(data)) {
-        //     formData.append(key, value)
-        // }
+        
         formData.append('mypic', mypic)
-        formData.append('company_name', data.company_name)
-        formData.append('about', data.about)
-        formData.append('company_website', data.company_website)
-        formData.append('fb_url', data.fb_url)
-        formData.append('ig_url', data.ig_url)
-        formData.append('tiktok_url', data.tiktok_url)
+        formData.append('company_name', datas.company_name)
+        formData.append('about', datas.about)
+        formData.append('company_website', datas.company_website)
+        formData.append('fb_url', datas.fb_url)
+        formData.append('ig_url', datas.ig_url)
+        formData.append('tiktok_url', datas.tiktok_url)
         formData.append('categories', cat)
         formData.append('delAvatar', delAva)
 
@@ -203,7 +208,7 @@ const ProfileEdit = () => {
         document.getElementById("uploadAva").click()
     }
     function handleChange(data, value) {
-        setData((e) => {
+        setDatas((e) => {
             return {
                 ...e,
                 [data]: value
@@ -221,12 +226,12 @@ const ProfileEdit = () => {
                         <div className="flex flex-col xl:flex-row md:pl-24 items-center">
                             <div className=" w-4/5 xl:w-1/3 ">
                                 {
-                                    data.img_avatar === '' && ava === '' ? (<Avatar name={data.name} className="mx-auto" round={true} size="125px" />) :
-                                        (<img src={data.img_avatar ? data.img_avatar : ava} draggable={false} style={{ width: '150px', height: '150px' }} className="rounded-full border-8 mb-4 xl:mb-0 xl:mr-4 border-red-600 mx-auto" alt={data.name} />)
+                                    datas.img_avatar === '' && ava === '' ? (<Avatar name={datas.name} className="mx-auto" round={true} size="125px" />) :
+                                        (<img src={datas.img_avatar ? datas.img_avatar : ava} draggable={false} style={{ width: '150px', height: '150px' }} className="rounded-full border-8 mb-4 xl:mb-0 xl:mr-4 border-red-600 mx-auto" alt={data.name} />)
 
                                 }
                                 <br />
-                                <h3 className="mr-8 text-sm font-light flex flex-row-reverse">{data && data.email}</h3>
+                                <h3 className="mr-8 text-sm font-light flex flex-row-reverse">{datas && datas.email}</h3>
                             </div>
                             <div className="xl:px-8 w-3/6">
                                 <div className="flex flex-wrap w-full pt-2">
@@ -251,13 +256,13 @@ const ProfileEdit = () => {
                             <h6 className="text-red-600 font-semibold text-lg">Edit Profile</h6>
                             <div className="flex flex-wrap w-full items-start my-2">
                                 <label htmlFor="name" className="w-full md:w-1/4 text-sm text-gray-700">Display Name</label>
-                                <input type="text" value={data && data.name} onChange={(e) => {
+                                <input type="text" value={datas && datas.name} onChange={(e) => {
                                     handleChange('name', e.target.value)
                                 }} placeholder="Your Display Name" className="w-full text-sm md:w-4/6 px-2 py-1 my-2 md:my-0 md:ml-4 border border-gray-300 rounded-md" />
                             </div>
                             <div className="flex flex-wrap w-full items-start my-2">
                                 <label htmlFor="about" className="w-full md:w-1/4 text-sm text-gray-700">About</label>
-                                <textarea value={data && data.about} onChange={(e) => {
+                                <textarea value={datas && datas.about} onChange={(e) => {
                                     handleChange('about', e.target.value)
                                 }} placeholder="Describe Your Self" className="w-full text-sm md:w-4/6 px-2 py-1 h-32 my-2 md:my-0 md:ml-4 border border-gray-300 rounded-lg" />
                             </div>
@@ -281,19 +286,19 @@ const ProfileEdit = () => {
                             </div>
                             <div className="flex flex-wrap w-full items-start my-2">
                                 <label htmlFor="name" className="w-full md:w-1/4 text-sm text-gray-700">Facebook Page Link</label>
-                                <input type="text" value={data && data.fb_url} onChange={(e) => {
+                                <input type="text" value={datas && datas.fb_url} onChange={(e) => {
                                     handleChange('fb_url', e.target.value)
                                 }} placeholder="https://facebook.com" className="w-full text-sm md:w-4/6 px-2 py-1 my-2 md:my-0 md:ml-4 border border-gray-300 rounded-md" />
                             </div>
                             <div className="flex flex-wrap w-full items-start my-2">
                                 <label htmlFor="name" className="w-full md:w-1/4 text-sm text-gray-700">Instagram Page Link</label>
-                                <input type="text" value={data && data.ig_url} onChange={(e) => {
+                                <input type="text" value={datas && datas.ig_url} onChange={(e) => {
                                     handleChange('ig_url', e.target.value)
                                 }} placeholder="https://instagram.com" className="w-full text-sm md:w-4/6 px-2 py-1 my-2 md:my-0 md:ml-4 border border-gray-300 rounded-md" />
                             </div>
                             <div className="flex flex-wrap w-full items-start my-2">
                                 <label htmlFor="name" className="w-full md:w-1/4 text-sm text-gray-700">Tiktok Page Link</label>
-                                <input type="text" value={data && data.tiktok_url} onChange={(e) => {
+                                <input type="text" value={datas && datas.tiktok_url} onChange={(e) => {
                                     handleChange('tiktok_url', e.target.value)
                                 }} placeholder="https://tiktok.com" className="w-full text-sm md:w-4/6 px-2 py-1 my-2 md:my-0 md:ml-4 border border-gray-300 rounded-md" />
                             </div>

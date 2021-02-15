@@ -221,7 +221,7 @@ const CreateDashboard = ({ state }) => {
                                 </div>
                                 <span className="text-red-700">*</span><i className="text-xs">Please enter your Livestream URL from Facebook, TikTok or Instagram</i>
                                 <div className="form-dashboard flex flex-wrap w-full items-center mt-4">
-                                    <label htmlFor="fbLink" className="w-full md:w-1/6 text-sm text-gray-700">Facebook Livestreams Link <span className="text-red-700">*</span></label>
+                                    <label htmlFor="fbLink" className="w-full md:w-1/6 text-sm text-gray-700">Facebook Livestreams Link</label>
                                     <input type="text" value={fb_url} onChange={fburlChange} placeholder="https://facebook.com/live/url" className="w-auto flex-2 md:flex-1 px-4 py-2 mr-2 md:mx-4 border border-gray-300 rounded-md" />
                                     <FbIcon />
                                 </div>

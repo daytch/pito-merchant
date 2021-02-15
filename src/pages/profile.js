@@ -34,6 +34,9 @@ const Profile = () => {
     const [Totalview, setTotalView] = useState(0);
     const [tipe, setTipe] = useState('')
     const [value, setValue] = useState(0);
+    const [category1, setCategory1] = useState("")
+    const [category2, setCategory2] = useState("")
+    const [category3, setCategory3] = useState("")
     const [phoneTooltip, setPhoneTooltip] = useState({
         show: false,
         x: 0,
@@ -53,7 +56,13 @@ const Profile = () => {
     useEffect(() => {
         User.getProfile().then((res) => {
             let data = res.data;
-
+            
+            let cat1 = typeof data.categories[0] === "undefined" ? "Category" : data.categories[0].name
+            let cat2 = typeof data.categories[1] === "undefined" ? "Category" : data.categories[1].name
+            let cat3 = typeof data.categories[2] === "undefined" ? "Category" : data.categories[2].name
+            setCategory1(cat1)
+            setCategory2(cat2)
+            setCategory3(cat3)
             let dataUser = {
                 "email": data.email,
                 "name": data.name,
@@ -74,14 +83,14 @@ const Profile = () => {
             setAbout(data.about);
             setName(data.name);
             setVideos(data.history_videos);
-            let arrFav = data.fav_month.map(item => item.total)
+            let arrFav = data.fav_month; //.map(item => item.total)
             setFav(arrFav);
-            let arrShare = data.shared_month.map(item => item.total)
+            let arrShare = data.shared_month; //.map(item => item.total)
             setShare(arrShare);
             setTotalFav(data.total_fav);
             setTotalShare(data.total_shared);
             setTotalView(data.total_view);
-            let arrView = data.view_month.map(item => item.total)
+            let arrView = data.view_month; //.map(item => item.total)
             setView(arrView);
             setLoading(false);
         });
@@ -177,7 +186,7 @@ const Profile = () => {
                         <div className="flex justify-end pt-8">
                             <Link to={{
                                 pathname: "/profile/edit",
-                                data: data
+                                state: { category1, category2, category3 }
                             }} >
                                 <button className="rounded-3xl text-sm md:text-base font-medium mr-2 md:mr-6 text-white bg-red-600 px-6 py-2 md:px-10 md:py-2">Edit Account</button>
                             </Link>

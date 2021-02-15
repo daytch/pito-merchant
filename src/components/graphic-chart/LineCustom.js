@@ -1,10 +1,24 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Line } from 'react-chartjs-2'
 
 const LineCustom = ({ favData, shareData, viewData }) => {
-    
+    const labels = favData && favData.map((item) => {
+        var day = item.day, month = item.month, month = item.month, year = item.year;
+        day = day.toString().length < 2 ? '0' + day : day;
+        month = month.toString().length < 2 ? '0' + month : month;
+        return day + '/' + month + '/' + year;
+    })
+    const data_fav = favData && favData.map((item) => {
+        return item.total;
+    })
+    const data_share = shareData && shareData.map((item) => {
+        return item.total;
+    })
+    const data_view = viewData && viewData.map((item) => {
+        return item.total;
+    })
     const state = {
-        labels: ['Jan', 'Feb', 'March', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Des'],
+        labels: labels,// ['Jan', 'Feb', 'March', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Des'],
         datasets: [
             {
                 label: 'Favorite Per Months',
@@ -12,7 +26,7 @@ const LineCustom = ({ favData, shareData, viewData }) => {
                 backgroundColor: '#009245',
                 borderColor: '#009245',
                 borderWidth: 2,
-                data: favData//[320, 1100, 1000, 500]
+                data: data_fav//[320, 1100, 1000, 500]
             },
             {
                 label: 'Shares per Month',
@@ -20,7 +34,7 @@ const LineCustom = ({ favData, shareData, viewData }) => {
                 borderColor: '#00A68C',
                 backgroundColor: '#00A68C',
                 borderWidth: 2,
-                data: shareData// [120, 320, 250, 520, 390]
+                data: data_share// [120, 320, 250, 520, 390]
 
             },
             {
@@ -29,7 +43,7 @@ const LineCustom = ({ favData, shareData, viewData }) => {
                 backgroundColor: '#E0472D',
                 borderColor: '#E0472D',
                 borderWidth: 2,
-                data: viewData// [290, 450, 350, 0, 520, 390]
+                data: data_view// [290, 450, 350, 0, 520, 390]
 
             }
         ]
