@@ -8,4 +8,5 @@ export default {
     getProfile: () => axios.get("/merchant/getProfile"),
     changePassword: (credentials) => axios.post("/user/changePassword", credentials),
     submitProfile: (data) => axios.post("/merchant/submitProfile", data),
+    changePassword: (data) => axios.post("/user/resetPassword", data)
 }

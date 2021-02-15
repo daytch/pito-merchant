@@ -7,6 +7,7 @@ import PrivateRoute from 'Routes/PrivateRoute'
 //import pages 
 import Login from 'pages/login'
 import ForgotPassword from 'pages/forgotPassword'
+import ChangePassword from 'pages/changePassword'
 import Dashboard from 'pages/dashboard'
 import CreateDashboard from 'pages/createDashboard'
 import EditDashboard from 'pages/editDashboard'
@@ -29,6 +30,7 @@ function App() {
       <Switch>
         <Route exact path="/" component={Login} />
         <Route path="/forgot-password" component={ForgotPassword} />
+        <Route path="/change-password" component={ChangePassword} />
         <Route path="/dashboard"
           render={({ match: { url } }) => (
             <>
