@@ -4,6 +4,7 @@ import Converter from 'configs/moment/DatetimeConverter'
 import Moment from 'moment'
 
 const index = React.forwardRef((props, ref) => {
+    console.log('notif id : ' + props.data.id + ' | UTC : ' + props.data.createdAt + ' => ' + Moment(props.data.createdAt).format('YYYY-MM-DD HH:mm:ss') + ' Convert To Local ' + Moment.utc(Moment(props.data.createdAt).format('YYYY-MM-DD HH:mm:ss')).local().format('YYYY-MM-DD HH:mm:ss'))
     return (
         <div ref={ref} className="flex justify-center items-center w-full md:px-4 py-4 border border-gray-100 bg-pink-500">
             <div className="notif-icon mx-4 md:mx-0" >
