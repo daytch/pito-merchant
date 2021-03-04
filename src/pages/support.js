@@ -37,7 +37,7 @@ const Supports = () => {
                return {
                    ticketNumber: e.id,
                    title: e.title,
-                   status: e.status,
+                   status: (e.status === 0) ? "Open" : "Close",
                    lastUpdated: e.last_session
                }
            })

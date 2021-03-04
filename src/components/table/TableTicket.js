@@ -33,7 +33,7 @@ const TableTicket = ({ itemHead, itemBody }) => {
                         <tr key={index} className="border-b border-gray-50">
                             <td className="text-center py-3 px-4 text-red-600 font-bold text-sm">
                                 <Link className="w-full" to={{
-                                    pathname: `/ticket/${item.ticketNumber}`,
+                                    pathname: `/support/edit/${item.ticketNumber}`,
                                     query: { title }
                                 }}>{item.ticketNumber}</Link>
                             </td>
