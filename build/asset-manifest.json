@@ -1,6 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.16f0c4ae.chunk.css",
+<<<<<<< HEAD
     "main.js": "/static/js/main.c2243db8.chunk.js",
     "main.js.map": "/static/js/main.c2243db8.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.5369e2d5.js",
@@ -12,13 +13,26 @@
     "static/css/2.83342f34.chunk.css.map": "/static/css/2.83342f34.chunk.css.map",
     "static/css/main.16f0c4ae.chunk.css.map": "/static/css/main.16f0c4ae.chunk.css.map",
     "static/js/2.1d55fdd1.chunk.js.LICENSE.txt": "/static/js/2.1d55fdd1.chunk.js.LICENSE.txt",
+=======
+    "main.js": "/static/js/main.8e4ede7e.chunk.js",
+    "main.js.map": "/static/js/main.8e4ede7e.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.5369e2d5.js",
+    "runtime-main.js.map": "/static/js/runtime-main.5369e2d5.js.map",
+    "static/css/2.83342f34.chunk.css": "/static/css/2.83342f34.chunk.css",
+    "static/js/2.549f7c0b.chunk.js": "/static/js/2.549f7c0b.chunk.js",
+    "static/js/2.549f7c0b.chunk.js.map": "/static/js/2.549f7c0b.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/2.83342f34.chunk.css.map": "/static/css/2.83342f34.chunk.css.map",
+    "static/css/main.16f0c4ae.chunk.css.map": "/static/css/main.16f0c4ae.chunk.css.map",
+    "static/js/2.549f7c0b.chunk.js.LICENSE.txt": "/static/js/2.549f7c0b.chunk.js.LICENSE.txt",
+>>>>>>> b57ba0c693fd338cb633abb22a4d7489cca6bc0d
     "static/media/appstore-sign.e543223f.svg": "/static/media/appstore-sign.e543223f.svg",
     "static/media/arrow-custom.b0438a31.svg": "/static/media/arrow-custom.b0438a31.svg",
     "static/media/arrow-white.39ec4e8d.svg": "/static/media/arrow-white.39ec4e8d.svg",
     "static/media/calendar-icon.2b9857c4.svg": "/static/media/calendar-icon.2b9857c4.svg",
     "static/media/close-icon.0d956a79.svg": "/static/media/close-icon.0d956a79.svg",
     "static/media/dashboard-icon.f4912018.svg": "/static/media/dashboard-icon.f4912018.svg",
-    "static/media/default.8225dda3.svg": "/static/media/default.8225dda3.svg",
+    "static/media/default.b318bf28.svg": "/static/media/default.b318bf28.svg",
     "static/media/email-icon.8f87c745.svg": "/static/media/email-icon.8f87c745.svg",
     "static/media/eye-icon.9c257360.svg": "/static/media/eye-icon.9c257360.svg",
     "static/media/fb-icon-blue.4fbaa286.svg": "/static/media/fb-icon-blue.4fbaa286.svg",
@@ -47,8 +61,14 @@
   "entrypoints": [
     "static/js/runtime-main.5369e2d5.js",
     "static/css/2.83342f34.chunk.css",
+<<<<<<< HEAD
     "static/js/2.1d55fdd1.chunk.js",
     "static/css/main.16f0c4ae.chunk.css",
     "static/js/main.c2243db8.chunk.js"
+=======
+    "static/js/2.549f7c0b.chunk.js",
+    "static/css/main.16f0c4ae.chunk.css",
+    "static/js/main.8e4ede7e.chunk.js"
+>>>>>>> b57ba0c693fd338cb633abb22a4d7489cca6bc0d
   ]
 }

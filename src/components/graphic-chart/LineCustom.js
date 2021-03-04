@@ -21,7 +21,7 @@ const LineCustom = ({ favData, shareData, viewData }) => {
         labels: labels,// ['Jan', 'Feb', 'March', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Des'],
         datasets: [
             {
-                label: 'Favorite Per Months',
+                label: 'Favorite Per Days',
                 fill: false,
                 backgroundColor: '#009245',
                 borderColor: '#009245',
@@ -29,7 +29,7 @@ const LineCustom = ({ favData, shareData, viewData }) => {
                 data: data_fav//[320, 1100, 1000, 500]
             },
             {
-                label: 'Shares per Month',
+                label: 'Shares per Days',
                 fill: false,
                 borderColor: '#00A68C',
                 backgroundColor: '#00A68C',
@@ -38,7 +38,7 @@ const LineCustom = ({ favData, shareData, viewData }) => {
 
             },
             {
-                label: 'Views per Month',
+                label: 'Views per Days',
                 fill: false,
                 backgroundColor: '#E0472D',
                 borderColor: '#E0472D',
