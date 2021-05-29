@@ -83,8 +83,8 @@ const LivestreamDetail = ({ location }) => {
             var testUrl = data.fb_url.match(/'(http:[^\s]+)'/),
                 onlyUrl = testUrl && testUrl[1];
             setFb(data.fb_url);
-            setIg(data.ig_url.indexOf('undefined') !== -1 ? '' : data.ig_url);
-            setTiktok(data.tiktok_url.indexOf('undefined') !== -1 ? '' : data.tiktok_url);
+            setIg(data.ig_url === null || data.ig_url.indexOf('undefined') !== -1 ? '' : data.ig_url);
+            setTiktok(data.tiktok_url === null || data.tiktok_url.indexOf('undefined') !== -1 ? '' : data.tiktok_url);
             setViews(data.views);
             setFav(data.favorites);
             setShared(data.shares);

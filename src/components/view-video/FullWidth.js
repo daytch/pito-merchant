@@ -72,6 +72,7 @@ const FullWidth = ({ displayToolTip, DeleteButton, linkVideo, actionLinks, views
             {
                 dataVideos.map((item, index) => {
                     let iframe = item.iframe
+
                     return (
                         <div className="md:inline-flex" key={index}>
                             <div className="flex-1">
@@ -94,22 +95,27 @@ const FullWidth = ({ displayToolTip, DeleteButton, linkVideo, actionLinks, views
                                                     </>
                                                 ) : null
                                             }
-                                            {
+                                            {/* {
                                                 item?.upcoming ? (
                                                     <>
                                                         <div className="upcoming rounded-lg border-2 border-red-600 w-11/12 md:w-full">
-                                                            <Countdown StartTime={Converter.convertToLocal(item.date)} />
+                                                            <Countdown StartTime={Converter.convertToUTC(item.date)} />
                                                         </div>
                                                         <img style={{ maxWidth: '348px', maxHeight: '222px' }} src={BgUpcoming} onError={(e) => { e.target.onerror = null; e.target.src = DefaultImg }} alt={title} className="thumbnail-live" />
                                                     </>
                                                 ) : (
-                                                        <>
-                                                            <PlayIcon style={{ transition: "all .15s ease" }}
-                                                                onClick={() => openModal(item.iframe)} className="icon" />
-                                                            <img style={{ maxWidth: '348px', maxHeight: '222px' }} src={item.thumbnail} onError={(e) => { e.target.onerror = null; e.target.src = DefaultImg }} alt={title} className="thumbnail-live" />
-                                                        </>
-                                                    )
-                                            }
+                                                    <>
+                                                        <PlayIcon style={{ transition: "all .15s ease" }}
+                                                            onClick={() => openModal(item.iframe)} className="icon" />
+                                                        <img style={{ maxWidth: '348px', maxHeight: '222px' }} src={item.thumbnail} onError={(e) => { e.target.onerror = null; e.target.src = DefaultImg }} alt={title} className="thumbnail-live" />
+                                                    </>
+                                                )
+                                            } */}
+
+                                            <PlayIcon style={{ transition: "all .15s ease" }}
+                                                onClick={() => openModal(item.iframe)} className="icon" />
+                                            <img style={{ maxWidth: '348px', maxHeight: '222px' }} src={item.thumbnail} onError={(e) => { e.target.onerror = null; e.target.src = DefaultImg }} alt={title} className="thumbnail-live" />
+
                                         </figure>
                                     </Link>
                                 </div>
@@ -139,11 +145,11 @@ const FullWidth = ({ displayToolTip, DeleteButton, linkVideo, actionLinks, views
                                                 item?.live ? (
                                                     <h4 className="font-bold text-xl text-red-600">Live Now</h4>
                                                 ) : (
-                                                        <>
-                                                            <h4 className="font-bold text-xl text-red-600">{Converter.convertToLocal(item.date)}</h4>
-                                                            <span className="text-sm text-gray-300 font-light whitespace-no-wrap">Day(s) ago</span>
-                                                        </>
-                                                    )
+                                                    <>
+                                                        <h4 className="font-bold text-xl text-red-600">{Converter.convertToLocal(item.date)}</h4>
+                                                        <span className="text-sm text-gray-300 font-light whitespace-no-wrap">Day(s) ago</span>
+                                                    </>
+                                                )
                                             }
                                         </div>
                                         <div className="flex-col flex md:hidden mx-auto mt-2 px-4 leading-tight">
@@ -154,10 +160,19 @@ const FullWidth = ({ displayToolTip, DeleteButton, linkVideo, actionLinks, views
                                 }
                                 <div className="flex-col md:px-4 xxl:px-8 leading-tight">
                                     {
+                                        item?.upcoming ?
+                                            item?.date && <h4 className="text-sm font-bold text-gray-700 break-all">
+                                                {Moment(Converter.convertToLocal(item.date)).format('ll')}
+                                                <div className="rounded-full inline-block w-2 h-2 bg-gray-700 mx-2"></div>
+                                                {Moment(Converter.convertToLocal(item.date)).format('LT')}
+                                            </h4>
+                                            : null
+                                    }
+                                    {
                                         name && <h4 className="font-bold text-xl text-red-600">{name}</h4>
                                     }
                                     {
-                                        title && <h4 className="font-bold text-md text-gray-700 break-all">{title}</h4>
+                                        title && <h4 className="text-md text-gray-700 break-all">{title}</h4>
                                     }
                                     <div className="md:mt-4">
                                         {

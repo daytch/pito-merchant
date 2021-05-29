@@ -52,7 +52,7 @@ const UserLivestreamVideos = ({ displayToolTip, ListVideo }) => {
             {
                 ListVideo.map((item, index) => {
                     var duration = Moment((Moment(Converter.convertToLocal(item.end_time))).diff(Moment(Converter.convertToLocal(item.start_time)))).format("HH:mm:ss")
-                    
+
                     return (
                         <div key={index} className="mt-4 md:mt-8 flex flex-wrap xl:flex-no-wrap">
                             <div className="flex">
@@ -60,24 +60,24 @@ const UserLivestreamVideos = ({ displayToolTip, ListVideo }) => {
                                     <Link to={`/livestream/${item.id}`} className="link-wrapped">
                                         <figure className="item-image-user">
                                             {
-                                                Moment(new Date()).isBefore(Converter.convertToLocal(item.start_time)) ?
-                                                    (
-                                                        <>
-                                                            <div className="upcoming-mn rounded-lg border-2 border-red-600 w-11/12 md:w-full">
-                                                                <Countdown StartTime={Converter.convertToLocal(item.start_time)} isMini={true} />
-                                                            </div>
-                                                            <img style={{ width: '291px', height: '159px' }} src={BgUpcoming} onError={(e) => { e.target.onerror = null; e.target.src = DefaultImg }} alt={item.title} className="thumbnail-live" />
-                                                        </>
-                                                    ) :
-                                                    (
-                                                        <>
-                                                            <div className="minute-user py-2 px-2">
-                                                                <p className="font-medium text-sm text-white float-right">{duration}</p>
-                                                            </div>
-                                                            <PlayIcon style={{ transition: "all .15s ease" }} onClick={() => openModal(item.iframe)} className="icon" />
-                                                            <img src={item.img_thumbnail} onError={(e) => { e.target.onerror = null; e.target.src = DefaultImg }} alt={item.title} />
-                                                        </>
-                                                    )
+                                                // Moment(new Date()).isBefore(Converter.convertToLocal(item.start_time)) ?
+                                                //     (
+                                                //         <>
+                                                //             <div className="upcoming-mn rounded-lg border-2 border-red-600 w-11/12 md:w-full">
+                                                //                 <Countdown StartTime={Converter.convertToLocal(item.start_time)} isMini={true} />
+                                                //             </div>
+                                                //             <img style={{ width: '291px', height: '159px' }} src={BgUpcoming} onError={(e) => { e.target.onerror = null; e.target.src = DefaultImg }} alt={item.title} className="thumbnail-live" />
+                                                //         </>
+                                                //     ) :
+                                                //     (
+                                                <>
+                                                    <div className="minute-user py-2 px-2">
+                                                        <p className="font-medium text-sm text-white float-right">{duration}</p>
+                                                    </div>
+                                                    <PlayIcon style={{ transition: "all .15s ease" }} onClick={() => openModal(item.iframe)} className="icon" />
+                                                    <img src={item.img_thumbnail} onError={(e) => { e.target.onerror = null; e.target.src = DefaultImg }} alt={item.title} />
+                                                </>
+                                                // )
                                             }
 
                                         </figure>

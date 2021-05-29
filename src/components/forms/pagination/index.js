@@ -1,4 +1,5 @@
 const Pagination = ({ pages, getData, tipe }) => {
+    
     return (
         <nav className="relative z-0 inline-flex shadow-sm -space-x-px" aria-label="Pagination">
             <a href="#" className="relative inline-flex items-center px-1 py-1 md:px-2 md:py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">

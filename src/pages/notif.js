@@ -19,12 +19,19 @@ const Notif = () => {
     }
     function markAll() {
         arrRef.map((item) => {
-            item.current.style.backgroundColor="#eff7ff"
+            item.current.style.backgroundColor = "#eff7ff"
+        })
+    }
+    function markRead(id_notification) {
+        NotifAPI.readNotif({ id_notification: id_notification }).then(e => {
+            NotifAPI.getList().then(e => {
+                setData(e.data)
+            })
         })
     }
     useEffect(() => {
         setLoading(true)
-        
+
         NotifAPI.getList().then(e => {
             setData(e.data)
             setLoading(false)
@@ -44,7 +51,7 @@ const Notif = () => {
                             data.map((item, index) => {
                                 let notif = React.createRef()
                                 arrRef.push(notif)
-                                return <Notification hideNotif={hideNotif} ref={notif} index={index} key={index} data={item} />
+                                return <Notification markRead={markRead} hideNotif={hideNotif} ref={notif} index={index} key={index} data={item} />
                             })
                         }
                     </div>

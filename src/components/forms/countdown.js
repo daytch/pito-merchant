@@ -15,7 +15,7 @@ const Countdown = ({ StartTime, isMini }) => {
 
             // Get today's date and time
             var now = new Date().getTime();
-
+            
             // Find the distance between now and the count down date
             var distance = new Date(Converter.convertToLocal(StartTime)).getTime() - now;
 
@@ -49,7 +49,7 @@ const Countdown = ({ StartTime, isMini }) => {
         isMini ? (
             <div className="container-countdown-mn space-x-4">
                 <div className="text-starting-mn inline-block text-red-600">Starting in<br />
-                    <p className="starting-in font-light text-white">{Moment(StartTime).format('lll')}</p>
+                    <p className="starting-in font-light text-white">{Moment(Converter.convertToLocal(StartTime)).format('lll')}</p>
                 </div>
                 <div className="inline-block">
                     <div className="timer-mn font-light text-white">{days}:{hours}:{minutes}:{seconds}</div>
@@ -60,7 +60,7 @@ const Countdown = ({ StartTime, isMini }) => {
             (
                 <div className="container-countdown space-x-4">
                     <div className="text-starting inline-block text-red-600">Starting in<br />
-                        <p className="starting-in font-light text-white">{Moment(StartTime).format('lll')}</p>
+                        <p className="starting-in font-light text-white">{Moment(Converter.convertToLocal(StartTime)).format('lll')}</p>
                     </div>
                     <div className="inline-block">
                         <div className="timer font-light text-white">{days}:{hours}:{minutes}:{seconds}</div>

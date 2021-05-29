@@ -4,15 +4,8 @@ import Converter from 'configs/moment/DatetimeConverter'
 import Moment from 'moment'
 
 const index = React.forwardRef((props, ref) => {
-<<<<<<< HEAD
-    console.log(props.data.createdAt)
-    console.log('local : ' + Converter.convertToLocal(props.data.createdAt))
-    console.log('utc : ' + Moment.utc(props.data.createdAt).format('YYYY-MM-DD HH:mm:ss'))
-=======
-    console.log('notif id : ' + props.data.id + ' | UTC : ' + props.data.createdAt + ' => ' + Moment(props.data.createdAt).format('YYYY-MM-DD HH:mm:ss') + ' Convert To Local ' + Moment.utc(Moment(props.data.createdAt).format('YYYY-MM-DD HH:mm:ss')).local().format('YYYY-MM-DD HH:mm:ss'))
->>>>>>> b57ba0c693fd338cb633abb22a4d7489cca6bc0d
     return (
-        <div ref={ref} className="flex justify-center items-center w-full md:px-4 py-4 border border-gray-100 bg-pink-500">
+        <div ref={ref} onClick={() => props.markRead(props.data.id)} style={{ background: props.data.isRead ? "#eff7ff" : 'pink' }} className="flex justify-center items-center w-full md:px-4 py-4 border border-gray-100 bg-pink-500">
             <div className="notif-icon mx-4 md:mx-0" >
                 <button role="button" onClick={() => props.hideNotif(props.index)} className="mx-auto">
                     <CloseNotif />

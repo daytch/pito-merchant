@@ -21,7 +21,7 @@
     "html-webpack-plugin": "^4.5.0",
     "moment": "^2.29.1",
     "moment-timezone": "^0.5.32",
-    "postcss": "^8.2.4",
+    "postcss": "^8.2.12",
     "react": "^16.14.0",
     "react-avatar": "^3.9.7",
     "react-chartjs-2": "^2.10.0",
@@ -47,7 +47,7 @@
   "scripts": {
     "build:css": "postcss tailwindcss/style.css -o src/assets/css/main.css",
     "watch:css": "postcss tailwindcss/style.css -o src/assets/css/main.css -w",
-    "start": "concurrently \"npm run watch:css\" \"react-scripts start\"",
+    "start": "concurrently \"npm run watch:css\" \"FAST_REFRESH=false react-scripts start\"",
     "build": "concurrently  \"npm run build:css\" \"react-scripts build\"",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

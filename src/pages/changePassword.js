@@ -35,7 +35,7 @@ const ChangePassword = () => {
         if (password !== repassword) {
             MySwal.fire('Validation!', "Passwords don't match", 'info');
         }
-debugger;
+
         users.changePassword({
             password: password,
             retype_password: repassword,
