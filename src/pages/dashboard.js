@@ -110,7 +110,7 @@ const Dashboard = () => {
 
     function getData(e, tipe) {
         setLoading(true)
-        
+
         const page = e;//tipe === 'live_videos' ? activeLivePage : tipe === 'upcoming_videos' ? activeNextPage : activePrevPage
         livestream.getVideos(page, tipe).then((res) => {
             if (res.isSuccess) {
@@ -167,7 +167,8 @@ const Dashboard = () => {
                                             liveVideos.map((item, index) => {
                                                 const videos = [{ upcoming: false, iframe: item.iframe, id: item.id, thumbnail: item.img_thumbnail, live: true, views: item.views, likes: item.likes, date: item.start_time, title: item.title, end_time: item.end_time, share_url: item.share_url, redirect_fb: item.redirect_fb, redirect_ig: item.redirect_ig, redirect_tiktok: item.redirect_tiktok }]
                                                 return (
-                                                    <div key={index} className="w-full xl:w-1/2 mt-4">
+                                                    <div key={index} className="flex flex-wrap w-full xl:w-1/2 shadow-lg p-2">
+                                                    {/* <div key={index} className="w-full xl:w-1/2 mt-4"> */}
                                                         <FullWidth displayToolTip={displayToolTip} actionLinks={'/dashboard/edit/' + item.id} dataVideos={videos} title={item.title} caption={item.description} category={item.categories} ig={item.redirect_ig} fb={item.redirect_fb} tiktok={item.redirect_tiktok} socmedCustom={true} />
                                                     </div>
                                                 )
@@ -188,7 +189,7 @@ const Dashboard = () => {
 
                                                 const videos = [{ upcoming: true, iframe: item.iframe, id: item.id, thumbnail: item.img_thumbnail, live: false, views: item.views, likes: item.likes, date: item.start_time, title: item.title, end_time: item.end_time, share_url: item.share_url, redirect_fb: item.redirect_fb, redirect_ig: item.redirect_ig, redirect_tiktok: item.redirect_tiktok }]
                                                 return (
-                                                    <div key={index} className="flex flex-wrap mb-2 w-full xl:w-1/2 mt-4">
+                                                    <div key={index} className="flex flex-wrap mb-4 w-full xl:w-1/2 shadow-lg p-2">
                                                         <FullWidth displayToolTip={displayToolTip} DeleteButton={DeleteButton} actionLinks={'/dashboard/edit/' + item.id} dataVideos={videos} title={item.title} actions={true} caption={item.description} category={item.categories} ig={item.redirect_ig} fb={item.redirect_fb} tiktok={item.redirect_tiktok} socmedCustom={true} />
                                                     </div>
                                                 )
@@ -210,7 +211,7 @@ const Dashboard = () => {
                                                 const videos = [{ isPrevious: true, upcoming: false, iframe: item.iframe, id: item.id, thumbnail: item.img_thumbnail, live: false, share: item.share, views: item.views, likes: item.likes, date: item.start_time, title: item.title, end_time: item.end_time, share_url: item.share_url, redirect_fb: item.redirect_fb, redirect_ig: item.redirect_ig, redirect_tiktok: item.redirect_tiktok }]
 
                                                 return (
-                                                    <div key={index} className="flex flex-wrap mb-2 w-full xl:w-1/2 mt-4">
+                                                    <div key={index} className="flex flex-wrap mb-4 w-full xl:w-1/2 shadow-lg p-2">
                                                         <FullWidth displayToolTip={displayToolTip} actionLinks={'/dashboard/edit/' + item.id} dataVideos={videos} title={item.title} viewsElement={true} actions={false} ig={item.redirect_ig} fb={item.redirect_fb} tiktok={item.redirect_tiktok} caption={item.description} category={item.categories} socmedCustom={true} />
                                                     </div>
                                                 )

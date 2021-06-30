@@ -100,9 +100,7 @@ const FullWidth = ({ displayToolTip, DeleteButton, linkVideo, actionLinks, views
                                             <PlayIcon style={{ transition: "all .15s ease" }}
                                                 onClick={() => openModal(item.iframe)} className="icon" />
                                             <img style={{
-                                                maxWidth: '348px', maxHeight: '222px', height: '222px',
-                                                objectFit: 'cover'
-                                            }} src={item.thumbnail} onError={(e) => { e.target.onerror = null; e.target.src = DefaultImg }} alt={title} className="thumbnail-live" />
+                                                maxWidth: '250px', maxHeight: '145px', objectFit: 'cover' }} src={item.thumbnail} onError={(e) => { e.target.onerror = null; e.target.src = DefaultImg }} alt={title} className="thumbnail-live" />
 
                                         </figure>
                                     </Link>
