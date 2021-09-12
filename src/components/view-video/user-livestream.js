@@ -72,7 +72,7 @@ const UserLivestreamVideos = ({ displayToolTip, ListVideo }) => {
                                 </div>
                                 <div className="flex flex-grow flex-col ml-2">
                                     <div className="flex flex-wrap">
-                                        <h6 className="break-all font-bold text-sm text-red-700 py-3 lg:py-0 px-4 lg:px-0">Live on {Moment(item.start_time).format('MMMM Do YYYY, h:mm a')}</h6>
+                                        <h6 className="break-all font-bold text-sm text-red-700 py-3 lg:py-0 px-4 lg:px-0">Live on {Moment(item.start_time).format('LLL')}</h6>
                                     </div>
                                     <div className="flex flex-wrap h-12">
                                         <h5 className="break-all font-semibold text-md text-gray-700 py-3 lg:py-0 px-4 lg:px-0 lg:mb-2">{item.title}</h5>

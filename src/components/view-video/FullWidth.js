@@ -79,8 +79,7 @@ const FullWidth = ({ displayToolTip, DeleteButton, linkVideo, actionLinks, views
         <>
             {
                 dataVideos.map((item, index) => {
-                    let iframe = item.iframe
-                    console.log(item);
+                    let iframe = item.iframe;
                     return (
                         <div className="md:inline-flex" key={index}>
                             <div className="flex-1">
@@ -109,7 +108,7 @@ const FullWidth = ({ displayToolTip, DeleteButton, linkVideo, actionLinks, views
 
                             <div className="flex flex-grow flex-col ml-4">
                                 <div className="flex flex-wrap">
-                                    <h6 className="break-all font-bold text-sm text-red-700 py-3 lg:py-0 px-4 lg:px-0">Live on {Moment(item.start_time).format('MMMM Do YYYY, h:mm a')}</h6>
+                                    <h6 className="break-all font-bold text-sm text-red-700 py-3 lg:py-0 px-4 lg:px-0">Live on {Moment(item.date).format('LLL')}</h6>
                                 </div>
                                 <div className="flex flex-wrap h-full">
                                     <h5 className="break-all font-semibold text-md text-gray-700 py-3 lg:py-0 px-4 lg:px-0 lg:mb-2">{item.title}</h5>
@@ -157,7 +156,17 @@ const FullWidth = ({ displayToolTip, DeleteButton, linkVideo, actionLinks, views
                                         )
                                     }
                                 </div>
-
+                                {
+                                            actions && (
+                                                <div className="md:mt-4 flex items-center">
+                                                    <Link to={{
+                                                        pathname: actionLinks,
+                                                        query: { linkVideo, actionLinks, viewsElement, actions, dataVideos, socmedVertical, socmedCustom, liveRecord, title, name, subtitle, caption, category1, category2, category3, buttons }
+                                                    }} className="font-semibold text-base md:text-lg text-red-600 mr-4">Edit</Link>
+                                                    <DeleteButton id={item.id} />
+                                                </div>
+                                            )
+                                        }
                             </div>
                         </div>
                     )
