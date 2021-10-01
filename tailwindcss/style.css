@@ -363,6 +363,18 @@ item:hover figure.item-image-live-detail svg.icon {
   width: 100px;
 }
 
+.img-livestream-create {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+.sign-close {
+  position: absolute;
+    right: 1rem;
+    top: 0.75rem;
+    cursor: pointer;
+}
 .play-icon-lvdetail {
   transition: all 0.15s ease 0s;
   margin-top: -15%;
