@@ -10,19 +10,20 @@ import livestream from 'api/livestream';
 import 'react-toastify/dist/ReactToastify.css';
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
-import Moment from 'moment'
 import Converter from 'configs/moment/DatetimeConverter'
 import camera from '../../assets/images/camera-plus.png'
 
 const MySwal = withReactContent(Swal)
 
 const Edit = ({ data, openLoading, closeLoading }) => {
-    
+	console.log('end time : '+Converter.convertToLocal(data.dataVideos[0].end_time));
+	console.log('start time : '+Converter.convertToLocal(data.dataVideos[0].date));
 	const { id } = useParams()
 	const [mypic, setMypic] = useState(data.dataVideos[0].thumbnail)
-	const [startDate, setStartDate] = useState(Moment(Converter.convertToLocal(data.dataVideos[0].date)).format("YYYY-MM-DD"))
-	const [startTime, setStartTime] = useState(Moment(Converter.convertToLocal(data.dataVideos[0].date)).format("HH:mm"))
-	const [duration, setDuration] = useState(Moment(Converter.convertToLocal(data.dataVideos[0].end_time)).diff(Moment(Converter.convertToLocal(data.dataVideos[0].date)), 'hours', true));
+	const [startDate, setStartDate] = useState(Converter.convertToLocalDate(data.dataVideos[0].date))
+	const [startTime, setStartTime] = useState(Converter.convertToLocalTime(data.dataVideos[0].date))
+	const [endTime, setEndTime] = useState(Converter.convertToLocalTime(data.dataVideos[0].end_time))
+	const [duration, setDuration] = useState(Converter.getHoursDiff(data.dataVideos[0].date,data.dataVideos[0].end_time));
 	const [title, setTitle] = useState(data.title)
 	const [desc, setDesc] = data.desc ? useState(data.desc) : useState(data.caption)
 	const [fb_url, setFburl] = useState(data.dataVideos[0].redirect_fb)
@@ -31,10 +32,9 @@ const Edit = ({ data, openLoading, closeLoading }) => {
 	const [category, setCategory] = useState(data.category)
 	const [categoryid, setCategoryid] = useState([]);
 	const inputFile = useRef(null);
-	const [category1] = useState(data.category1)
-	const [category2] = useState(data.category2)
-    console.log(data)
-    const [category3] = useState(data.category3)
+	const [category1,setCategory1] = useState(data.category1)
+	const [category2,setCategory2] = useState(data.category2)
+    const [category3,setCategory3] = useState(data.category3)
 		const [disableCategory2,setDisableCategory2]=useState(data.category2.toLowerCase === 'category' ? true : false);
 		const [disableCategory3,setDisableCategory3]=useState(data.category3.toLowerCase === 'category' ? true : false);
 
@@ -151,8 +151,10 @@ const Edit = ({ data, openLoading, closeLoading }) => {
 		}
 
 		var date = new Date();
+        var startz = new Date(startDate);
 		date.setDate(date.getDate() + 7);
-		if (Moment(startDate).isSameOrAfter(date, 'day')) {
+		// if (Moment(startDate).isSameOrAfter(date, 'day')) {
+        if(startz.getTime() > date){
 			closeLoading()
 			MySwal.fire('Validation!', 'Start Date cannot more than a week.', 'warning');
 			return;
@@ -290,7 +292,6 @@ const Edit = ({ data, openLoading, closeLoading }) => {
 	* Component to display thumbnail of image.
 	*/
 const ImageThumb = ({ image }) => {
-    console.log(image);
    if(typeof (image)==='string'){
 	    return <img className="img-livestream-create" src={image} alt={image?.name} />;
    }else{
